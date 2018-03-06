@@ -21,6 +21,7 @@
     "alexa-app": "^4.2.1",
     "alexa-sdk": "^1.0.25",
     "express": "^4.16.2",
+    "express-force-ssl": "^0.3.2",
     "fs": "0.0.1-security",
     "nodemon": "^1.17.1",
     "path": "^0.12.7",
