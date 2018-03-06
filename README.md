@@ -16,6 +16,9 @@ This is how we will be sending URLs to the user's device after proper prompts/in
 ## Sessions
 It will be noted that _alexa-app_ from _npm_ has support for session data. This could result in an encrypted/cookie-based or user-agent based authentication which would hook into the netid login system.
 
+## Payment
+TBD
+
 ## License
 **MIT License**
 
