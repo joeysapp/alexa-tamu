@@ -1,9 +1,9 @@
 
 ![alexa-tamu logo](/logo.png)
 # alexa-tamu
-repo for node testing for slot requirement of _Project Asset_
+Extension of **Project Asset** to serve dynamic content to the students of **Texas A&M University**.
 
-Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Swink) to complete the proposed "reach goals" of their final senior design project (_CSCE482_) which was given to them by the Information Technology department of **Texas A&M University**.
+Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Swink) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
 
 ## how-to for development
 ```
@@ -13,9 +13,8 @@ npm install nodemon --save
 nodemon server-alexa-instance.js
 ```
 
-
 ## Technical Details
-Will be completed as development of the project continues (if it does.)
+TBD
 
 ## URLs [_Maps_, _HelpDesk_, _TAMU Library_, _ecampus_]
 It is recommended to visit the following url
