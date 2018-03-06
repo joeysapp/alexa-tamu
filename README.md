@@ -1,5 +1,5 @@
 
-![alexa-tamu logo](/logo.png)
+![alexa-tamu logo](/logo.png =32x)
 # alexa-tamu
 repo for node testing for slot requirement of _Project Asset_
 
