@@ -19,6 +19,9 @@
   "homepage": "https://github.com/joeysapp/alexa-tamu#readme",
   "dependencies": {
     "alexa-app": "^4.2.1",
-    "express": "^4.16.2"
+    "alexa-sdk": "^1.0.25",
+    "express": "^4.16.2",
+    "nodemon": "^1.17.1",
+    "useragent": "^2.3.0"
   }
 }
