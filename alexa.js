@@ -13,5 +13,6 @@ const handlers = {
         //emit response directly
         console.log("rawr");
         this.emit(':tell', 'Hello World!');
+        this.emit(':ask', 'What would you like to do?', 'Please say that again?');
     }
 };
