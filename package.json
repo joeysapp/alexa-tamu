@@ -1,0 +1,24 @@
+{
+  "name": "alexa-tamu",
+  "version": "1.0.0",
+  "description": "repo for node testing for slot requirement of Project Asset",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeysapp/alexa-tamu.git"
+  },
+  "author": "Joey Sapp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joeysapp/alexa-tamu/issues"
+  },
+  "homepage": "https://github.com/joeysapp/alexa-tamu#readme",
+  "dependencies": {
+    "alexa-app": "^4.2.1",
+    "express": "^4.16.2"
+  }
+}

@@ -6,6 +6,8 @@ Note that this project is being made to fulfill requirements of the team members
 ## Technical Details
 Will be completed as development of the project continues (if it does.)
 
+It will be noted that _alexa-app_ from _npm_ has support for session data. This could result in an encrypted/cookie-based or user-agent based authentication which would hook into the netid login system.
+
 ## License
 **MIT License**
 
