@@ -6,6 +6,14 @@ Note that this project is being made to fulfill requirements of the team members
 ## Technical Details
 Will be completed as development of the project continues (if it does.)
 
+## URLs [_Maps_, _HelpDesk_, _TAMU Library_, _ecampus_]
+It is recommended to visit the following url
+```
+https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#card-object
+```
+This is how we will be sending URLs to the user's device after proper prompts/intents.
+
+## Sessions
 It will be noted that _alexa-app_ from _npm_ has support for session data. This could result in an encrypted/cookie-based or user-agent based authentication which would hook into the netid login system.
 
 ## License
