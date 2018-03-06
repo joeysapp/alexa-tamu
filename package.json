@@ -1,7 +1,7 @@
 {
   "name": "alexa-tamu",
   "version": "1.0.0",
-  "description": "repo for node testing for slot requirement of Project Asset",
+  "description": "Extension of Project Asset to serve dynamic content to the students of Texas A&M University",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
