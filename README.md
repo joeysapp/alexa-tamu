@@ -13,6 +13,19 @@ npm install nodemon --save
 nodemon server-alexa-instance.js
 ```
 
+## Upload to Amazon Lambda
+It must be noted, prior to uploading to Lambda, you must create a folder containing:
+```
+index.js
+node_modules/
+package-lock.json
+package.json
+```
+If you are developing on macOS, navigate to the folder and type the following:
+```
+zip -r ../out.zip *
+```
+
 ## Technical Details
 TBD
 
