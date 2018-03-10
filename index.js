@@ -1,6 +1,6 @@
 const Alexa = require('alexa-sdk');
 const APP_ID = "amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f";
-const definitions = {};
+const definitions = require('./definitions');
 
 const languageStrings = {
 	'en': {
@@ -37,15 +37,39 @@ const handlers = {
 		this.emit(':responseReady');
 	},
 	'GetDefinition' : function(){
-		let speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
-		speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME');
-		speechOutput += this.t('DEF_NOT_FOUND_REPROMPT');
+		const defSlot = this.event.request.intent.slots.Definition;
+		let defName;
+		if (defSlot && defSlot.value){
+			defName = defSlot.value.toLowerCase();
+		}
 
-		this.attributes.speechOutput = speechOutput;
-		this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+		const cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
+		const myDefs = this.t('DEFINITIONS');
+		const def = myDefs[defName];
 
-		this.response.speak(speechOutput);
-		this.emit(':responseReady');
+		if (def){
+			this.attributes.speechOutput = def;
+			this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+
+			this.response.speak(def).listen(this.attributes.repromptSpeech);
+			this.response.cardRenderer(cardTitle, def);
+			this.emit(':responseReady');
+		} else {
+			let speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
+			const repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
+			if (defName){
+				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', defName);
+			} else {
+				speechOutput += this.t('DEF_NOT_FOUND_WITHOUT_NAME');
+			}
+
+			speechOutput += repromptSpeech;
+			this.attributes.speechOutput = speechOutput;
+			this.attributes.repromptSpeech = repromptSpeech;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
+		}
 	},
 	'AMAZON.HelpIntent': function () {
 		this.attributes.speechOutput = this.t('HELP_MESSAGE');

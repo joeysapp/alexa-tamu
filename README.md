@@ -15,7 +15,7 @@ nodemon server-alexa-instance.js
 
 ## Upload to Amazon Lambda
 ```
-$ zip -r out.zip index.js node_modules/ package-lock.json package.json 
+$ zip -r out.zip index.js definitions.js node_modules/ package-lock.json package.json 
 ```
 ## Technical Details
 TBD
