@@ -1,3 +1,7 @@
+# output
+*.zip
+to_zip/
+
 # Logs
 logs
 *.log
