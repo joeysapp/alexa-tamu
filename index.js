@@ -36,7 +36,7 @@ const handlers = {
 		this.response.speak(this.attributes.speechOut).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
 	},
-	'GetDefinition' : function(){
+	'GetDefinitionIntent' : function(){
 		const defSlot = this.event.request.intent.slots.Definition;
 		let defName;
 		if (defSlot && defSlot.value){
@@ -70,6 +70,18 @@ const handlers = {
 			this.response.speak(speechOutput).listen(repromptSpeech);
 			this.emit(':responseReady');
 		}
+	},
+	'GetLocationIntent' : function(){
+        this.response.speak("GetLocationIntent!");
+        this.emit(':responseReady');
+	},
+	'GetBusStatusIntent' : function(){
+        this.response.speak("GetBusStatusIntent!");
+        this.emit(':responseReady');
+	},
+	'GetCollegeIntent' : function(){
+        this.response.speak("GetCollegeIntent!");
+        this.emit(':responseReady');
 	},
 	'AMAZON.HelpIntent': function () {
 		this.attributes.speechOutput = this.t('HELP_MESSAGE');

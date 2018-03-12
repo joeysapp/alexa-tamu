@@ -1,0 +1,308 @@
+{
+    "languageModel": {
+        "invocationName": "tamu",
+        "intents": [
+            {
+                "name": "GetDefinitionIntent",
+                "slots": [
+                    {
+                        "name": "Definition",
+                        "type": "Definition"
+                    }
+                ],
+                "samples": [
+                    "what does {Definition} mean",
+                    "what's {Definition}",
+                    "tell me {Definition}",
+                    "give me {Definition}",
+                    "get me {Definition}",
+                    "get {Definition}",
+                    "find {Definition}",
+                    "find me {Definition}",
+                    "who is {Definition}",
+                    "tell me about {Definition}",
+                    "who are the {Definition}"
+                ]
+            },
+            {
+                "name": "GetLocationIntent",
+                "slots": [
+                    {
+                        "name": "Location",
+                        "type": "Location"
+                    }
+                ],
+                "samples": [
+                    "where is the {Location} building",
+                    "where is the {Location}",
+                    "where could {Location} be",
+                    "show me {Location}",
+                    "how do I get to {Location}",
+                    "tell me where {Location} is",
+                    "where is {Location}"
+                ]
+            },
+            {
+                "name": "GetBusStatusIntent",
+                "slots": [
+                    {
+                        "name": "BusNumber",
+                        "type": "AMAZON.NUMBER",
+                        "samples": [
+                            "Give me {BusNumber}",
+                            "I want to hear about {BusNumber}",
+                            "route {BusNumber}",
+                            "the route is {BusNumber}",
+                            "{BusNumber}"
+                        ]
+                    }
+                ],
+                "samples": [
+                    "is route {BusNumber} late",
+                    "is my bus late",
+                    "find my bus",
+                    "where is my bus",
+                    "find me route {BusNumber}",
+                    "find me bus {BusNumber}",
+                    "where is the bus on route {BusNumber}",
+                    "is bus {BusNumber} coming",
+                    "where is bus {BusNumber}"
+                ]
+            },
+            {
+                "name": "GetCollegeIntent",
+                "slots": [
+                    {
+                        "name": "College",
+                        "type": "College"
+                    }
+                ],
+                "samples": []
+            }
+        ],
+        "types": [
+            {
+                "name": "Definition",
+                "values": [
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "goodbull",
+                            "synonyms": [
+                                "good bull"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "helpdesk",
+                            "synonyms": [
+                                "it helpdesk"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "information technology",
+                            "synonyms": [
+                                "it",
+                                "it department"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "yell leaders",
+                            "synonyms": [
+                                "leaders",
+                                "yell "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "twelfth man",
+                            "synonyms": [
+                                "12 man",
+                                "12th man"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "corps of cadets",
+                            "synonyms": [
+                                "corps"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "aggie",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "gig em",
+                            "synonyms": [
+                                "gigem"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "johnny manziel",
+                            "synonyms": [
+                                "manziel",
+                                "johnny"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "tamu",
+                            "synonyms": [
+                                "Texas A&M University",
+                                "Texas A&M"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "a and m",
+                            "synonyms": [
+                                "a and m"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "reveille",
+                            "synonyms": []
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Location",
+                "values": [
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "JJKB",
+                            "synonyms": [
+                                "koldus"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "KYLE",
+                            "synonyms": [
+                                "kyle field"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "BLOC",
+                            "synonyms": [
+                                "blocker"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "HRBB",
+                            "synonyms": [
+                                "computer science building",
+                                "bright building"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "MSC",
+                            "synonyms": [
+                                "memorial student center"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "College",
+                "values": [
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "College of Architecture",
+                            "synonyms": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "dialog": {
+        "intents": [
+            {
+                "name": "GetLocationIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "Location",
+                        "type": "Location",
+                        "confirmationRequired": false,
+                        "elicitationRequired": false,
+                        "prompts": {}
+                    }
+                ]
+            },
+            {
+                "name": "GetBusStatusIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "BusNumber",
+                        "type": "AMAZON.NUMBER",
+                        "confirmationRequired": false,
+                        "elicitationRequired": true,
+                        "prompts": {
+                            "elicitation": "Elicit.Slot.13385747633.940678137535"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "prompts": [
+        {
+            "id": "Elicit.Slot.13385747633.940678137535",
+            "variations": [
+                {
+                    "type": "PlainText",
+                    "value": "Which route would you like to hear about?"
+                }
+            ]
+        }
+    ]
+}
