@@ -5,14 +5,6 @@ Extension of **Project Asset** to serve dynamic content to the students of **Tex
 
 Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Swink) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
 
-## how-to for development
-```
-git clone this repo
-cd to folder
-npm install nodemon --save
-nodemon server-alexa-instance.js
-```
-
 ## Upload to Amazon Lambda
 ```
 $ zip -r out.zip index.js definitions.js node_modules/ package-lock.json package.json 
