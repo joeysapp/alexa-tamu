@@ -45,13 +45,15 @@ const handlers = {
 		if (!(defName in this.t('DEFINITIONS'))){
 			// so I think this won't work in testing???
 			// we have to type out our stuff exactly..
-			const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0]
-			defName = defSlotResolved.value
+			// const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0]
+			// defName = defSlotResolved.value
 		}
 
 		const cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
 		const myDefs = this.t('DEFINITIONS');
 		const def = myDefs[defName];
+
+		console.log(defSlot);
 
 		if (def){
 			this.attributes.speechOutput = def;
@@ -73,6 +75,7 @@ const handlers = {
 			this.attributes.speechOutput = speechOutput;
 			this.attributes.repromptSpeech = repromptSpeech;
 
+			// this.response.speak(defSlot).listen(repromptSpeech);
 			this.response.speak(speechOutput).listen(repromptSpeech);
 			this.emit(':responseReady');
 		}
