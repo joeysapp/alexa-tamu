@@ -25,7 +25,9 @@ Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-us
 ```
 'How full is the garage?' : http://transport.tamu.edu/parking/realtime.aspx
 'When's the next game?'
-''
+All howdy/ecampus requests: 'Sorry, we can't do that yet
+Get entire list of professors/people
+
 
 ```
 
