@@ -1,17 +1,25 @@
+// SSML
+var Speech = require('ssml-builder');
+
+// General Alexa
+//	* Intents
+//  * Custom slot types
 const Alexa = require('alexa-sdk');
-const APP_ID = "amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f";
+const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
+
+// getDefinitionIntent library
+// 	We don't need any others YET (profs/courses/colleges/etc)
+// 	as the rest will be dynamically created 😮😳🐫
 const definitions = require('./definitions');
 
 const languageStrings = {
 	'en': {
 		translation: {
 			DEFINITIONS: definitions.DEFINITION_EN_US,
-			SKILL_NAME: 'Texas A and M Helpdesk',
-			WELCOME_MESSAGE: "Welcome to %s. You can ask a question like, who are the yell leaders? ... Now, what can I help you with?",
-			WELCOME_REPROMPT: 'For instructions on what you can ask, please say help me.',
+			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
-			HELP_MESSAGE: 'You can ask questions like who is Johnny Manziel, or who is on the football team?',
-			HELP_REPROMPT: 'You can ask questions like who is Johnny Manziel, or who is on the football team?',
+			HELP_MESSAGE: 'You could ask me things about classes, or parking lots, or any upcoming games!',
+			HELP_REPROMPT: 'Check out alexa.tamu.edu for more information.',
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_REPEAT_MESSAGE: 'Try saying repeat.',
 			DEF_NOT_FOUND_MESSAGE: 'I\'m sorry, I currently don\'t know ',
@@ -23,25 +31,41 @@ const languageStrings = {
 	'en-us' : {
 		translation: {
 			DEFINITIONS: definitions.DEFINITION_EN_US,
-			SKILL_NAME: 'Texas A and M Helpdesk',
+			SKILL_NAME: 'alexa-tamu',
 		},
 	},
 };
 
 const handlers = {
 	'LaunchRequest': function(){
-		this.attributes.speechOutput = this.t('WELCOME_MESSAGE', this.t('SKILL_NAME'));
-		this.attributes.repromptSpeech = this.t('WELCOME_REPROMPT');
 
-		this.response.speak(this.attributes.speechOut).listen(this.attributes.repromptSpeech);
+		var speech = new Speech();
+		speech.say('Welcome to Texas A')
+			  .pause('5ms')
+			  .sub('and', '&')
+			  .pause('5ms')
+			  .say('M')
+			  .pause('10ms')
+			  .say('University\'s development Alexa application!')
+			  .pause('300ms')
+			  .say('Check out')
+			  .say('alexa .')
+			  .phoneme('ipa', 'tiː-eɪ-ɛm-juː', 'tamu')
+			  .say(' .edu to see what you can ask me.');
+
+		var s = speech.ssml(true);
+
+		this.attributes.outputSpeech = s;
+
+		this.response.speak(this.attributes.outputSpeech);
 		this.emit(':responseReady');
 	},
 	'GetDefinitionIntent' : function(){
-		const defSlot = this.event.request.intent.slots.Definition;
+		var defSlot = this.event.request.intent.slots.Definition;
 		// wtf
 		// https://forums.developer.amazon.com/questions/100181/cannot-read-property-resolutionsperauthority-of-un.html
 		// const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0];
-		const defName = defSlot.value;
+		var defName = defSlot.value;
 		if (!(defName in this.t('DEFINITIONS'))){
 			// so I think this won't work in testing???
 			// we have to type out our stuff exactly..
@@ -49,11 +73,9 @@ const handlers = {
 			// defName = defSlotResolved.value
 		}
 
-		const cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
-		const myDefs = this.t('DEFINITIONS');
-		const def = myDefs[defName];
-
-		console.log(defSlot);
+		var cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
+		var myDefs = this.t('DEFINITIONS');
+		var def = myDefs[defName];
 
 		if (def){
 			this.attributes.speechOutput = def;
@@ -63,8 +85,8 @@ const handlers = {
 			this.response.cardRenderer(cardTitle, def);
 			this.emit(':responseReady');
 		} else {
-			let speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
-			const repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
+			var speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
+			var repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
 			if (defName){
 				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', defName);
 			} else {

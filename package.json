@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/joeysapp/alexa-tamu#readme",
   "dependencies": {
-    "alexa-sdk": "^1.0.25"
+    "alexa-sdk": "^1.0.25",
+    "ssml-builder": "^0.4.3"
   }
 }

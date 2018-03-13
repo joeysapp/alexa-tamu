@@ -46,6 +46,7 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 | alexa-sdk    | Alexa language model generation         | https://www.npmjs.com/package/alexa-sdk    |
 | ssml-builder | SSML (Speech Synthesis Markup Language) | https://www.npmjs.com/package/ssml-builder |
 
+[toPhonetics](https://tophonetics.com/)
 ## License
 **MIT License**
 
