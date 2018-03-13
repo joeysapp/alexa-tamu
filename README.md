@@ -5,10 +5,15 @@ Extension of **Project Asset** to serve dynamic content to the students of **Tex
 
 Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Swink) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
 
-## Upload to Amazon Lambda
+## [Uploading code](https://blog.seanssmith.com/posts/alexa-s3-upload.html), ecosystem and developing
 ```
-$ zip -r out.zip index.js definitions.js node_modules/ package-lock.json package.json 
+Create IAM account for user on console.aws.amazon.com
+Install awscli, configure to above IAM account credentials
+$ zip -r out.zip index.js definitions.js node_modules/ package-lock.json package.json  
+$ aws s3 cp out.zip s3://alexa-tamu-code
 ```
+It must be noted our skill (Lambda setup within AWS console) is specifically running off of the file named "out.zip" and is particular about how the file is zipped.
+
 ## Technical Details
 TBD
 
