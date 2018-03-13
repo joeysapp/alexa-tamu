@@ -40,8 +40,11 @@ Tell me about [COLLEGE]:[CLASS NUMBER] -> class stats/description
 Maroon Alerts: https://twitter.com/tamucodemaroon?lang=en
 ```
 
-## Payment
-TBD
+## Dependencies 
+```
+[**ssml-builder**](https://www.npmjs.com/package/ssml-builder)
+[**alexa-sdk**](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs)
+```
 
 ## License
 **MIT License**
