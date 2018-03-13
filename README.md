@@ -21,6 +21,13 @@ https://developer.amazon.com/docs/custom-skills/request-and-response-json-refere
 Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-user-with-a-user-in-your-system.html
 ```
 
+## Notes about Slot Types
+```
+Slot values are sent to your skill in written format. For example, both "fire h. d. 7" and "fire h. d. seven" would be sent to your skill as "Fire HD7". For better recognition, acronyms and other phrases involving spoken letters should either be all caps ("HD") or separated by periods and a space ("h. d. "). Using lowercase for initialisms may lead to unreliable recognition since the spoken form may not correctly be detected
+
+https://developer.amazon.com/docs/custom-skills/custom-interaction-model-reference.html#custom-slot-type-values
+```
+
 ## Potential Ideas
 ```
 School/depts: https://www.tamu.edu/about/departments.html
