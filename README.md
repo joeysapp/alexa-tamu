@@ -21,6 +21,14 @@ https://developer.amazon.com/docs/custom-skills/request-and-response-json-refere
 Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-user-with-a-user-in-your-system.html
 ```
 
+## Potential Ideas
+```
+'How full is the garage?' : http://transport.tamu.edu/parking/realtime.aspx
+'When's the next game?'
+''
+
+```
+
 ## Payment
 TBD
 
