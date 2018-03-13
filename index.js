@@ -38,7 +38,16 @@ const handlers = {
 	},
 	'GetDefinitionIntent' : function(){
 		const defSlot = this.event.request.intent.slots.Definition;
+		// wtf
+		// https://forums.developer.amazon.com/questions/100181/cannot-read-property-resolutionsperauthority-of-un.html
+		// const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0];
 		const defName = defSlot.value;
+		if (!(defName in this.t('DEFINITIONS'))){
+			// so I think this won't work in testing???
+			// we have to type out our stuff exactly..
+			const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0]
+			defName = defSlotResolved.value
+		}
 
 		const cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
 		const myDefs = this.t('DEFINITIONS');
