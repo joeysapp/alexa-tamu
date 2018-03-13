@@ -39,9 +39,6 @@ const handlers = {
 	'GetDefinitionIntent' : function(){
 		const defSlot = this.event.request.intent.slots.Definition;
 		let defName;
-		if (defSlot && defSlot.value){
-			defName = defSlot.value.toLowerCase();
-		}
 
 		const cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
 		const myDefs = this.t('DEFINITIONS');
@@ -67,7 +64,7 @@ const handlers = {
 			this.attributes.speechOutput = speechOutput;
 			this.attributes.repromptSpeech = repromptSpeech;
 
-			this.response.speak(myDefs).listen(repromptSpeech);
+			this.response.speak(speechOutput).listen(repromptSpeech);
 			this.emit(':responseReady');
 		}
 	},
