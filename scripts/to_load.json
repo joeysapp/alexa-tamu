@@ -1,0 +1,594 @@
+{
+    "languageModel": {
+        "invocationName": "tamu",
+        "intents": [
+            {
+                "name": "GetDefinitionIntent",
+                "slots": [
+                    {
+                        "name": "Definition",
+                        "type": "Definition"
+                    }
+                ],
+                "samples": [
+                    "tell me who {Definition} is",
+                    "who's {Definition}",
+                    "what does {Definition} mean",
+                    "what's {Definition}",
+                    "tell me {Definition}",
+                    "give me {Definition}",
+                    "get me {Definition}",
+                    "get {Definition}",
+                    "find {Definition}",
+                    "find me {Definition}",
+                    "who is {Definition}",
+                    "tell me about {Definition}",
+                    "who are the {Definition}"
+                ]
+            },
+            {
+                "name": "GetLocationIntent",
+                "slots": [
+                    {
+                        "name": "Location",
+                        "type": "Location"
+                    }
+                ],
+                "samples": [
+                    "where is the {Location} building",
+                    "where is the {Location}",
+                    "where could {Location} be",
+                    "show me {Location}",
+                    "how do I get to {Location}",
+                    "tell me where {Location} is",
+                    "where is {Location}"
+                ]
+            },
+            {
+                "name": "GetBusStatusIntent",
+                "slots": [
+                    {
+                        "name": "BusNumber",
+                        "type": "AMAZON.NUMBER",
+                        "samples": [
+                            "Give me {BusNumber}",
+                            "I want to hear about {BusNumber}",
+                            "route {BusNumber}",
+                            "the route is {BusNumber}",
+                            "{BusNumber}"
+                        ]
+                    }
+                ],
+                "samples": [
+                    "is route {BusNumber} late",
+                    "is my bus late",
+                    "find my bus",
+                    "where is my bus",
+                    "find me route {BusNumber}",
+                    "find me bus {BusNumber}",
+                    "where is the bus on route {BusNumber}",
+                    "is bus {BusNumber} coming",
+                    "where is bus {BusNumber}"
+                ]
+            },
+            {
+                "name": "GetCollegeIntent",
+                "slots": [
+                    {
+                        "name": "College",
+                        "type": "College"
+                    }
+                ],
+                "samples": []
+            }
+        ],
+        "types": [
+            {
+                "name": "Definition",
+                "values": [
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "yell_practice",
+                            "synonyms": [
+                                "yell practice"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "yells",
+                            "synonyms": [
+                                "aggie yells"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "whoop",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "wildcat",
+                            "synonyms": [
+                                "wild cat"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "war_hymn",
+                            "synonyms": [
+                                "war hymn",
+                                "aggie war hymn"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "ut",
+                            "synonyms": [
+                                "ut",
+                                "university of texas",
+                                "tu"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "tsip",
+                            "synonyms": [
+                                "tea sip"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "TAMC",
+                            "synonyms": [
+                                "Agricultural and Mechanical College",
+                                "Agricultural and Mechanical College of Texas"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "silver_taps",
+                            "synonyms": [
+                                "silver taps"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "ring_dunk",
+                            "synonyms": [
+                                "dunk",
+                                "dunking",
+                                "ring dunk"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "the quad",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "old_army",
+                            "synonyms": [
+                                "old army",
+                                "ol army"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "northgate",
+                            "synonyms": [
+                                "north gate",
+                                "ng"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "new_army",
+                            "synonyms": [
+                                "new army"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "muster",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "maroon",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "hump",
+                            "synonyms": [
+                                "hump it"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "Hullabaloo",
+                            "synonyms": [
+                                "hullabaloo canek canek"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "howdy",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "fish_camp",
+                            "synonyms": [
+                                "fish camp"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "fish",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "band",
+                            "synonyms": [
+                                "the aggie band",
+                                "the band",
+                                "the fighting texas aggie band",
+                                "fighting texas aggie band"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "elephant_walk",
+                            "synonyms": [
+                                "elephant walk",
+                                "elephant"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "code",
+                            "synonyms": [
+                                "the honor code",
+                                "the code of honor",
+                                "honor code",
+                                "code of honor",
+                                "ag code of honor",
+                                "aggie code of honor"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "batt",
+                            "synonyms": [
+                                "battalion",
+                                "the battalion "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "aggieland",
+                            "synonyms": []
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "two_percenters",
+                            "synonyms": [
+                                "two percent",
+                                "2 percent",
+                                "2 percenters"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "aggie",
+                            "synonyms": [
+                                "ag",
+                                "aggies"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "corps",
+                            "synonyms": [
+                                "The Corps",
+                                "The Corps of Cadets",
+                                "The Fighting Texas Aggie Corps of Cadets",
+                                "The Fightin Texas Aggie Corps of Cadets",
+                                "Texas A&M University Corps of Cadets",
+                                "cadet",
+                                "corp",
+                                "cadets",
+                                "corps of cadets"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "goodbull",
+                            "synonyms": [
+                                "good bull"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "helpdesk",
+                            "synonyms": [
+                                "information technology",
+                                "it helpdesk"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "twelfth man",
+                            "synonyms": [
+                                "12 man",
+                                "12th man"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "gig em",
+                            "synonyms": [
+                                "gigem"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "johnny manziel",
+                            "synonyms": [
+                                "johnny football",
+                                "manziel",
+                                "johnny"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "tamu",
+                            "synonyms": [
+                                "A&M",
+                                "a and m",
+                                "Texas A&M University",
+                                "Texas A&M"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "reveille",
+                            "synonyms": [
+                                "dog",
+                                "mascot"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Location",
+                "values": [
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "JJKB",
+                            "synonyms": [
+                                "koldus"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "KYLE",
+                            "synonyms": [
+                                "kyle field"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "BLOC",
+                            "synonyms": [
+                                "blocker"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "HRBB",
+                            "synonyms": [
+                                "computer science building",
+                                "bright building"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "MSC",
+                            "synonyms": [
+                                "memorial student center"
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "College",
+                "values": [
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "College of Architecture",
+                            "synonyms": []
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "JSONTest",
+                "values": [
+                    {
+                        "id": "2",
+                        "name": {
+                            "value": "mistake",
+                            "synonyms": [
+                                "HOW DO ESTHIS emrer"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "3",
+                        "name": {
+                            "value": "THIS SUot",
+                            "synonyms": [
+                                "asdfasdf"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "1",
+                        "name": {
+                            "value": "foo",
+                            "synonyms": [
+                                "rererer"
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "dialog": {
+        "intents": [
+            {
+                "name": "GetLocationIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "Location",
+                        "type": "Location",
+                        "confirmationRequired": false,
+                        "elicitationRequired": false,
+                        "prompts": {}
+                    }
+                ]
+            },
+            {
+                "name": "GetBusStatusIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "BusNumber",
+                        "type": "AMAZON.NUMBER",
+                        "confirmationRequired": false,
+                        "elicitationRequired": true,
+                        "prompts": {
+                            "elicitation": "Elicit.Slot.13385747633.940678137535"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "GetDefinitionIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "Definition",
+                        "type": "Definition",
+                        "confirmationRequired": false,
+                        "elicitationRequired": false,
+                        "prompts": {}
+                    }
+                ]
+            }
+        ]
+    },
+    "prompts": [
+        {
+            "id": "Elicit.Slot.13385747633.940678137535",
+            "variations": [
+                {
+                    "type": "PlainText",
+                    "value": "Which route would you like to hear about?"
+                }
+            ]
+        }
+    ]
+}
