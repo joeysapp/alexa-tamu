@@ -14,18 +14,12 @@ $ aws s3 cp out.zip s3://alexa-tamu-code
 ```
 It must be noted our skill (Lambda setup within AWS console) is specifically running off of the file named "out.zip" and is particular about how the file is zipped.
 
-## Technical Details
-TBD
-
-## URLs [_Maps_, _HelpDesk_, _TAMU Library_, _ecampus_]
-It is recommended to visit the following url
+## Helpful Links 
 ```
+https://console.aws.amazon.com/lambda/home
 https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#card-object
+Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-user-with-a-user-in-your-system.html
 ```
-This is how we will be sending URLs to the user's device after proper prompts/intents.
-
-## Sessions
-It will be noted that _alexa-app_ from _npm_ has support for session data. This could result in an encrypted/cookie-based or user-agent based authentication which would hook into the netid login system.
 
 ## Payment
 TBD
