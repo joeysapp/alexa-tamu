@@ -38,7 +38,7 @@ const handlers = {
 	},
 	'GetDefinitionIntent' : function(){
 		const defSlot = this.event.request.intent.slots.Definition;
-		let defName;
+		const defName = defSlot.value;
 
 		const cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
 		const myDefs = this.t('DEFINITIONS');
