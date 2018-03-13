@@ -10,12 +10,12 @@ const languageStrings = {
 			WELCOME_MESSAGE: "Welcome to %s. You can ask a question like, who are the yell leaders? ... Now, what can I help you with?",
 			WELCOME_REPROMPT: 'For instructions on what you can ask, please say help me.',
 			DISPLAY_CARD_TITLE: '%s',
-			HELP_MESSAGE: 'You can ask questions like what is good bull? or give me the football team.',
-			HELP_REPROMPT: 'You can ask questions like what is good bull? or give me the football team.',
+			HELP_MESSAGE: 'You can ask questions like who is Johnny Manziel, or who is on the football team?',
+			HELP_REPROMPT: 'You can ask questions like who is Johnny Manziel, or who is on the football team?',
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_REPEAT_MESSAGE: 'Try saying repeat.',
 			DEF_NOT_FOUND_MESSAGE: 'I\'m sorry, I currently don\'t know ',
-			DEF_NOT_FOUND_WITH_NAME: 'the definition for %s.',
+			DEF_NOT_FOUND_WITH_NAME: 'the definition for %s. ',
 			DEF_NOT_FOUND_WITHOUT_NAME: 'that definition.',
 			DEF_NOT_FOUND_REPROMPT: 'What else can I help you with?',
 		},
@@ -67,7 +67,7 @@ const handlers = {
 			this.attributes.speechOutput = speechOutput;
 			this.attributes.repromptSpeech = repromptSpeech;
 
-			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.response.speak(myDefs).listen(repromptSpeech);
 			this.emit(':responseReady');
 		}
 	},
