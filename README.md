@@ -23,6 +23,7 @@ Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-us
 
 ## Potential Ideas
 ```
+School/depts: https://www.tamu.edu/about/departments.html
 Bus routes: http://transport.tamu.edu/BusRoutes/
 'How full is the garage?' : http://transport.tamu.edu/parking/realtime.aspx
 'When's the next game?'
