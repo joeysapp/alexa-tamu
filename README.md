@@ -22,31 +22,30 @@ Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-us
 ```
 
 ## Notes about Slot Types
-```
+https://developer.amazon.com/docs/custom-skills/custom-interaction-model-reference.html#custom-slot-type-values
+)[Link](
 Slot values are sent to your skill in written format. For example, both "fire h. d. 7" and "fire h. d. seven" would be sent to your skill as "Fire HD7". For better recognition, acronyms and other phrases involving spoken letters should either be all caps ("HD") or separated by periods and a space ("h. d. "). Using lowercase for initialisms may lead to unreliable recognition since the spoken form may not correctly be detected
 
-https://developer.amazon.com/docs/custom-skills/custom-interaction-model-reference.html#custom-slot-type-values
-```
+
 
 ## Potential Ideas
-| Idea          | Example                                                                                            | URL                                                           |
-|---------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
-| School/Depts  | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
-| Bus Routes    | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
-| Garage Status | "Is                                                                                                | http://transport.tamu.edu/parking/realtime.aspx               |
-| Games         | 'When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
-| Locations     | "Where is the MSC?", "Where is my son's New Student Conference?", "How do I get to my math class?" | https://aggiemap.tamu.edu/directory/                          |
-| Maroon Alerts | Possible global opt-in Maroon Alert system                                                         | https://twitter.com/tamucodemaroon?lang=en                    |
-| eCampus/Howdy | "Sorry, we can't do that just yet!"                                                                | N/A                                                           |
-| college:crm   | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
-|               |                                                                                                    |                                                               |
-|               |                                                                                                    |                                                               |
-
+| Idea           | Example                                                                                            | URL                                                           |
+|----------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
+| School/Depts   | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
+| Bus Routes     | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
+| Garage Status  | "Is WCG full?"                                                                                     | http://transport.tamu.edu/parking/realtime.aspx               |
+| Games          | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
+| Locations      | "Where is the MSC?", "Where is my son's New Student Conference?", "How do I get to my math class?" | https://aggiemap.tamu.edu/directory/                          |
+| Maroon Alerts  | Possible global opt-in Maroon Alert system                                                         | https://twitter.com/tamucodemaroon?lang=en                    |
+| eCampus/Howdy  | "Sorry, we can't do that just yet!"                                                                | N/A                                                           |
+| college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
+| Parking Info   | "Where can I park on parent's weekend?", "What times can I park in Lot 100 today?"                 | http://transportmap.tamu.edu/parkingmap/                      |
+| Student Health | "Is Beutel open today?", "Here's the Student Health Service URL!"                                  |                                                               |
 ## Dependencies 
-```
-[**ssml-builder**](https://www.npmjs.com/package/ssml-builder)
-[**alexa-sdk**](https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs)
-```
+| Library      | Uses                                    | URL                                        |
+|--------------|-----------------------------------------|--------------------------------------------|
+| alexa-sdk    | Alexa language model generation         | https://www.npmjs.com/package/alexa-sdk    |
+| ssml-builder | SSML (Speech Synthesis Markup Language) | https://www.npmjs.com/package/ssml-builder |
 
 ## License
 **MIT License**
