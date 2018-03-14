@@ -48,22 +48,11 @@ const languageStrings = {
 
 const handlers = {
 	'LaunchRequest': function(){
-		// var speech = new Speech();
-		// speech.say('Welcome to Texas A')
-		// 	  .pause('1ms')
-		// 	  .sub('and', '&')
-		// 	  .pause('1ms')
-		// 	  .say('M')
-		// 	  .pause('10ms')
-		// 	  .say('University\'s development Alexa application!')
-		// 	  .pause('300ms')
-		// 	  .say('Check out')
-		// 	  .say('alexa .')
-		// 	  .phoneme('ipa', 'tiː-eɪ-ɛm-juː', 'tamu')
-		// 	  .say(' .edu to seewhat you can ask me.');
-		// var s = speech.ssml(true);
+		var speech = new Speech();
+		speech.say("Welcome to Texas A&M University's Alexa dev app! Visit alexa.tamu.edu for more info.");
+		var s = speech.ssml(true);
 
-		this.attributes.outputSpeech = "Welcome to Texas A&M University's Alexa dev app! Check out alexa.tamu.edu for example questions.";
+		this.attributes.outputSpeech = s;
 		this.attributes.repromptSpeech = "Please visit alexa.tamu.edu to learn more.";
 
 		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
