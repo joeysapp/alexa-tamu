@@ -11,6 +11,8 @@
                     }
                 ],
                 "samples": [
+                    "about {Definition}",
+                    "who {Definition} is",
                     "tell me who {Definition} is",
                     "who's {Definition}",
                     "what does {Definition} mean",
@@ -86,10 +88,8 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "yell_practice",
-                            "synonyms": [
-                                "yell practice"
-                            ]
+                            "value": "yell practice",
+                            "synonyms": []
                         }
                     },
                     {
@@ -120,7 +120,7 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "war_hymn",
+                            "value": "war hymn",
                             "synonyms": [
                                 "war hymn",
                                 "aggie war hymn"
@@ -130,18 +130,17 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "ut",
+                            "value": "U. T.",
                             "synonyms": [
-                                "ut",
-                                "university of texas",
-                                "tu"
+                                "T. U.",
+                                "University of Texas"
                             ]
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "tsip",
+                            "value": "T. Sip",
                             "synonyms": [
                                 "tea sip"
                             ]
@@ -150,7 +149,7 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "TAMC",
+                            "value": "T. A. M. C.",
                             "synonyms": [
                                 "Agricultural and Mechanical College",
                                 "Agricultural and Mechanical College of Texas"
@@ -160,7 +159,7 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "silver_taps",
+                            "value": "silver taps",
                             "synonyms": [
                                 "silver taps"
                             ]
@@ -169,7 +168,7 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "ring_dunk",
+                            "value": "ring dunk",
                             "synonyms": [
                                 "dunk",
                                 "dunking",
@@ -187,27 +186,26 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "old_army",
+                            "value": "old army",
                             "synonyms": [
-                                "old army",
-                                "ol army"
+                                "Ol Army"
                             ]
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "northgate",
+                            "value": "Northgate",
                             "synonyms": [
-                                "north gate",
-                                "ng"
+                                "N. G. ",
+                                "North Gate"
                             ]
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "new_army",
+                            "value": "new army",
                             "synonyms": [
                                 "new army"
                             ]
@@ -216,14 +214,14 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "muster",
+                            "value": "Muster",
                             "synonyms": []
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "maroon",
+                            "value": "Maroon",
                             "synonyms": []
                         }
                     },
@@ -248,17 +246,8 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "howdy",
+                            "value": "Howdy",
                             "synonyms": []
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "fish_camp",
-                            "synonyms": [
-                                "fish camp"
-                            ]
                         }
                     },
                     {
@@ -283,7 +272,7 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "elephant_walk",
+                            "value": "elephant walk",
                             "synonyms": [
                                 "elephant walk",
                                 "elephant"
@@ -293,7 +282,7 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "code",
+                            "value": "honor code",
                             "synonyms": [
                                 "the honor code",
                                 "the code of honor",
@@ -307,114 +296,104 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "batt",
+                            "value": "Batt",
                             "synonyms": [
-                                "battalion",
-                                "the battalion "
+                                "Battalion",
+                                "The Battalion",
+                                "The Batt"
                             ]
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "aggieland",
+                            "value": "Aggieland",
+                            "synonyms": [
+                                "Aggie Land"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "two percenters",
+                            "synonyms": [
+                                "Two Percent"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "Aggie",
+                            "synonyms": [
+                                "Aggies",
+                                "Ag"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "Corps",
+                            "synonyms": [
+                                "Corps of Cadets",
+                                "The Corps of Cadets",
+                                "The Corps",
+                                "The Fighting Texas Aggie Corps of Cadets"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "",
+                        "name": {
+                            "value": "good bull",
                             "synonyms": []
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "two_percenters",
-                            "synonyms": [
-                                "two percent",
-                                "2 percent",
-                                "2 percenters"
-                            ]
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "aggie",
-                            "synonyms": [
-                                "ag",
-                                "aggies"
-                            ]
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "corps",
-                            "synonyms": [
-                                "The Corps",
-                                "The Corps of Cadets",
-                                "The Fighting Texas Aggie Corps of Cadets",
-                                "The Fightin Texas Aggie Corps of Cadets",
-                                "Texas A&M University Corps of Cadets",
-                                "cadet",
-                                "corp",
-                                "cadets",
-                                "corps of cadets"
-                            ]
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "goodbull",
-                            "synonyms": [
-                                "good bull"
-                            ]
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "helpdesk",
-                            "synonyms": [
-                                "information technology",
-                                "it helpdesk"
-                            ]
+                            "value": "help desk",
+                            "synonyms": []
                         }
                     },
                     {
                         "id": "",
                         "name": {
                             "value": "twelfth man",
-                            "synonyms": [
-                                "12 man",
-                                "12th man"
-                            ]
+                            "synonyms": []
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "gig em",
+                            "value": "Gig",
                             "synonyms": [
+                                "gig em",
                                 "gigem"
                             ]
                         }
                     },
                     {
-                        "id": "",
+                        "id": "JOHNNY",
                         "name": {
-                            "value": "johnny manziel",
+                            "value": "Johnny Manziel",
                             "synonyms": [
-                                "johnny football",
-                                "manziel",
-                                "johnny"
+                                "Johnny Manziel",
+                                "Manziel",
+                                "Johnny",
+                                "Johnny Football",
+                                "johnny football"
                             ]
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "tamu",
+                            "value": "A&M",
                             "synonyms": [
                                 "A&M",
-                                "a and m",
                                 "Texas A&M University",
                                 "Texas A&M"
                             ]
@@ -423,9 +402,8 @@
                     {
                         "id": "",
                         "name": {
-                            "value": "reveille",
+                            "value": "Reveille",
                             "synonyms": [
-                                "dog",
                                 "mascot"
                             ]
                         }
