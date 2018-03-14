@@ -31,6 +31,10 @@ const languageStrings = {
 			DEF_NOT_FOUND_WITH_NAME: 'the definition for %s. ',
 			DEF_NOT_FOUND_WITHOUT_NAME: 'that definition.',
 			DEF_NOT_FOUND_REPROMPT: 'What else can I help you with?',
+			LOC_NOT_FOUND_MESSAGE: 'I\'m sorry, I currently don\'t know ',
+			LOC_NOT_FOUND_WITH_NAME: 'the location of %s. ',
+			LOC_NOT_FOUND_WITHOUT_NAME: 'that location.',
+			LOC_NOT_FOUND_REPROMPT: 'What else can I help you with?',
 		},
 	},
 	'en-us' : {
@@ -44,23 +48,22 @@ const languageStrings = {
 
 const handlers = {
 	'LaunchRequest': function(){
-		var speech = new Speech();
-		speech.say('Welcome to Texas A')
-			  .pause('5ms')
-			  .sub('and', '&')
-			  .pause('5ms')
-			  .say('M')
-			  .pause('10ms')
-			  .say('University\'s development Alexa application!')
-			  .pause('300ms')
-			  .say('Check out')
-			  .say('alexa .')
-			  .phoneme('ipa', 'tiː-eɪ-ɛm-juː', 'tamu')
-			  .say(' .edu to seewhat you can ask me.');
+		// var speech = new Speech();
+		// speech.say('Welcome to Texas A')
+		// 	  .pause('1ms')
+		// 	  .sub('and', '&')
+		// 	  .pause('1ms')
+		// 	  .say('M')
+		// 	  .pause('10ms')
+		// 	  .say('University\'s development Alexa application!')
+		// 	  .pause('300ms')
+		// 	  .say('Check out')
+		// 	  .say('alexa .')
+		// 	  .phoneme('ipa', 'tiː-eɪ-ɛm-juː', 'tamu')
+		// 	  .say(' .edu to seewhat you can ask me.');
+		// var s = speech.ssml(true);
 
-		var s = speech.ssml(true);
-
-		this.attributes.outputSpeech = s;
+		this.attributes.outputSpeech = "Welcome to Texas A&M University's Alexa dev app! Check out alexa.tamu.edu for example questions.";
 		this.attributes.repromptSpeech = "Please visit alexa.tamu.edu to learn more.";
 
 		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
@@ -140,20 +143,20 @@ const handlers = {
 
 		if (location_info){
 			var url = "https://aggiemap.tamu.edu/?bldg="+location_info["url"];
-			var speechOutput = "You can find "+location_name+" on AggieMap at"+url;
+			var speechOutput = "You can find "+location_name+" on AggieMap at the url I've sent your Alexa application.";
 			this.attributes.speechOutput = speechOutput;
 			this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
 
 			this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-			this.response.cardRenderer(cardTitle, speechOutput);
+			this.response.cardRenderer(cardTitle, url);
 			this.emit(':responseReady');
 		} else {
-			var speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
-			var repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
+			var speechOutput = this.t('LOC_NOT_FOUND_MESSAGE');
+			var repromptSpeech = this.t('LOC_NOT_FOUND_REPROMPT');
 			if (location_name){
-				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', location_name);
+				speechOutput += this.t('LOC_NOT_FOUND_WITH_NAME', location_name);
 			} else {
-				speechOutput += this.t('DEF_NOT_FOUND_WITHOUT_NAME');
+				speechOutput += this.t('LOC_NOT_FOUND_WITHOUT_NAME');
 			}
 
 			speechOutput += repromptSpeech;
