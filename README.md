@@ -9,7 +9,7 @@ Note that this project is being made to fulfill requirements of the team members
 ```
 Create IAM account for user on console.aws.amazon.com
 Install awscli, configure to above IAM account credentials
-$ zip -r out.zip index.js definitions.js node_modules/ package-lock.json package.json  
+$ zip -r out.zip index.js data/ node_modules/ package-lock.json package.json  
 $ aws s3 cp out.zip s3://alexa-tamu-code
 ```
 It must be noted our skill (Lambda setup within AWS console) is specifically running off of the file named "out.zip" and is particular about how the file is zipped.
