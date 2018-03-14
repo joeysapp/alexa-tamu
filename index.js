@@ -38,7 +38,6 @@ const languageStrings = {
 
 const handlers = {
 	'LaunchRequest': function(){
-
 		var speech = new Speech();
 		speech.say('Welcome to Texas A')
 			  .pause('5ms')
@@ -56,8 +55,9 @@ const handlers = {
 		var s = speech.ssml(true);
 
 		this.attributes.outputSpeech = s;
+		this.attributes.repromptSpeech = "Please visit alexa.tamu.edu to learn more.";
 
-		this.response.speak(this.attributes.outputSpeech);
+		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
 	},
 	'GetDefinitionIntent' : function(){
