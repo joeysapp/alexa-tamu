@@ -6,19 +6,21 @@ var stringSimilarity = require('string-similarity');
 
 // General Alexa
 //	* Intents
-//  * Custom slot types
+//  * Custom slot types 😮😳🐫
 const Alexa = require('alexa-sdk');
 const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
 
 // getDefinitionIntent library
-// 	We don't need any others YET (profs/courses/colleges/etc)
-// 	as the rest will be dynamically created 😮😳🐫
 const definitions = require('./data/definitions');
+
+// getLocationIntent library
+const locations = require('./data/locations');
 
 const languageStrings = {
 	'en': {
 		translation: {
 			DEFINITIONS: definitions.DEFINITION_EN_US,
+			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
 			HELP_MESSAGE: 'You could ask me things about classes, or parking lots, or any upcoming games!',
@@ -34,6 +36,7 @@ const languageStrings = {
 	'en-us' : {
 		translation: {
 			DEFINITIONS: definitions.DEFINITION_EN_US,
+			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 		},
 	},
@@ -114,8 +117,52 @@ const handlers = {
 		}
 	},
 	'GetLocationIntent' : function(){
-        this.response.speak("GetLocationIntent!");
-        this.emit(':responseReady');
+		var location_slot = this.event.request.intent.slots.Location;
+		var location_name = location_slot.value.toString();
+		if (!(location_name in this.t('LOCATIONS'))){
+			if (typeof location_slot.resolutions !== 'undefined'){
+				// This occurs:
+				// 		developer.amazon.com/alexa/console
+				//		in actual use
+				const location_slot_resolved = location_slot.resolutions.resolutionsPerAuthority[0].values[0];
+				location_name = location_slot_resolved.value.name;
+			} else {
+				// This only occurs on console.aws.alexa.com
+				// This is a little silly and is only for testing, can be removed later
+				var closest_key = stringSimilarity.findBestMatch(location_name, Object.keys(this.t('DEFINITIONS')))['bestMatch']['target'];
+				location_name = closest_key;
+			}
+		}
+
+		var cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), location_name);
+		var cur_locations = this.t('DEFINITIONS');
+		var location_info = cur_locations[location_name];
+
+		if (location_info){
+			var url = "https://aggiemap.tamu.edu/?bldg="+location_info["url_id"];
+			this.attributes.speechOutput = "I've sent an AggieMap URL to your Alexa application.";
+			this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+
+			this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
+			this.response.cardRenderer(cardTitle, url);
+			this.emit(':responseReady');
+		} else {
+			var speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
+			var repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
+			if (defName){
+				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', defName);
+			} else {
+				speechOutput += this.t('DEF_NOT_FOUND_WITHOUT_NAME');
+			}
+
+			speechOutput += repromptSpeech;
+			this.attributes.speechOutput = speechOutput;
+			this.attributes.repromptSpeech = repromptSpeech;
+
+			// this.response.speak(defSlot).listen(repromptSpeech);
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
+		}
 	},
 	'GetBusStatusIntent' : function(){
         this.response.speak("GetBusStatusIntent!");
