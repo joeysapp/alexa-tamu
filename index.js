@@ -1,6 +1,9 @@
 // SSML
 var Speech = require('ssml-builder');
 
+// Custom slot resolution for testing
+var stringSimilarity = require('string-similarity');
+
 // General Alexa
 //	* Intents
 //  * Custom slot types
@@ -50,7 +53,7 @@ const handlers = {
 			  .say('Check out')
 			  .say('alexa .')
 			  .phoneme('ipa', 'tiː-eɪ-ɛm-juː', 'tamu')
-			  .say(' .edu to see what you can ask me.');
+			  .say(' .edu to seewhat you can ask me.');
 
 		var s = speech.ssml(true);
 
@@ -62,15 +65,23 @@ const handlers = {
 	},
 	'GetDefinitionIntent' : function(){
 		var defSlot = this.event.request.intent.slots.Definition;
-		// wtf
+
+		// To be noted:
 		// https://forums.developer.amazon.com/questions/100181/cannot-read-property-resolutionsperauthority-of-un.html
-		// const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0];
 		var defName = defSlot.value;
 		if (!(defName in this.t('DEFINITIONS'))){
-			// so I think this won't work in testing???
-			// we have to type out our stuff exactly..
-			// const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority.values[0]
-			// defName = defSlotResolved.value
+			if (typeof defSlot.resolutions !== 'undefined'){
+				// This occurs:
+				// 		developer.amazon.com/alexa/console
+				//		in actual use
+				const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority[0].values[0];
+				defName = defSlotResolved.value.name;
+			} else {
+				// This only occurs on console.aws.alexa.com
+				// This is a little silly and is only for testing, can be removed later
+				var closest_key = stringSimilarity.findBestMatch(defName, Object.keys(this.t('DEFINITIONS')))['bestMatch']['target'];
+				defName = closest_key;
+			}
 		}
 
 		var cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);

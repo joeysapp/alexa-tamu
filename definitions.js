@@ -26,7 +26,7 @@ module.exports = {
 		'honor code': 'Aggies do not lie, cheat, or steal, nor do they tolerate those who do.',
 		'Batt': 'The Battalion (often referred to simply as The Batt) is the student newspaper of Texas A and M University. Started in 1893 as a monthly publication, it continues to this day, now as a daily paper.',
 		'Aggieland': 'Name for Texas A and M and the surrounding metropolitan area, Bryan–College Station, Texas. The phrase, \'Welcome to Aggieland\', is on the watertower in the middle of campus and on one of the decks of Kyle Field.',
-		'two percenters': 'Aggies who choose not to participate in Texas A and M traditions.',
+		'2 percenters': 'Aggies who choose not to participate in Texas A and M traditions.',
 		'Aggie': 'A student, alumnus, or supporter of Texas A&M University. Several other land grant schools use "Aggie", such as New Mexico State and UC Davis. Adding the name of the state at the beginning of the term (i.e. "Texas Aggie") is often used to distinguish between the different schools.',
 		'help desk': '',
 		'twelfth man': 'The 12th man or 12th player is a term for fans of teams in eleven-a-side sports games, particularly association football (soccer) or American football. As most football leagues allow a maximum of eleven players per team on the playing field at a time, referring to a team\'s fans as the 12th man implies that they have a potentially helpful role in the game.',

@@ -41,10 +41,11 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 | Parking Info   | "Where can I park on parent's weekend?", "What times can I park in Lot 100 today?"                 | http://transportmap.tamu.edu/parkingmap/                      |
 | Student Health | "Is Beutel open today?", "Here's the Student Health Service URL!"                                  |                                                               |
 ## Dependencies 
-| Library      | Uses                                    | URL                                        |
-|--------------|-----------------------------------------|--------------------------------------------|
-| alexa-sdk    | Alexa language model generation         | https://www.npmjs.com/package/alexa-sdk    |
-| ssml-builder | SSML (Speech Synthesis Markup Language) | https://www.npmjs.com/package/ssml-builder |
+| Library      | Uses                                    | URL                                             |
+|--------------|-----------------------------------------|-------------------------------------------------|
+| alexa-sdk    | Alexa language model generation         | https://www.npmjs.com/package/alexa-sdk         |
+| ssml-builder | SSML (Speech Synthesis Markup Language) | https://www.npmjs.com/package/ssml-builder      |
+| string-sim   | Alexa slot resolution imitation         | https://www.npmjs.com/package/string-similarity |
 
 [toPhonetics](https://tophonetics.com/)
 ## License
