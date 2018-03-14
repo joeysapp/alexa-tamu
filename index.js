@@ -118,7 +118,7 @@ const handlers = {
 	},
 	'GetLocationIntent' : function(){
 		var location_slot = this.event.request.intent.slots.Location;
-		var location_name = location_slot.value.toString();
+		var location_name = location_slot.value;
 		if (!(location_name in this.t('LOCATIONS'))){
 			if (typeof location_slot.resolutions !== 'undefined'){
 				// This occurs:
@@ -135,22 +135,23 @@ const handlers = {
 		}
 
 		var cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), location_name);
-		var cur_locations = this.t('DEFINITIONS');
+		var cur_locations = this.t('LOCATIONS');
 		var location_info = cur_locations[location_name];
 
 		if (location_info){
-			var url = "https://aggiemap.tamu.edu/?bldg="+location_info["url_id"];
-			this.attributes.speechOutput = "I've sent an AggieMap URL to your Alexa application.";
+			var url = "https://aggiemap.tamu.edu/?bldg="+location_info["url"];
+			var speechOutput = "You can find "+location_name+" on AggieMap at"+url;
+			this.attributes.speechOutput = speechOutput;
 			this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
 
 			this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-			this.response.cardRenderer(cardTitle, url);
+			this.response.cardRenderer(cardTitle, speechOutput);
 			this.emit(':responseReady');
 		} else {
 			var speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
 			var repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
-			if (defName){
-				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', defName);
+			if (location_name){
+				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', location_name);
 			} else {
 				speechOutput += this.t('DEF_NOT_FOUND_WITHOUT_NAME');
 			}
