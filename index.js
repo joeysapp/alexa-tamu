@@ -13,7 +13,7 @@ const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
 // getDefinitionIntent library
 // 	We don't need any others YET (profs/courses/colleges/etc)
 // 	as the rest will be dynamically created 😮😳🐫
-const definitions = require('./definitions');
+const definitions = require('./data/definitions');
 
 const languageStrings = {
 	'en': {
