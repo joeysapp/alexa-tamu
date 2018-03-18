@@ -37,6 +37,9 @@
                     }
                 ],
                 "samples": [
+                    "where's {Location}",
+                    "where {Location} is",
+                    "where the {Location} building is",
                     "to direct me to {Location}",
                     "directions to {Location}",
                     "how to get to {Location}",
@@ -78,6 +81,65 @@
                     "where is the bus on route {BusNumber}",
                     "is bus {BusNumber} coming",
                     "where is bus {BusNumber}"
+                ]
+            },
+            {
+                "name": "GetGarageCountIntent",
+                "slots": [
+                    {
+                        "name": "GarageName",
+                        "type": "Garage",
+                        "samples": [
+                            "I want to look into {GarageName}",
+                            "I am interested in {GarageName}",
+                            "I want to hear about {GarageName}",
+                            "give me {GarageName}",
+                            "{GarageName}"
+                        ]
+                    }
+                ],
+                "samples": [
+                    "is the {GarageName} full",
+                    "how many spaces are in {GarageName}",
+                    "how many people are parked in {GarageName}",
+                    "how many spots are left in {GarageName}",
+                    "is {GarageName} full"
+                ]
+            },
+            {
+                "name": "GetParkingLotInfoIntent",
+                "slots": [
+                    {
+                        "name": "ParkingLot",
+                        "type": "AMAZON.NUMBER"
+                    }
+                ],
+                "samples": [
+                    "when can I park in lot {ParkingLot}",
+                    "can I park in lot {ParkingLot}",
+                    "can I park in {ParkingLot}"
+                ]
+            },
+            {
+                "name": "GetSportsInfoIntent",
+                "slots": [
+                    {
+                        "name": "SportType",
+                        "type": "SportType"
+                    },
+                    {
+                        "name": "RivalTeam",
+                        "type": "AMAZON.SportsTeam"
+                    }
+                ],
+                "samples": [
+                    "who do the Aggies play next",
+                    "when do the Aggies play {RivalTeam}",
+                    "when is the next {SportType} game",
+                    "when is the next game",
+                    "are there any games soon",
+                    "tell me about {SportType}",
+                    "{SportType}"
                 ]
             }
         ],
@@ -414,49 +476,2406 @@
                 "name": "Location",
                 "values": [
                     {
+                        "id": "ONRP",
+                        "name": {
+                            "value": "1111 Research Parkway Bldg",
+                            "synonyms": [
+                                "ONRP",
+                                "O. N. R. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "2RPK",
+                        "name": {
+                            "value": "2 Research Park",
+                            "synonyms": [
+                                "2RPK",
+                                "2. R. P. K. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ACAD",
+                        "name": {
+                            "value": "Academic Building",
+                            "synonyms": [
+                                "ACAD",
+                                "A. C. A. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ADAM",
+                        "name": {
+                            "value": "Adams Band Hall",
+                            "synonyms": [
+                                "ADAM",
+                                "A. D. A. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AEPM",
+                        "name": {
+                            "value": "AG Engineering Power & Machinery Building",
+                            "synonyms": [
+                                "AEPM",
+                                "A. E. P. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AESH",
+                        "name": {
+                            "value": "AG Engr Res Lab & Shop",
+                            "synonyms": [
+                                "AESH",
+                                "A. E. S. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AGLS",
+                        "name": {
+                            "value": "Agriculture and Life Sciences Building",
+                            "synonyms": [
+                                "AGLS",
+                                "A. G. L. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "4HHQ",
+                        "name": {
+                            "value": "AgriLife Extension 4-H State Headquarters",
+                            "synonyms": [
+                                "4HHQ",
+                                "4. H. H. Q. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AGRL",
+                        "name": {
+                            "value": "Agronomy Field Lab",
+                            "synonyms": [
+                                "AGRL",
+                                "A. G. R. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AIEN",
+                        "name": {
+                            "value": "AI Engineering Building",
+                            "synonyms": [
+                                "AIEN",
+                                "A. I. E. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CHPL",
+                        "name": {
+                            "value": "All Faiths Chapel",
+                            "synonyms": [
+                                "CHPL",
+                                "C. H. P. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ALLN",
+                        "name": {
+                            "value": "Allen Building",
+                            "synonyms": [
+                                "ALLN",
+                                "A. L. L. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BPCC",
+                        "name": {
+                            "value": "Annenberg Presidential Conference Center",
+                            "synonyms": [
+                                "BPCC",
+                                "B. P. C. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ANTH",
+                        "name": {
+                            "value": "Anthropology Building",
+                            "synonyms": [
+                                "ANTH",
+                                "A. N. T. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "APPE",
+                        "name": {
+                            "value": "Appelt Residence Hall",
+                            "synonyms": [
+                                "APPE",
+                                "A. P. P. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ARTF",
+                        "name": {
+                            "value": "Aquaculture Research Teaching Facility",
+                            "synonyms": [
+                                "ARTF",
+                                "A. R. T. F. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ARCB",
+                        "name": {
+                            "value": "Architecture Building B",
+                            "synonyms": [
+                                "ARCB",
+                                "A. R. C. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ARCC",
+                        "name": {
+                            "value": "Architecture Building C",
+                            "synonyms": [
+                                "ARCC",
+                                "A. R. C. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ASTO",
+                        "name": {
+                            "value": "Aston Residence Hall",
+                            "synonyms": [
+                                "ASTO",
+                                "A. S. T. O. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "RNCH",
+                        "name": {
+                            "value": "Automated Fabrication and Design Lab",
+                            "synonyms": [
+                                "RNCH",
+                                "R. N. C. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BEAS",
+                        "name": {
+                            "value": "Beasley Laboratory",
+                            "synonyms": [
+                                "BEAS",
+                                "B. E. A. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BEUT",
+                        "name": {
+                            "value": "Beutel Health Center",
+                            "synonyms": [
+                                "BEUT",
+                                "B. E. U. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BICH",
+                        "name": {
+                            "value": "Biochemistry/Biophysics Building",
+                            "synonyms": [
+                                "BICH",
+                                "B. I. C. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BCC",
+                        "name": {
+                            "value": "Biological Control Facility",
+                            "synonyms": [
+                                "BCC",
+                                "B. C. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BSBE",
+                        "name": {
+                            "value": "Biological Sciences Bldg East",
+                            "synonyms": [
+                                "BSBE",
+                                "B. S. B. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BSBW",
+                        "name": {
+                            "value": "Biological Sciences Bldg West",
+                            "synonyms": [
+                                "BSBW",
+                                "B. S. B. W. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BIZL",
+                        "name": {
+                            "value": "Bizzell Hall",
+                            "synonyms": [
+                                "BIZL",
+                                "B. I. Z. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BLOC",
+                        "name": {
+                            "value": "Blocker Building",
+                            "synonyms": [
+                                "BLOC",
+                                "B. L. O. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BLTN",
+                        "name": {
+                            "value": "Bolton Hall",
+                            "synonyms": [
+                                "BLTN",
+                                "B. L. T. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SCIC",
+                        "name": {
+                            "value": "Borlaug Center for Southern Crop Improvement",
+                            "synonyms": [
+                                "SCIC",
+                                "S. C. I. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BRIG",
+                        "name": {
+                            "value": "Briggs Hall - Dorm 3",
+                            "synonyms": [
+                                "BRIG",
+                                "B. R. I. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HRBB",
+                        "name": {
+                            "value": "Bright Building",
+                            "synonyms": [
+                                "HRBB",
+                                "H. R. B. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BFC",
+                        "name": {
+                            "value": "Bright Football Complex",
+                            "synonyms": [
+                                "BFC",
+                                "B. F. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BMSB",
+                        "name": {
+                            "value": "Business Management Services Building",
+                            "synonyms": [
+                                "BMSB",
+                                "B. M. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BTLR",
+                        "name": {
+                            "value": "Butler Hall",
+                            "synonyms": [
+                                "BTLR",
+                                "B. T. L. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CPLX",
+                        "name": {
+                            "value": "Cardiovascular Pathology Lab Annex",
+                            "synonyms": [
+                                "CPLX",
+                                "C. P. L. X. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CPL",
+                        "name": {
+                            "value": "Cardiovascular Pathology Laboratory",
+                            "synonyms": [
+                                "CPL",
+                                "C. P. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CMAT",
+                        "name": {
+                            "value": "Cater-Mattil Hall",
+                            "synonyms": [
+                                "CMAT",
+                                "C. M. A. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CEN",
+                        "name": {
+                            "value": "Centeq Building",
+                            "synonyms": [
+                                "CEN",
+                                "C. E. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CCPG",
+                        "name": {
+                            "value": "Central Campus Parking Garage",
+                            "synonyms": [
+                                "CCPG",
+                                "C. C. P. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CUP",
+                        "name": {
+                            "value": "Central Utility Plant",
+                            "synonyms": [
+                                "CUP",
+                                "C. U. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CHEM",
+                        "name": {
+                            "value": "Chemistry",
+                            "synonyms": [
+                                "CHEM",
+                                "C. H. E. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CLEM",
+                        "name": {
+                            "value": "Clements Residence Hall",
+                            "synonyms": [
+                                "CLEM",
+                                "C. L. E. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CEL",
+                        "name": {
+                            "value": "Coastal Engineering Lab",
+                            "synonyms": [
+                                "CEL",
+                                "C. E. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "COKE",
+                        "name": {
+                            "value": "Coke Building",
+                            "synonyms": [
+                                "COKE",
+                                "C. O. K. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "COMM",
+                        "name": {
+                            "value": "Commons",
+                            "synonyms": [
+                                "COMM",
+                                "C. O. M. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CSA",
+                        "name": {
+                            "value": "Computing Services Annex",
+                            "synonyms": [
+                                "CSA",
+                                "C. S. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CSC",
+                        "name": {
+                            "value": "Computing Services Center",
+                            "synonyms": [
+                                "CSC",
+                                "C. S. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CONC",
+                        "name": {
+                            "value": "Concrete Materials Laboratory",
+                            "synonyms": [
+                                "CONC",
+                                "C. O. N. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "INSC",
+                        "name": {
+                            "value": "CUSE-Chemistry",
+                            "synonyms": [
+                                "INSC",
+                                "I. N. S. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "DAVI",
+                        "name": {
+                            "value": "Davis-Gary Residence Hall",
+                            "synonyms": [
+                                "DAVI",
+                                "D. A. V. I. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "DRTY",
+                        "name": {
+                            "value": "Doherty Building",
+                            "synonyms": [
+                                "DRTY",
+                                "D. R. T. Y. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "DLH",
+                        "name": {
+                            "value": "Donald L. Houston Building",
+                            "synonyms": [
+                                "DLH",
+                                "D. L. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "DCAN",
+                        "name": {
+                            "value": "Duncan Dining Hall",
+                            "synonyms": [
+                                "DCAN",
+                                "D. C. A. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "DUNN",
+                        "name": {
+                            "value": "Dunn Residence Hall",
+                            "synonyms": [
+                                "DUNN",
+                                "D. U. N. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "DLEB",
+                        "name": {
+                            "value": "Dwight Look Engineering Building",
+                            "synonyms": [
+                                "DLEB",
+                                "D. L. E. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EBRF",
+                        "name": {
+                            "value": "Electron Beam Food Research Facility",
+                            "synonyms": [
+                                "EBRF",
+                                "E. B. R. F. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ETB",
+                        "name": {
+                            "value": "Emerging Technologies Building",
+                            "synonyms": [
+                                "ETB",
+                                "E. T. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EABA",
+                        "name": {
+                            "value": "Engineering Activities Bldg A",
+                            "synonyms": [
+                                "EABA",
+                                "E. A. B. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EABB",
+                        "name": {
+                            "value": "Engineering Activities Bldg B",
+                            "synonyms": [
+                                "EABB",
+                                "E. A. B. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EABC",
+                        "name": {
+                            "value": "Engineering Activities Bldg C",
+                            "synonyms": [
+                                "EABC",
+                                "E. A. B. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EIC",
+                        "name": {
+                            "value": "Engineering Innovation Center",
+                            "synonyms": [
+                                "EIC",
+                                "E. I. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ERLB",
+                        "name": {
+                            "value": "Entomology Research Lab",
+                            "synonyms": [
+                                "ERLB",
+                                "E. R. L. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EPPR",
+                        "name": {
+                            "value": "Eppright Residence Hall",
+                            "synonyms": [
+                                "EPPR",
+                                "E. P. P. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EQCT",
+                        "name": {
+                            "value": "Equine Center Stable",
+                            "synonyms": [
+                                "EQCT",
+                                "E. Q. C. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NEW",
+                        "name": {
+                            "value": "ESTI PROCESS UNIT FIRES",
+                            "synonyms": [
+                                "NEW",
+                                "N. E. W. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LIBR",
+                        "name": {
+                            "value": "Evans Library",
+                            "synonyms": [
+                                "LIBR",
+                                "L. I. B. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PLNT",
+                        "name": {
+                            "value": "Facilities Services",
+                            "synonyms": [
+                                "PLNT",
+                                "P. L. N. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FERM",
+                        "name": {
+                            "value": "Fermier Hall",
+                            "synonyms": [
+                                "FERM",
+                                "F. E. R. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FLSV",
+                        "name": {
+                            "value": "Fleet Services",
+                            "synonyms": [
+                                "FLSV",
+                                "F. L. S. V. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FSLB",
+                        "name": {
+                            "value": "Forest Science Laboratory Building",
+                            "synonyms": [
+                                "FSLB",
+                                "F. S. L. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FOUN",
+                        "name": {
+                            "value": "Fountain Hall - Dorm 4",
+                            "synonyms": [
+                                "FOUN",
+                                "F. O. U. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FOWL",
+                        "name": {
+                            "value": "Fowler Residence Hall",
+                            "synonyms": [
+                                "FOWL",
+                                "F. O. W. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FRAN",
+                        "name": {
+                            "value": "Francis Hall",
+                            "synonyms": [
+                                "FRAN",
+                                "F. R. A. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FOOD",
+                        "name": {
+                            "value": "Fred Dollar Food Services Commissary",
+                            "synonyms": [
+                                "FOOD",
+                                "F. O. O. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FREE",
+                        "name": {
+                            "value": "Freeman Arena",
+                            "synonyms": [
+                                "FREE",
+                                "F. R. E. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "GAIN",
+                        "name": {
+                            "value": "Gainer Hall - Dorm 5",
+                            "synonyms": [
+                                "GAIN",
+                                "G. A. I. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "GSC",
+                        "name": {
+                            "value": "General Services Complex",
+                            "synonyms": [
+                                "GSC",
+                                "G. S. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "BPLM",
+                        "name": {
+                            "value": "George Bush Presidential Library & Museum",
+                            "synonyms": [
+                                "BPLM",
+                                "B. P. L. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "GERG",
+                        "name": {
+                            "value": "GERG Main Office Building",
+                            "synonyms": [
+                                "GERG",
+                                "G. E. R. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "GOLF",
+                        "name": {
+                            "value": "Golf Course Clubhouse",
+                            "synonyms": [
+                                "GOLF",
+                                "G. O. L. F. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HAAS",
+                        "name": {
+                            "value": "Haas Residence Hall",
+                            "synonyms": [
+                                "HAAS",
+                                "H. A. A. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HGLR",
+                        "name": {
+                            "value": "Hagler Center",
+                            "synonyms": [
+                                "HGLR",
+                                "H. G. L. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HALB",
+                        "name": {
+                            "value": "Halbouty Geosciences Building",
+                            "synonyms": [
+                                "HALB",
+                                "H. A. L. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HARL",
+                        "name": {
+                            "value": "Harrell Hall - Dorm 8",
+                            "synonyms": [
+                                "HARL",
+                                "H. A. R. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HECC",
+                        "name": {
+                            "value": "Harrington Education Center Classroom Building",
+                            "synonyms": [
+                                "HECC",
+                                "H. E. C. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "EDCT",
+                        "name": {
+                            "value": "Harrington Education Center Office Tower",
+                            "synonyms": [
+                                "EDCT",
+                                "E. D. C. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HARR",
+                        "name": {
+                            "value": "Harrington Hall - Dorm 11",
+                            "synonyms": [
+                                "HARR",
+                                "H. A. R. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HART",
+                        "name": {
+                            "value": "Hart Residence Hall",
+                            "synonyms": [
+                                "HART",
+                                "H. A. R. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HEAT",
+                        "name": {
+                            "value": "Heaton Hall",
+                            "synonyms": [
+                                "HEAT",
+                                "H. E. A. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HPCT",
+                        "name": {
+                            "value": "HEEP Center",
+                            "synonyms": [
+                                "HPCT",
+                                "H. P. C. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HLB",
+                        "name": {
+                            "value": "HEEP Laboratory Building",
+                            "synonyms": [
+                                "HLB",
+                                "H. L. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HELD",
+                        "name": {
+                            "value": "Heldenfels Hall",
+                            "synonyms": [
+                                "HELD",
+                                "H. E. L. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HEND",
+                        "name": {
+                            "value": "Henderson Hall",
+                            "synonyms": [
+                                "HEND",
+                                "H. E. N. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HOBB",
+                        "name": {
+                            "value": "Hobby Residence Hall",
+                            "synonyms": [
+                                "HOBB",
+                                "H. O. B. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HFSB",
+                        "name": {
+                            "value": "Horticulture/Forest Science Building",
+                            "synonyms": [
+                                "HFSB",
+                                "H. F. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HOTA",
+                        "name": {
+                            "value": "Hotard Hall",
+                            "synonyms": [
+                                "HOTA",
+                                "H. O. T. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HUGH",
+                        "name": {
+                            "value": "Hughes Residence Hall",
+                            "synonyms": [
+                                "HUGH",
+                                "H. U. G. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ILSB",
+                        "name": {
+                            "value": "Interdisciplinary Life Sciences Building",
+                            "synonyms": [
+                                "ILSB",
+                                "I. L. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "IODP",
+                        "name": {
+                            "value": "International Ocean Discovery Building",
+                            "synonyms": [
+                                "IODP",
+                                "I. O. D. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CHEN",
+                        "name": {
+                            "value": "Jack E. Brown Chemical Engineering Building",
+                            "synonyms": [
+                                "CHEN",
+                                "C. H. E. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ADMN",
+                        "name": {
+                            "value": "Jack K. Williams Administration Building",
+                            "synonyms": [
+                                "ADMN",
+                                "A. D. M. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ENPH",
+                        "name": {
+                            "value": "James J. Cain '51 Building",
+                            "synonyms": [
+                                "ENPH",
+                                "E. N. P. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "RICH",
+                        "name": {
+                            "value": "Joe C. Richardson Petroleum Engineering Building",
+                            "synonyms": [
+                                "RICH",
+                                "R. I. C. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LIND",
+                        "name": {
+                            "value": "John H. Lindsey Building",
+                            "synonyms": [
+                                "LIND",
+                                "L. I. N. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "KEAT",
+                        "name": {
+                            "value": "Keathley Residence Hall",
+                            "synonyms": [
+                                "KEAT",
+                                "K. E. A. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "KIES",
+                        "name": {
+                            "value": "Kiest Hall - Dorm 2",
+                            "synonyms": [
+                                "KIES",
+                                "K. I. E. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "KLCT",
+                        "name": {
+                            "value": "Kleberg Center",
+                            "synonyms": [
+                                "KLCT",
+                                "K. L. C. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "JJKB",
+                        "name": {
+                            "value": "Koldus Building",
+                            "synonyms": [
+                                "JJKB",
+                                "J. J. K. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "KRUE",
+                        "name": {
+                            "value": "Krueger Residence Hall",
+                            "synonyms": [
+                                "KRUE",
+                                "K. R. U. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "KYLE",
+                        "name": {
+                            "value": "Kyle Field",
+                            "synonyms": [
+                                "KYLE",
+                                "K. Y. L. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LARR",
+                        "name": {
+                            "value": "Laboratory Animal Care Building",
+                            "synonyms": [
+                                "LARR",
+                                "L. A. R. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LACY",
+                        "name": {
+                            "value": "Lacy Hall - Dorm 6",
+                            "synonyms": [
+                                "LACY",
+                                "L. A. C. Y. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ARCA",
+                        "name": {
+                            "value": "Langford Architecture Center Building A",
+                            "synonyms": [
+                                "ARCA",
+                                "A. R. C. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LECH",
+                        "name": {
+                            "value": "Lechner Residence Hall",
+                            "synonyms": [
+                                "LECH",
+                                "L. E. C. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LEGE",
+                        "name": {
+                            "value": "Legett Residence Hall",
+                            "synonyms": [
+                                "LEGE",
+                                "L. E. G. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LEON",
+                        "name": {
+                            "value": "Leonard Hall - Dorm 7",
+                            "synonyms": [
+                                "LEON",
+                                "L. E. O. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LAAH",
+                        "name": {
+                            "value": "Liberal Arts and Arts & Humanities Building",
+                            "synonyms": [
+                                "LAAH",
+                                "L. A. A. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MCFA",
+                        "name": {
+                            "value": "McFadden Residence Hall",
+                            "synonyms": [
+                                "MCFA",
+                                "M. C. F. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ITRK",
+                        "name": {
+                            "value": "McFerrin Athletic Center-Indoor Track",
+                            "synonyms": [
+                                "ITRK",
+                                "I. T. R. K. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MCNW",
+                        "name": {
+                            "value": "McNew Laboratory",
+                            "synonyms": [
+                                "MCNW",
+                                "M. C. N. W. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MEOB",
+                        "name": {
+                            "value": "Mechanical Engineering Office Building",
+                            "synonyms": [
+                                "MEOB",
+                                "M. E. O. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MEDL",
+                        "name": {
+                            "value": "Medical Sciences Library",
+                            "synonyms": [
+                                "MEDL",
+                                "M. E. D. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "GLAS",
+                        "name": {
+                            "value": "Melbern G. Glasscock Building",
+                            "synonyms": [
+                                "GLAS",
+                                "G. L. A. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MSC",
+                        "name": {
+                            "value": "Memorial Student Center",
+                            "synonyms": [
+                                "MSC",
+                                "M. S. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MILS",
+                        "name": {
+                            "value": "Military Sciences Building",
+                            "synonyms": [
+                                "MILS",
+                                "M. I. L. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MILN",
+                        "name": {
+                            "value": "Milner Hall",
+                            "synonyms": [
+                                "MILN",
+                                "M. I. L. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MIST",
+                        "name": {
+                            "value": "Mitchell Inst for Fundamental Phys & Astronomy",
+                            "synonyms": [
+                                "MIST",
+                                "M. I. S. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MPHY",
+                        "name": {
+                            "value": "Mitchell Physics Building",
+                            "synonyms": [
+                                "MPHY",
+                                "M. P. H. Y. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "KAMU",
+                        "name": {
+                            "value": "Moore Communications Center",
+                            "synonyms": [
+                                "KAMU",
+                                "K. A. M. U. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MOSE",
+                        "name": {
+                            "value": "Moses Residence Hall",
+                            "synonyms": [
+                                "MOSE",
+                                "M. O. S. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MOSH",
+                        "name": {
+                            "value": "Mosher Residence Hall",
+                            "synonyms": [
+                                "MOSH",
+                                "M. O. S. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MASS",
+                        "name": {
+                            "value": "Munnerlyn Astronomy & Space Sciences Engineering",
+                            "synonyms": [
+                                "MASS",
+                                "M. A. S. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NGLE",
+                        "name": {
+                            "value": "Nagle Hall",
+                            "synonyms": [
+                                "NGLE",
+                                "N. G. L. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NCTM",
+                        "name": {
+                            "value": "National Center for Therapeutics Manufacturing",
+                            "synonyms": [
+                                "NCTM",
+                                "N. C. T. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NEEL",
+                        "name": {
+                            "value": "Neeley Residence Hall",
+                            "synonyms": [
+                                "NEEL",
+                                "N. E. E. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WIND",
+                        "name": {
+                            "value": "Nicks Low Speed Wind Tunnel",
+                            "synonyms": [
+                                "WIND",
+                                "W. I. N. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NSPG",
+                        "name": {
+                            "value": "Northside Parking Garage",
+                            "synonyms": [
+                                "NSPG",
+                                "N. S. P. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NMR",
+                        "name": {
+                            "value": "Nuclear Magnetic Resonance Facility",
+                            "synonyms": [
+                                "NMR",
+                                "N. M. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "NFFL",
+                        "name": {
+                            "value": "Nursery Floral Field Laboratory",
+                            "synonyms": [
+                                "NFFL",
+                                "N. F. F. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "OM",
+                        "name": {
+                            "value": "Oceanography & Meteorology Building",
+                            "synonyms": [
+                                "OM",
+                                "O. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "OTRC",
+                        "name": {
+                            "value": "Offshore Technology Research Center",
+                            "synonyms": [
+                                "OTRC",
+                                "O. T. R. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "OLSN",
+                        "name": {
+                            "value": "Olsen Field at Bluebell Park",
+                            "synonyms": [
+                                "OLSN",
+                                "O. L. S. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WCTC",
+                        "name": {
+                            "value": "Omar Smith Instructional Tennis Center",
+                            "synonyms": [
+                                "WCTC",
+                                "W. C. T. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PRES",
+                        "name": {
+                            "value": "One Circle Drive",
+                            "synonyms": [
+                                "PRES",
+                                "P. R. E. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PAV",
+                        "name": {
+                            "value": "Pavilion",
+                            "synonyms": [
+                                "PAV",
+                                "P. A. V. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PRPV",
+                        "name": {
+                            "value": "Pearce Animal Pavilion",
+                            "synonyms": [
+                                "PRPV",
+                                "P. R. P. V. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PISC",
+                        "name": {
+                            "value": "Penberthy Intramural Sports Center",
+                            "synonyms": [
+                                "PISC",
+                                "P. I. S. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PGBG",
+                        "name": {
+                            "value": "Perennial Grass Breeding and Genetics",
+                            "synonyms": [
+                                "PGBG",
+                                "P. G. B. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PETR",
+                        "name": {
+                            "value": "Peterson Building",
+                            "synonyms": [
+                                "PETR",
+                                "P. E. T. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PPGM",
+                        "name": {
+                            "value": "Phys Plant-Grounds Maintenance",
+                            "synonyms": [
+                                "PPGM",
+                                "P. P. G. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "OBSV",
+                        "name": {
+                            "value": "Physics Teaching Observatory",
+                            "synonyms": [
+                                "OBSV",
+                                "O. B. S. V. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "POSC",
+                        "name": {
+                            "value": "Poultry Sci Handling & Judging",
+                            "synonyms": [
+                                "POSC",
+                                "P. O. S. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PSNP",
+                        "name": {
+                            "value": "Poultry Sci Nutrition & Phys",
+                            "synonyms": [
+                                "PSNP",
+                                "P. S. N. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FARM",
+                        "name": {
+                            "value": "Poultry Science Headquarters",
+                            "synonyms": [
+                                "FARM",
+                                "F. A. R. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "HOBG",
+                        "name": {
+                            "value": "Price Hobgood Ag. Engineering Research Lab",
+                            "synonyms": [
+                                "HOBG",
+                                "H. O. B. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PSYC",
+                        "name": {
+                            "value": "Psychology Building",
+                            "synonyms": [
+                                "PSYC",
+                                "P. S. Y. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PRCH",
+                        "name": {
+                            "value": "Purchasing & Stores",
+                            "synonyms": [
+                                "PRCH",
+                                "P. R. C. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "REED",
+                        "name": {
+                            "value": "Reed Arena",
+                            "synonyms": [
+                                "REED",
+                                "R. E. E. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "RDMC",
+                        "name": {
+                            "value": "Reed-McDonald Building",
+                            "synonyms": [
+                                "RDMC",
+                                "R. D. M. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "REYN",
+                        "name": {
+                            "value": "Reynolds Medical Sciences Building",
+                            "synonyms": [
+                                "REYN",
+                                "R. E. Y. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "MSTC",
+                        "name": {
+                            "value": "Rosenthal Meat Science & Technology Center",
+                            "synonyms": [
+                                "MSTC",
+                                "M. S. T. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "RUDD",
+                        "name": {
+                            "value": "Rudder Residence Hall",
+                            "synonyms": [
+                                "RUDD",
+                                "R. U. D. D. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "RDER",
+                        "name": {
+                            "value": "Rudder Tower",
+                            "synonyms": [
+                                "RDER",
+                                "R. D. E. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SCCT",
+                        "name": {
+                            "value": "Sam Houston Sanders Corps of Cadets Center",
+                            "synonyms": [
+                                "SCCT",
+                                "S. C. C. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SUP1",
+                        "name": {
+                            "value": "Satellite Utility Plant No. 1",
+                            "synonyms": [
+                                "SUP1",
+                                "S. U. P. 1. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SUP2",
+                        "name": {
+                            "value": "Satellite Utility Plant No. 2",
+                            "synonyms": [
+                                "SUP2",
+                                "S. U. P. 2. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SUP3",
+                        "name": {
+                            "value": "Satellite Utility Plant No. 3",
+                            "synonyms": [
+                                "SUP3",
+                                "S. U. P. 3. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SBSA",
+                        "name": {
+                            "value": "Sbisa Dining Hall",
+                            "synonyms": [
+                                "SBSA",
+                                "S. B. S. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SPHA",
+                        "name": {
+                            "value": "School of Public Health - Admin Bldg",
+                            "synonyms": [
+                                "SPHA",
+                                "S. P. H. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SPHC",
+                        "name": {
+                            "value": "School of Public Health - Classroom Bldg",
+                            "synonyms": [
+                                "SPHC",
+                                "S. P. H. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SPHB",
+                        "name": {
+                            "value": "School of Public Health - Lab Bldg",
+                            "synonyms": [
+                                "SPHB",
+                                "S. P. H. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SCHU",
+                        "name": {
+                            "value": "Schuhmacher Residence Hall",
+                            "synonyms": [
+                                "SCHU",
+                                "S. C. H. U. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SCTS",
+                        "name": {
+                            "value": "Scoates Hall",
+                            "synonyms": [
+                                "SCTS",
+                                "S. C. T. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "STL",
+                        "name": {
+                            "value": "Soil Testing Lab",
+                            "synonyms": [
+                                "STL",
+                                "S. T. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SSPG",
+                        "name": {
+                            "value": "South Side Parking Garage",
+                            "synonyms": [
+                                "SSPG",
+                                "S. S. P. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SCIG",
+                        "name": {
+                            "value": "Southern Crop Improvement Greenhouse",
+                            "synonyms": [
+                                "SCIG",
+                                "S. C. I. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SPEN",
+                        "name": {
+                            "value": "Spence Hall - Dorm 1",
+                            "synonyms": [
+                                "SPEN",
+                                "S. P. E. N. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "STCH",
+                        "name": {
+                            "value": "State Chemist Building",
+                            "synonyms": [
+                                "STCH",
+                                "S. T. C. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "SREC",
+                        "name": {
+                            "value": "Student Recreation Center",
+                            "synonyms": [
+                                "SREC",
+                                "S. R. E. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TAES",
+                        "name": {
+                            "value": "TAES Annex Building",
+                            "synonyms": [
+                                "TAES",
+                                "T. A. E. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TEAG",
+                        "name": {
+                            "value": "Teague Research Center",
+                            "synonyms": [
+                                "TEAG",
+                                "T. E. A. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ELTC",
+                        "name": {
+                            "value": "TEEX Hangar/Classrooms",
+                            "synonyms": [
+                                "ELTC",
+                                "E. L. T. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TIGM",
+                        "name": {
+                            "value": "Texas A&M Institute For Genomic Medicine",
+                            "synonyms": [
+                                "TIGM",
+                                "T. I. G. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AMSB",
+                        "name": {
+                            "value": "Texas A&M System Agency Office Building",
+                            "synonyms": [
+                                "AMSB",
+                                "A. M. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMDL",
+                        "name": {
+                            "value": "Texas Vet Med Diagnostic Lab",
+                            "synonyms": [
+                                "VMDL",
+                                "V. M. D. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "AGCT",
+                        "name": {
+                            "value": "The AgriLife Center",
+                            "synonyms": [
+                                "AGCT",
+                                "A. G. C. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMTF",
+                        "name": {
+                            "value": "Theriogenology Facility, Equine Reproduction",
+                            "synonyms": [
+                                "VMTF",
+                                "V. M. T. F. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "THOM",
+                        "name": {
+                            "value": "Thompson Hall",
+                            "synonyms": [
+                                "THOM",
+                                "T. H. O. M. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TICK",
+                        "name": {
+                            "value": "Tick Research Facility",
+                            "synonyms": [
+                                "TICK",
+                                "T. I. C. K. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TRSV",
+                        "name": {
+                            "value": "Transit Services",
+                            "synonyms": [
+                                "TRSV",
+                                "T. R. S. V. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TURF",
+                        "name": {
+                            "value": "Turfgrass Field Lab",
+                            "synonyms": [
+                                "TURF",
+                                "T. U. R. F. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMB3",
+                        "name": {
+                            "value": "TVMC-Barn No 3",
+                            "synonyms": [
+                                "VMB3",
+                                "V. M. B. 3. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMCA",
+                        "name": {
+                            "value": "TVMC-Caged Animals",
+                            "synonyms": [
+                                "VMCA",
+                                "V. M. C. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VIV2",
+                        "name": {
+                            "value": "TVMC-Small Animal Research Building",
+                            "synonyms": [
+                                "VIV2",
+                                "V. I. V. 2. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMSB",
+                        "name": {
+                            "value": "TVMC-Surgery Building",
+                            "synonyms": [
+                                "VMSB",
+                                "V. M. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UNDE",
+                        "name": {
+                            "value": "Underwood Residence Hall",
+                            "synonyms": [
+                                "UNDE",
+                                "U. N. D. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UACC",
+                        "name": {
+                            "value": "University Apartments Community Center",
+                            "synonyms": [
+                                "UACC",
+                                "U. A. C. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UCPG",
+                        "name": {
+                            "value": "University Center Parking Garage",
+                            "synonyms": [
+                                "UCPG",
+                                "U. C. P. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "USB",
+                        "name": {
+                            "value": "University Services Building",
+                            "synonyms": [
+                                "USB",
+                                "U. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UTAY",
+                        "name": {
+                            "value": "Utay Hall - Dorm 12",
+                            "synonyms": [
+                                "UTAY",
+                                "U. T. A. Y. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UBO",
+                        "name": {
+                            "value": "Utilities & Energy Services Business Office",
+                            "synonyms": [
+                                "UBO",
+                                "U. B. O. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UCO",
+                        "name": {
+                            "value": "Utilities & Energy Services Central Office",
+                            "synonyms": [
+                                "UCO",
+                                "U. C. O. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UEOA",
+                        "name": {
+                            "value": "Utilities & Energy Services Energy Office",
+                            "synonyms": [
+                                "UEOA",
+                                "U. E. O. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "FSSB",
+                        "name": {
+                            "value": "Variety Testing and Sorghum Breeding",
+                            "synonyms": [
+                                "FSSB",
+                                "F. S. S. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMR",
+                        "name": {
+                            "value": "Vet Med Research Bldg Addition",
+                            "synonyms": [
+                                "VMR",
+                                "V. M. R. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VAPA",
+                        "name": {
+                            "value": "Veterinary Anatomic Pathology",
+                            "synonyms": [
+                                "VAPA",
+                                "V. A. P. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VLAH",
+                        "name": {
+                            "value": "Veterinary Large Animal Hospital",
+                            "synonyms": [
+                                "VLAH",
+                                "V. L. A. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMS",
+                        "name": {
+                            "value": "Veterinary Medical Sciences Building",
+                            "synonyms": [
+                                "VMS",
+                                "V. M. S. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VMA",
+                        "name": {
+                            "value": "Veterinary Medicine Administration",
+                            "synonyms": [
+                                "VMA",
+                                "V. M. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VRB",
+                        "name": {
+                            "value": "Veterinary Research Building",
+                            "synonyms": [
+                                "VRB",
+                                "V. R. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VSAH",
+                        "name": {
+                            "value": "Veterinary Small Animal Hospital",
+                            "synonyms": [
+                                "VSAH",
+                                "V. S. A. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VTH",
+                        "name": {
+                            "value": "Veterinary Teaching Hospital",
+                            "synonyms": [
+                                "VTH",
+                                "V. T. H. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "PRVP",
+                        "name": {
+                            "value": "Vice President's Residence",
+                            "synonyms": [
+                                "PRVP",
+                                "P. R. V. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "VIV3",
+                        "name": {
+                            "value": "Vivarium III",
+                            "synonyms": [
+                                "VIV3",
+                                "V. I. V. 3. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "LFB",
+                        "name": {
+                            "value": "W.P. Luse Foundation Building",
+                            "synonyms": [
+                                "LFB",
+                                "L. F. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "W5AC",
+                        "name": {
+                            "value": "W5AC Amateur Radio Club Building",
+                            "synonyms": [
+                                "W5AC",
+                                "W. 5. A. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WALT",
+                        "name": {
+                            "value": "Walton Residence Hall",
+                            "synonyms": [
+                                "WALT",
+                                "W. A. L. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WWTP",
+                        "name": {
+                            "value": "Wastewater Treatment Plant",
+                            "synonyms": [
+                                "WWTP",
+                                "W. W. T. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WCBA",
+                        "name": {
+                            "value": "Wehner Building",
+                            "synonyms": [
+                                "WCBA",
+                                "W. C. B. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WELL",
+                        "name": {
+                            "value": "Wells Residence Hall",
+                            "synonyms": [
+                                "WELL",
+                                "W. E. L. L. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WCLF",
+                        "name": {
+                            "value": "West Campus Library Facility",
+                            "synonyms": [
+                                "WCLF",
+                                "W. C. L. F. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WCG",
+                        "name": {
+                            "value": "West Campus Parking Garage",
+                            "synonyms": [
+                                "WCG",
+                                "W. C. G. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WHIT",
+                        "name": {
+                            "value": "White Hall - Dorm 10",
+                            "synonyms": [
+                                "WHIT",
+                                "W. H. I. T. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WHTE",
+                        "name": {
+                            "value": "Whitely Hall - Dorm 9",
+                            "synonyms": [
+                                "WHTE",
+                                "W. H. T. E. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CLAC",
+                        "name": {
+                            "value": "Williams Alumni Center",
+                            "synonyms": [
+                                "CLAC",
+                                "C. L. A. C. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WEB",
+                        "name": {
+                            "value": "Wisenbaker Engineering Building",
+                            "synonyms": [
+                                "WEB",
+                                "W. E. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TPBB",
+                        "name": {
+                            "value": "WWTP Digester Boiler Building",
+                            "synonyms": [
+                                "TPBB",
+                                "T. P. B. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TPDB",
+                        "name": {
+                            "value": "WWTP Disinfection Building",
+                            "synonyms": [
+                                "TPDB",
+                                "T. P. D. B. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TPPP",
+                        "name": {
+                            "value": "WWTP Primary Pump Building",
+                            "synonyms": [
+                                "TPPP",
+                                "T. P. P. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "TPSP",
+                        "name": {
+                            "value": "WWTP Secondary Pump Building",
+                            "synonyms": [
+                                "TPSP",
+                                "T. P. S. P. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "YMCA",
+                        "name": {
+                            "value": "YMCA Building",
+                            "synonyms": [
+                                "YMCA",
+                                "Y. M. C. A. "
+                            ]
+                        }
+                    },
+                    {
+                        "id": "ZEEC",
+                        "name": {
+                            "value": "Zachry Engineering Education Complex",
+                            "synonyms": [
+                                "ZEEC",
+                                "Z. E. E. C. "
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Garage",
+                "values": [
+                    {
+                        "id": "CAIN",
+                        "name": {
+                            "value": "Cain Garage",
+                            "synonyms": [
+                                "Cain"
+                            ]
+                        }
+                    },
+                    {
+                        "id": "CCG",
+                        "name": {
+                            "value": "Central Campus Garage",
+                            "synonyms": [
+                                "Central",
+                                "Central Campus",
+                                "C. C. G."
+                            ]
+                        }
+                    },
+                    {
+                        "id": "UCG",
+                        "name": {
+                            "value": "University Center Garage",
+                            "synonyms": [
+                                "University",
+                                "University Center",
+                                "U. C. G."
+                            ]
+                        }
+                    },
+                    {
+                        "id": "WCG",
+                        "name": {
+                            "value": "West Campus Garage",
+                            "synonyms": [
+                                "West",
+                                "West Campus",
+                                "W. C. G."
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "SportType",
+                "values": [
+                    {
                         "id": "",
                         "name": {
-                            "value": "JJKB",
-                            "synonyms": [
-                                "koldus"
-                            ]
+                            "value": "soccer",
+                            "synonyms": []
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "KYLE",
-                            "synonyms": [
-                                "kyle field"
-                            ]
+                            "value": "football",
+                            "synonyms": []
                         }
                     },
                     {
                         "id": "",
                         "name": {
-                            "value": "BLOC",
-                            "synonyms": [
-                                "blocker"
-                            ]
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "HRBB",
-                            "synonyms": [
-                                "computer science building",
-                                "bright building"
-                            ]
-                        }
-                    },
-                    {
-                        "id": "",
-                        "name": {
-                            "value": "MSC",
-                            "synonyms": [
-                                "memorial student center"
-                            ]
+                            "value": "basketball",
+                            "synonyms": []
                         }
                     }
                 ]
@@ -508,6 +2927,36 @@
                         "prompts": {}
                     }
                 ]
+            },
+            {
+                "name": "GetGarageCountIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "GarageName",
+                        "type": "Garage",
+                        "confirmationRequired": false,
+                        "elicitationRequired": true,
+                        "prompts": {
+                            "elicitation": "Elicit.Slot.740030270664.943739476249"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "GetParkingLotInfoIntent",
+                "confirmationRequired": false,
+                "prompts": {},
+                "slots": [
+                    {
+                        "name": "ParkingLot",
+                        "type": "AMAZON.NUMBER",
+                        "confirmationRequired": false,
+                        "elicitationRequired": false,
+                        "prompts": {}
+                    }
+                ]
             }
         ]
     },
@@ -526,6 +2975,44 @@
                 {
                     "type": "PlainText",
                     "value": "Which route would you like to hear about?"
+                }
+            ]
+        },
+        {
+            "id": "Elicit.Slot.740030270664.943739476249",
+            "variations": [
+                {
+                    "type": "PlainText",
+                    "value": "What garage would you like to look into?"
+                },
+                {
+                    "type": "PlainText",
+                    "value": "Which garage are you interested in?"
+                },
+                {
+                    "type": "PlainText",
+                    "value": "Which garage do you want to hear about?"
+                }
+            ]
+        },
+        {
+            "id": "Confirm.Intent.500235681428",
+            "variations": [
+                {
+                    "type": "PlainText",
+                    "value": "Which route will you be on?"
+                },
+                {
+                    "type": "PlainText",
+                    "value": "Which bus will you be riding?"
+                },
+                {
+                    "type": "PlainText",
+                    "value": "Which bus do you want me to look at?"
+                },
+                {
+                    "type": "PlainText",
+                    "value": "Which bus would you like to hear about?"
                 }
             ]
         }
