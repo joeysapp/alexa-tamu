@@ -1,5 +1,5 @@
 module.exports = {
-	'DEFINITION_EN_US': {
+	'GARAGE_EN_US': {
 		'West Campus Garage': '3',
 		'University Center Garage': '2',
 		'Central Campus Garage': '1',
