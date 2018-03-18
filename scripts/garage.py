@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-
+import sys
 
 # specify the url
 quote_page = 'http://transport.tamu.edu/parking/realtime.aspx'
@@ -16,10 +16,10 @@ with urllib.request.urlopen(quote_page) as url:
 # parse the html using beautiful soup and store in variable `soup`
 soup = BeautifulSoup(page, 'html.parser')
 
-# Take out the <div> of name and get its value
-name_box = soup.find('h1', attrs={'class': 'name'})
 
-# get the index price
-price_box = soup.find_all('td', attrs={'class':'count'})
-price = price_box[3].text
-print (price)
+# spotsList contains 4 entries containing the 4 garages number of spots left
+spotsList = soup.find_all('td', attrs={'class':'count'})
+# this takes the first argument (garage number) and grabs the corresponding number of empty spots
+numSpots = spotsList[sys.argv[1]].text
+# currently just printing to console.  Will ultimately output to node.js
+print (numSpots)
