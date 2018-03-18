@@ -18,7 +18,7 @@
 	var replyObject = dynamicSportsInfo[requestedSportName];
 	// cardContent = replyObject.dynamicCardContent;
 
-	// or, just do it out here.
+	// or, just do it out here. cause it's better to abstract this away to separate files right?
 
 	var urlToQuery = "https://www.12thmanfoundation.com/ticket-center/sport/${requestedSportName}";
 
