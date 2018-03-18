@@ -122,6 +122,17 @@ const handlers = {
 		// this example would obviously require to calls to python function
 		var spawn = require("child_process").spawn;
 		var pythonProcess = spawn('python',["..\scripts\garage.py", arg1]);
+		pythonProcess.stdout.on('data', function (data){
+			if(parseInt(data, 10) <= 50) {
+				var output = "Sorry there are only " + 'data' + " spots left at " + garage_name;
+				this.emit(':tell', output);
+			}
+			else {
+				var output = "There are still " + 'data' + " spotse left at " + garage_name;
+				this.emit(':tell', output);
+			}
+		});
+		
 	}
 	'GetLocationIntent' : function(){
 		var location_slot = this.event.request.intent.slots.Location;
