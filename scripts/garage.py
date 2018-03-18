@@ -23,3 +23,4 @@ spotsList = soup.find_all('td', attrs={'class':'count'})
 numSpots = spotsList[sys.argv[1]].text
 # currently just printing to console.  Will ultimately output to node.js
 print (numSpots)
+sys.stdout.flush()
