@@ -1,9 +1,13 @@
-
 ![alexa-tamu logo](/logo.png)
 # alexa-tamu
 Extension of **Project Asset** to serve dynamic content to the students of **Texas A&M University**.
 
 Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Swink) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
+
+## Todo
+```
+Transfer all Bobby-supplied questions to related intents (w/ creation of Intents)
+```
 
 ## [Uploading code](https://blog.seanssmith.com/posts/alexa-s3-upload.html), ecosystem and developing
 ```
@@ -21,11 +25,10 @@ https://developer.amazon.com/docs/custom-skills/request-and-response-json-refere
 Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-user-with-a-user-in-your-system.html
 ```
 
-## Notes about Slot Types
-[Link](https://developer.amazon.com/docs/custom-skills/custom-interaction-model-reference.html#custom-slot-type-values)
+## Notes
+[Clickable URLS in cards/responses](https://forums.developer.amazon.com/questions/72895/how-to-include-clickable-urls-in-alexa-card-respon.html)
+[Custom Slot Types](https://developer.amazon.com/docs/custom-skills/custom-interaction-model-reference.html#custom-slot-type-values)
 Slot values are sent to your skill in written format. For example, both "fire h. d. 7" and "fire h. d. seven" would be sent to your skill as "Fire HD7". For better recognition, acronyms and other phrases involving spoken letters should either be all caps ("HD") or separated by periods and a space ("h. d. "). Using lowercase for initialisms may lead to unreliable recognition since the spoken form may not correctly be detected
-
-
 
 ## Potential Ideas
 | Idea           | Example                                                                                            | URL                                                           |
