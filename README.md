@@ -2,7 +2,7 @@
 # alexa-tamu
 Extension of **Project Asset** to serve dynamic content to the students of **Texas A&M University**.
 
-Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Swink) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
+Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Blasband) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
 
 ## Todo
 ```

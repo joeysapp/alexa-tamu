@@ -16,11 +16,15 @@ const definitions = require('./data/definitions');
 // getLocationIntent library
 const locations = require('./data/locations');
 
+//getGarageIntent library
+const garages = require('./data/locations');
+
 const languageStrings = {
 	'en': {
 		translation: {
 			DEFINITIONS: definitions.DEFINITION_EN_US,
 			LOCATIONS: locations.LOCATION_EN_US,
+			GARAGES: garages.GARAGE_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
 			HELP_MESSAGE: 'You could ask me things about classes, or parking lots, or any upcoming games!',
@@ -108,6 +112,28 @@ const handlers = {
 			this.emit(':responseReady');
 		}
 	},
+	'GetGarageIntent' : function(){
+		var garage_slot = this.event.request.intent.slots.Garage;
+		var garage_name = garage_slot.value;
+		// my goal is to send the value from the garage JSON to my python file
+		// then to take the number of spots and tell alexa to say something
+		// depending on if there are diffenet amounts of vacancies
+		// example: if less than 30 spots say "CCG only has 20 spots left, but ucg has 150"
+		// this example would obviously require to calls to python function
+		var spawn = require("child_process").spawn;
+		var pythonProcess = spawn('python',["..\scripts\garage.py", arg1]);
+		pythonProcess.stdout.on('data', function (data){
+			if(parseInt(data, 10) <= 50) {
+				var output = "Sorry there are only " + 'data' + " spots left at " + garage_name;
+				this.emit(':tell', output);
+			}
+			else {
+				var output = "There are still " + 'data' + " spotse left at " + garage_name;
+				this.emit(':tell', output);
+			}
+		});
+		
+	}
 	'GetLocationIntent' : function(){
 		var location_slot = this.event.request.intent.slots.Location;
 		var location_name = location_slot.value;
