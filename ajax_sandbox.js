@@ -8,9 +8,17 @@
 	var requestedSportName = requestedSportType.value;
 
 	var cardTitle = this.t('Aggie '+requestedSportName);
+
+
+	// OOooooo this could actually be like dynamicSportsInfo too, and we could render
+	// images of where to go on a map to put in the card.. dunno if the above 'requires'
+	// will actually work tho.
 	var cardContent = this.t('SPORTS_CARD_INFORMATION');
 
 	var replyObject = dynamicSportsInfo[requestedSportName];
+	// cardContent = replyObject.dynamicCardContent;
+
+	// or, just do it out here.
 
 	var urlToQuery = "https://www.12thmanfoundation.com/ticket-center/sport/${requestedSportName}";
 
