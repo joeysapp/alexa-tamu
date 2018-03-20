@@ -43,6 +43,9 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 | college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
 | Parking Info   | "Where can I park on parent's weekend?", "What times can I park in Lot 100 today?"                 | http://transportmap.tamu.edu/parkingmap/                      |
 | Student Health | "Is Beutel open today?", "Here's the Student Health Service URL!"                                  |                                                               |
+| college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
+| Event info.    | "Tell me events coming up", "Tell me if Craggies have any events soon!"                            | Custom website for insertion w/ curation                      |
+
 ## Dependencies 
 | Library      | Uses                                    | URL                                             |
 |--------------|-----------------------------------------|-------------------------------------------------|
