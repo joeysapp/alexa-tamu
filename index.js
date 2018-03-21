@@ -62,6 +62,30 @@ const handlers = {
 		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
 	},
+	'GetSportsInfoIntent' : function(){
+		var reqSportType = this.event.request.intent.slots.SportType;
+		var reqRivalTeam = this.event.request.intent.slots.RivalTeam;
+
+		// Assume we've had Slot Resolution ®
+		if (typeof reqSportType !== 'undefined'){
+			reqSportType = reqSportType.value;
+		} else {
+			//freakout
+		}
+		if (typeof reqRivalTeam !== 'undefined'){
+			reqRivalTeam = reqRivalTeam.value;
+		} else {
+			// dare u say
+		}
+
+		var dynamicSportsInfo = require('data/sports.js');
+		console.log("doing this then stuff");
+		var res = dynamicSportsInfo.DynamicContentGetter(reqSportType);
+
+		this.response.speak(res).listen("burp");
+		this.emit(':responseReady');
+		
+	},
 	'GetDefinitionIntent' : function(){
 		var defSlot = this.event.request.intent.slots.Definition;
 
@@ -132,8 +156,7 @@ const handlers = {
 				this.emit(':tell', output);
 			}
 		});
-		
-	}
+	},
 	'GetLocationIntent' : function(){
 		var location_slot = this.event.request.intent.slots.Location;
 		var location_name = location_slot.value;
