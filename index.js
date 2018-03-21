@@ -67,22 +67,8 @@ const handlers = {
 		var reqRivalTeam = this.event.request.intent.slots.RivalTeam;
 
 		// Assume we've had Slot Resolution ®
-		if (typeof reqSportType !== 'undefined'){
-			reqSportType = reqSportType.value;
-		} else {
-			//freakout
-		}
-		if (typeof reqRivalTeam !== 'undefined'){
-			reqRivalTeam = reqRivalTeam.value;
-		} else {
-			// dare u say
-		}
 
-		var dynamicSportsInfo = require('data/sports.js');
-		console.log("doing this then stuff");
-		var res = dynamicSportsInfo.DynamicContentGetter(reqSportType);
-
-		this.response.speak(res).listen("burp");
+		this.response.speak("response object :-)").listen("burp :-O");
 		this.emit(':responseReady');
 		
 	},
