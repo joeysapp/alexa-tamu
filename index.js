@@ -73,15 +73,13 @@ const handlers = {
 			var url = 'https://www.12thmanfoundation.com/ticket-center/sport/'+reqSportType;
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
-					var games = [];
-					const dom = new JSDOM(body);
+					const $ = cheerio.load(body);
 
-					var tmp = dom.window.document;
-					var tmp2 = tmp.title;
-					console.log(tmp);
+					// Parsing of $
+					var tmp = null;
 
-					this.response.speak('You\'d like to hear about '+tmp2);
-					this.response.cardRenderer('alexa-tamu', tmp2);
+					this.response.speak('You\'d like to hear about '+tmp);
+					this.response.cardRenderer('alexa-tamu', tmp);
 					this.emit(':responseReady');
 				}			
 			});
