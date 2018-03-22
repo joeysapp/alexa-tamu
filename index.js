@@ -18,11 +18,16 @@ const locations = require('./data/locations');
 const request = require('request'); 
 const cheerio = require('cheerio'); // DOM Parser
 const _ = require('lodash'); // Functional Library
+var fs = require('fs'); // filesystem
 
 // Database
 var dynamo = require('dynamodb');
-dynamo.AWS.config.loadFromPath('data/dynamodb_credentials.json');
-dynamo.AWS.config.update({region: 'us-east-1'});
+if (fs.existsSync('data/data/dynamodb_credentials')){
+	dynamo.AWS.config.loadFromPath('data/dynamodb_credentials');
+	dynamo.AWS.config.update({region: 'us-east-1'});
+} else {
+	console.log('dynamo credentials not present! ask joey for the key!');
+}
 
 const languageStrings = {
 	'en': {
@@ -279,6 +284,17 @@ const handlers = {
 	'Unhandled': function () {
 		// This is where we'd add
 		// this.event.request -> DynamoDB
+		var MissedQuery = dynamo.define('MissedQuery', {
+			hashKey : 'ID',
+			// add the timestamp attributes (updatedAt, createdAt)
+			timestamps : true,
+			schema : {
+				ID : dynamo.types.number,
+				date : dynamo.types.date,
+				query: dynamo.types.string,
+			}
+		});
+		MissedQuery.create({ID: 0, date:'0000-00-01', query:'hello'});
 		this.attributes.speechOutput = this.t('HELP_MESSAGE');
 		this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
 		this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
