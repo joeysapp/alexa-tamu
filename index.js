@@ -14,20 +14,16 @@ const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
 const definitions = require('./data/definitions');
 const locations = require('./data/locations');
 
-const garages = require('./data/locations');
-
 // Dynamic Content
-const request = require('request');
-const cheerio = require('cheerio');
-const _ = require('lodash');
-
+const request = require('request'); 
+const cheerio = require('cheerio'); // DOM Parser
+const _ = require('lodash'); // Functional Library
 
 const languageStrings = {
 	'en': {
 		translation: {
 			DEFINITIONS: definitions.DEFINITION_EN_US,
 			LOCATIONS: locations.LOCATION_EN_US,
-			GARAGES: garages.GARAGE_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
 			HELP_MESSAGE: 'You could ask me things about classes, or parking lots, or any upcoming games!',
@@ -164,7 +160,6 @@ const handlers = {
 					// of the class 'count'. Then, for each of these elements,
 					// we iterate through and push the trimmed (whitespace) data
 					// that happens to be the current garage counts to an array counts.
-
 					Array.from($('.count > .badge').slice(0,5)).forEach(element => {
 						counts.push(_.trim(element.children[0].data));
 					});
@@ -190,6 +185,8 @@ const handlers = {
 					// CCG:  counts[1]
 					// UCG:  counts[2]
 					// WCG:  counts[3]
+					// We could be doing this better, aka using the Resolved Slot's ID, but 
+					// if we do it here then people can add garages easily.
 					var count_idx = -1;
 					if (reqGarageName === 'Cain Garage'){
 						count_idx = 0;
