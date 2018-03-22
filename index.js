@@ -242,12 +242,12 @@ const handlers = {
 		}
 	},
 	'GetBusStatusIntent' : function(){
-        this.response.speak("GetBusStatusIntent!");
-        this.emit(':responseReady');
+		this.response.speak("GetBusStatusIntent!");
+		this.emit(':responseReady');
 	},
 	'GetCollegeIntent' : function(){
-        this.response.speak("GetCollegeIntent!");
-        this.emit(':responseReady');
+		this.response.speak("GetCollegeIntent!");
+		this.emit(':responseReady');
 	},
 	'AMAZON.HelpIntent': function () {
 		this.attributes.speechOutput = this.t('HELP_MESSAGE');
@@ -256,36 +256,36 @@ const handlers = {
 		this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
 	},
-    'AMAZON.RepeatIntent': function () {
-        this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
-        this.emit(':responseReady');
+	'AMAZON.RepeatIntent': function () {
+		this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
+		this.emit(':responseReady');
+	},
+	'AMAZON.StopIntent': function () {
+		this.response.speak("Goodbye!");
+		this.emit(':responseReady');
+	},
+	'AMAZON.CancelIntent': function () {
+		this.response.speak("Goodbye!");
+		this.emit(':responseReady');
+	},
+	'SessionEndedRequest': function () {
+		console.log(`Session ended: ${this.event.request.reason}`);
     },
-    'AMAZON.StopIntent': function () {
-        this.response.speak("Goodbye!");
-        this.emit(':responseReady');
-    },
-    'AMAZON.CancelIntent': function () {
-        this.response.speak("Goodbye!");
-        this.emit(':responseReady');
-    },
-    'SessionEndedRequest': function () {
-        console.log(`Session ended: ${this.event.request.reason}`);
-    },
-    'Unhandled': function () {
-    	// This is where we'd add
-    	// this.event.request -> DynamoDB
-        this.attributes.speechOutput = this.t('HELP_MESSAGE');
-        this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
-        this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
-        this.emit(':responseReady');
-    },
+	'Unhandled': function () {
+		// This is where we'd add
+		// this.event.request -> DynamoDB
+		this.attributes.speechOutput = this.t('HELP_MESSAGE');
+		this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
+		this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
+		this.emit(':responseReady');
+	},
 };
 
 exports.handler = function (event, context, callback) {
-    const alexa = Alexa.handler(event, context, callback);
-    alexa.APP_ID = APP_ID;
-    // To enable string internationalization (i18n) features, set a resources object.
-    alexa.resources = languageStrings;
-    alexa.registerHandlers(handlers);
-    alexa.execute();
+	const alexa = Alexa.handler(event, context, callback);
+	alexa.APP_ID = APP_ID;
+	// To enable string internationalization (i18n) features, set a resources object.
+	alexa.resources = languageStrings;
+	alexa.registerHandlers(handlers);
+	alexa.execute();
 };
