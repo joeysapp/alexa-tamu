@@ -89,9 +89,6 @@ const handlers = {
 	},
 	'GetDefinitionIntent' : function(){
 		var defSlot = this.event.request.intent.slots.Definition;
-
-		// To be noted:
-		// https://forums.developer.amazon.com/questions/100181/cannot-read-property-resolutionsperauthority-of-un.html
 		var defName = defSlot.value;
 		if (!(defName in this.t('DEFINITIONS'))){
 			if (typeof defSlot.resolutions !== 'undefined'){
@@ -146,13 +143,9 @@ const handlers = {
 		} else {
 			reqGarageName = reqGarageType.value;
 			var url = 'http://transport.tamu.edu/parking/realtime.aspx';
-			console.log("About to request..");
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
-
-					console.log("Parsing the result into a DOM element!");
 					const $ = cheerio.load(body);
-					console.log("Parsed the result!");
 
 					counts = [];
 					// We use the DOM element $() to access an array of all
@@ -165,26 +158,17 @@ const handlers = {
 					});
 
 					const garages = ['Cain Garage', 'Central Campus Garage', 'University Center Garage', 'West Campus Garage'];
-					// CUSTOM SLOT RESOLUTION!!
 					if (!(reqGarageName in garages)){
 						if (typeof reqGarageType.resolutions !== 'undefined'){
-							// This occurs:
-							// 		developer.amazon.com/alexa/console
-							//		in actual use
 							const garageSlotResolved = reqGarageType.resolutions.resolutionsPerAuthority[0].values[0];
 							reqGarageName = garageSlotResolved.value.name;
 						} else {
-							// This only occurs on console.aws.alexa.com
-							// This is a little silly and is only for testing, can be removed later
 							var closestGarage = stringSimilarity.findBestMatch(reqGarageName, garages)['bestMatch']['target'];
 							reqGarageName = closestGarage;
 						}
 					}
 
-					// CAIN: counts[0]
-					// CCG:  counts[1]
-					// UCG:  counts[2]
-					// WCG:  counts[3]
+					// CAIN: counts[0] CCG:  counts[1] UCG:  counts[2] WCG:  counts[3]
 					// We could be doing this better, aka using the Resolved Slot's ID, but 
 					// if we do it here then people can add garages easily.
 					var count_idx = -1;
@@ -203,7 +187,6 @@ const handlers = {
 					this.emit(':responseReady');
 				}			
 			});
-
 		}
 	},
 	'GetLocationIntent' : function(){
@@ -211,15 +194,10 @@ const handlers = {
 		var location_name = location_slot.value;
 		if (!(location_name in this.t('LOCATIONS'))){
 			if (typeof location_slot.resolutions !== 'undefined'){
-				// This occurs:
-				// 		developer.amazon.com/alexa/console
-				//		in actual use
 				const location_slot_resolved = location_slot.resolutions.resolutionsPerAuthority[0].values[0];
 				location_name = location_slot_resolved.value.name;
 			} else {
-				// This only occurs on console.aws.alexa.com
-				// This is a little silly and is only for testing, can be removed later
-				var closest_key = stringSimilarity.findBestMatch(location_name, Object.keys(this.t('DEFINITIONS')))['bestMatch']['target'];
+				var closest_key = stringSimilarity.findBestMatch(location_name, Object.keys(this.t('LOCATIONS')))['bestMatch']['target'];
 				location_name = closest_key;
 			}
 		}
@@ -230,13 +208,23 @@ const handlers = {
 
 		if (location_info){
 			var url = "https://aggiemap.tamu.edu/?bldg="+location_info["url"];
-			var speechOutput = "You can find "+location_name+" on AggieMap at the url I've sent your Alexa application.";
-			this.attributes.speechOutput = speechOutput;
-			this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+			request(url, (err, res, body) => {
+				if (!err && res.statusCode === 200){
+					const $ = cheerio.load(body);
 
-			this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-			this.response.cardRenderer(cardTitle, url);
-			this.emit(':responseReady');
+					// soooo cheerio doesn't run JS. we'd need PhantomJS for this
+					// var canvas = $('.esri-display-object')[0];
+					// console.log("Found canvas at "+canvas.toDataURL());
+
+					var speechOutput = "I've sent you a screenshot of the location of ${location_name} on AggieMap.";
+					this.attributes.speechOutput = speechOutput;
+					this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+
+					this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
+					this.response.cardRenderer(cardTitle, url);
+					this.emit(':responseReady');
+				}
+			});
 		} else {
 			var speechOutput = this.t('LOC_NOT_FOUND_MESSAGE');
 			var repromptSpeech = this.t('LOC_NOT_FOUND_REPROMPT');
