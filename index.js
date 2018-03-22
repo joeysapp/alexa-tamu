@@ -77,12 +77,14 @@ const handlers = {
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
 					var games = [];
-					const { document } = (new JSDOM(body)).window;
+					const dom = new JSDOM(body);
 
-					var tmp = document;
+					var tmp = dom.window.document;
+					var tmp2 = tmp.title;
+					console.log(tmp);
 
-					this.response.speak('You\'d like to hear about '+tmp);
-					this.response.cardRenderer('alexa-tamu', tmp);
+					this.response.speak('You\'d like to hear about '+tmp2);
+					this.response.cardRenderer('alexa-tamu', tmp2);
 					this.emit(':responseReady');
 				}			
 			});
