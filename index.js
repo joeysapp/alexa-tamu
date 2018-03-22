@@ -19,6 +19,7 @@ const garages = require('./data/locations');
 // Dynamic Content
 const request = require('request');
 const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 const languageStrings = {
 	'en': {
@@ -76,9 +77,9 @@ const handlers = {
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
 					var games = [];
-					var window = jsdom.jsdom(body).createWindow();
+					const { document } = (new JSDOM(body)).window;
 
-					var tmp = window.document.getElementsByClassName('h4')[0].innerHTML;
+					var tmp = document;
 
 					this.response.speak('You\'d like to hear about '+tmp);
 					this.response.cardRenderer('alexa-tamu', tmp);
