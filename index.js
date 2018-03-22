@@ -19,6 +19,11 @@ const request = require('request');
 const cheerio = require('cheerio'); // DOM Parser
 const _ = require('lodash'); // Functional Library
 
+// Database
+var dynamo = require('dynamodb');
+dynamo.AWS.config.loadFromPath('data/dynamodb_credentials.json');
+dynamo.AWS.config.update({region: 'us-east-1'});
+
 const languageStrings = {
 	'en': {
 		translation: {
