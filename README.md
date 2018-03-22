@@ -48,6 +48,8 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 | Student Health | "Is Beutel open today?", "Here's the Student Health Service URL!"                                  |                                                               |
 | college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
 | Event info.    | "Tell me events coming up", "Tell me if Craggies have any events soon!"                            | Custom website for insertion w/ curation                      |
+| Campus food    | "Where can I eat?", "What food places are open right now?", "I'm hungry"                           | https://www.dineoncampus.com/tamu/                            |
+| OAL            | "I need to print something", "Where can I use a computer?", "What labs are open currently?         | http://oal.tamu.edu/Lab-Locations                             |
 
 ## Dependencies 
 | Library      | Uses                                    | URL                                             |
