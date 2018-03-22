@@ -1,8 +1,8 @@
 // SSML
-var Speech = require('ssml-builder');
+const Speech = require('ssml-builder');
 
 // Custom slot resolution for testing
-var stringSimilarity = require('string-similarity');
+const stringSimilarity = require('string-similarity');
 
 // General Alexa
 //	* Intents
@@ -10,14 +10,16 @@ var stringSimilarity = require('string-similarity');
 const Alexa = require('alexa-sdk');
 const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
 
-// getDefinitionIntent library
+// Static Content
 const definitions = require('./data/definitions');
-
-// getLocationIntent library
 const locations = require('./data/locations');
 
-//getGarageIntent library
 const garages = require('./data/locations');
+
+// Dynamic Content
+const request = require('request');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
 const languageStrings = {
 	'en': {
@@ -65,12 +67,25 @@ const handlers = {
 	'GetSportsInfoIntent' : function(){
 		var reqSportType = this.event.request.intent.slots.SportType;
 		var reqRivalTeam = this.event.request.intent.slots.RivalTeam;
+		if (!reqSportType.value){
+			const slotToElicit = 'SportType';
+			const speechOutput = 'What sport would you like to hear about?';
+			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
+		} else {
+			reqSportType = reqSportType.value;
+			var url = 'https://www.12thmanfoundation.com/ticket-center/sport/'+reqSportType;
+			request(url, (err, res, body) => {
+				var games = [];
+				var tmp = new JSDOM(body);
+				var tmp = tmp.window.document.querySelector('').textContext;
 
-		// Assume we've had Slot Resolution ®
 
-		this.response.speak("response object :-)").listen("burp :-O");
-		this.emit(':responseReady');
-		
+				this.response.speak('You\'d like to hear about '+reqSportType);
+				this.response.cardRenderer('alexa-tamu', games);
+				this.emit(':responseReady');			
+			});
+
+		}
 	},
 	'GetDefinitionIntent' : function(){
 		var defSlot = this.event.request.intent.slots.Definition;
