@@ -159,6 +159,12 @@ const handlers = {
 					console.log("Parsed the result!");
 
 					counts = [];
+					// We use the DOM element $() to access an array of all
+					// elements of the class 'badge' that are children of elements
+					// of the class 'count'. Then, for each of these elements,
+					// we iterate through and push the trimmed (whitespace) data
+					// that happens to be the current garage counts to an array counts.
+
 					Array.from($('.count > .badge').slice(0,5)).forEach(element => {
 						counts.push(_.trim(element.children[0].data));
 					});
