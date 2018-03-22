@@ -1,13 +1,16 @@
 ![alexa-tamu logo](/logo.png)
 # alexa-tamu
-Extension of **Project Asset** to serve dynamic content to the students of **Texas A&M University**.
+Alexa Skill created to serve dynamic content to the students of **Texas A&M University** by the members of **A&M Alexa Development Team**..
 
-Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Blasband) to complete the proposed *reach goals* of their final senior design project (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
+Note that this project is being made to fulfill requirements of the team members (Joey Sapp, Jack Swink, Justin Bevolo, and Aaron Blasband) to complete their final senior design projec oft (*CSCE482*) which was given to them by the Information Technology department of **Texas A&M University**.
 
 ## Todo
-```
-Transfer all Bobby-supplied questions to related intents (w/ creation of Intents)
-```
+| Task               | Goal                                                 | Assigned to               |
+|--------------------|------------------------------------------------------|---------------------------|
+| Intent ideation    | Compose a list of sites for dynamic content to serve | Aaron, Justin, Jack, Joey |
+| Intent creation    | Translate ideas to functional Intents                | Joey, Jack                |
+| Acceptance Testing | Ensure app performance prior to submission           | Aaron                     |
+| Website            | Communicate list tamu-alexa's abilities/Intents      | Justin, Joey              |
 
 ## [Uploading code](https://blog.seanssmith.com/posts/alexa-s3-upload.html), ecosystem and developing
 ```
