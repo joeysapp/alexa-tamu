@@ -18,8 +18,9 @@ const garages = require('./data/locations');
 
 // Dynamic Content
 const request = require('request');
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
+const cheerio = require('cheerio');
+const _ = require('lodash');
+
 
 const languageStrings = {
 	'en': {
@@ -88,7 +89,6 @@ const handlers = {
 					this.emit(':responseReady');
 				}			
 			});
-
 		}
 	},
 	'GetDefinitionIntent' : function(){
@@ -141,26 +141,67 @@ const handlers = {
 			this.emit(':responseReady');
 		}
 	},
-	'GetGarageIntent' : function(){
-		var garage_slot = this.event.request.intent.slots.Garage;
-		var garage_name = garage_slot.value;
-		// my goal is to send the value from the garage JSON to my python file
-		// then to take the number of spots and tell alexa to say something
-		// depending on if there are diffenet amounts of vacancies
-		// example: if less than 30 spots say "CCG only has 20 spots left, but ucg has 150"
-		// this example would obviously require to calls to python function
-		var spawn = require("child_process").spawn;
-		var pythonProcess = spawn('python',["..\scripts\garage.py", arg1]);
-		pythonProcess.stdout.on('data', function (data){
-			if(parseInt(data, 10) <= 50) {
-				var output = "Sorry there are only " + 'data' + " spots left at " + garage_name;
-				this.emit(':tell', output);
-			}
-			else {
-				var output = "There are still " + 'data' + " spotse left at " + garage_name;
-				this.emit(':tell', output);
-			}
-		});
+	'GetGarageInfoIntent' : function(){
+		var reqGarageType = this.event.request.intent.slots.GarageName;
+		if (!reqGarageType.value){
+			const slotToElicit = 'GarageName';
+			const speechOutput = 'What garage would you like to hear about?';
+			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
+		} else {
+			reqGarageName = reqGarageType.value;
+			var url = 'http://transport.tamu.edu/parking/realtime.aspx';
+			console.log("About to request..");
+			request(url, (err, res, body) => {
+				if (!err && res.statusCode === 200){
+
+					console.log("Parsing the result into a DOM element!");
+					const $ = cheerio.load(body);
+					console.log("Parsed the result!");
+
+					counts = [];
+					Array.from($('.count > .badge').slice(0,5)).forEach(element => {
+						counts.push(_.trim(element.children[0].data));
+					});
+
+					const garages = ['Cain Garage', 'Central Campus Garage', 'University Center Garage', 'West Campus Garage'];
+					// CUSTOM SLOT RESOLUTION!!
+					if (!(reqGarageName in garages)){
+						if (typeof reqGarageType.resolutions !== 'undefined'){
+							// This occurs:
+							// 		developer.amazon.com/alexa/console
+							//		in actual use
+							const garageSlotResolved = reqGarageType.resolutions.resolutionsPerAuthority[0].values[0];
+							reqGarageName = garageSlotResolved.value.name;
+						} else {
+							// This only occurs on console.aws.alexa.com
+							// This is a little silly and is only for testing, can be removed later
+							var closestGarage = stringSimilarity.findBestMatch(reqGarageName, garages)['bestMatch']['target'];
+							reqGarageName = closestGarage;
+						}
+					}
+
+					// CAIN: counts[0]
+					// CCG:  counts[1]
+					// UCG:  counts[2]
+					// WCG:  counts[3]
+					var count_idx = -1;
+					if (reqGarageName === 'Cain Garage'){
+						count_idx = 0;
+					} else if (reqGarageName === 'Central Campus Garage'){
+						count_idx = 1;
+					} else if (reqGarageName === 'University Center Garage'){
+						count_idx = 2;
+					} else if (reqGarageName === 'West Campus Garage'){
+						count_idx = 3;
+					}
+
+					this.response.speak(reqGarageName+' has '+counts[count_idx]+' spots left.');;
+					this.response.cardRenderer('alexa-tamu', reqGarageName+' has '+counts[count_idx]+' spots left.');
+					this.emit(':responseReady');
+				}			
+			});
+
+		}
 	},
 	'GetLocationIntent' : function(){
 		var location_slot = this.event.request.intent.slots.Location;
@@ -242,6 +283,8 @@ const handlers = {
         console.log(`Session ended: ${this.event.request.reason}`);
     },
     'Unhandled': function () {
+    	// This is where we'd add
+    	// this.event.request -> DynamoDB
         this.attributes.speechOutput = this.t('HELP_MESSAGE');
         this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
         this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
