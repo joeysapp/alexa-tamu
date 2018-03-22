@@ -19,7 +19,6 @@ const garages = require('./data/locations');
 // Dynamic Content
 const request = require('request');
 const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
 
 const languageStrings = {
 	'en': {
@@ -75,14 +74,16 @@ const handlers = {
 			reqSportType = reqSportType.value;
 			var url = 'https://www.12thmanfoundation.com/ticket-center/sport/'+reqSportType;
 			request(url, (err, res, body) => {
-				var games = [];
-				var tmp = new JSDOM(body);
-				var tmp = tmp.window.document.querySelector('').textContext;
+				if (!err && res.statusCode == 200){
+					var games = [];
+					var window = jsdom.jsdom(body).createWindow();
 
+					var tmp = window.document.getElementsByClassName('h4')[0].innerHTML;
 
-				this.response.speak('You\'d like to hear about '+reqSportType);
-				this.response.cardRenderer('alexa-tamu', games);
-				this.emit(':responseReady');			
+					this.response.speak('You\'d like to hear about '+tmp);
+					this.response.cardRenderer('alexa-tamu', tmp);
+					this.emit(':responseReady');
+				}			
 			});
 
 		}
