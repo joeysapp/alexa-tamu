@@ -66,11 +66,11 @@ const languageStrings = {
 const handlers = {
 	'LaunchRequest': function(){
 		var speech = new Speech();
-		speech.say("Welcome to Texas A&M University's Alexa dev app! Visit alexa.tamu.edu for more info.");
+		speech.say('Welcome to Texas A&M University\'s Alexa dev app! Visit alexa.tamu.edu for more info.');
 		var s = speech.ssml(true);
 
 		this.attributes.outputSpeech = s;
-		this.attributes.repromptSpeech = "Please visit alexa.tamu.edu to learn more.";
+		this.attributes.repromptSpeech = 'Please visit alexa.tamu.edu to learn more.';
 
 		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
@@ -220,14 +220,14 @@ const handlers = {
 		var location_info = cur_locations[location_name];
 
 		if (location_info){
-			var url = "https://aggiemap.tamu.edu/?bldg="+location_info["url"];
+			var url = 'https://aggiemap.tamu.edu/?bldg='+location_info['url'];
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
 					const $ = cheerio.load(body);
 
 					// soooo cheerio doesn't run JS. we'd need PhantomJS for this
 					// var canvas = $('.esri-display-object')[0];
-					// console.log("Found canvas at "+canvas.toDataURL());
+					// console.log('Found canvas at '+canvas.toDataURL());
 
 					var speechOutput = 'I\'ve sent you a screenshot of the location of '+location_name+' on AggieMap.';
 					this.attributes.speechOutput = speechOutput;
@@ -257,11 +257,11 @@ const handlers = {
 		}
 	},
 	'GetBusStatusIntent' : function(){
-		this.response.speak("GetBusStatusIntent!");
+		this.response.speak('GetBusStatusIntent!');
 		this.emit(':responseReady');
 	},
 	'GetCollegeIntent' : function(){
-		this.response.speak("GetCollegeIntent!");
+		this.response.speak('GetCollegeIntent!');
 		this.emit(':responseReady');
 	},
 	'AMAZON.HelpIntent': function () {
@@ -276,11 +276,11 @@ const handlers = {
 		this.emit(':responseReady');
 	},
 	'AMAZON.StopIntent': function () {
-		this.response.speak("Goodbye!");
+		this.response.speak('Goodbye!');
 		this.emit(':responseReady');
 	},
 	'AMAZON.CancelIntent': function () {
-		this.response.speak("Goodbye!");
+		this.response.speak('Goodbye!');
 		this.emit(':responseReady');
 	},
 	'SessionEndedRequest': function () {
