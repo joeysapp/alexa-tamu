@@ -22,8 +22,11 @@
     "cheerio": "^1.0.0-rc.2",
     "dynamodb": "^1.1.1",
     "http": "0.0.0",
+    "moment": "^2.21.0",
+    "moment-timezone": "^0.5.14",
     "request": "^2.85.0",
     "ssml-builder": "^0.4.3",
-    "string-similarity": "^1.2.0"
+    "string-similarity": "^1.2.0",
+    "stringify-object": "^3.2.2"
   }
 }

@@ -1,8 +1,9 @@
 // SSML
 const Speech = require('ssml-builder');
 
-// Custom slot resolution for testing
+// string manipulation
 const stringSimilarity = require('string-similarity');
+const stringifyObject = require('stringify-object');
 
 // General Alexa
 //	* Intents
@@ -17,12 +18,17 @@ const locations = require('./data/locations');
 // Dynamic Content
 const request = require('request'); 
 const cheerio = require('cheerio'); // DOM Parser
+
+// util
+const moment = require('moment-timezone'); // Timestamps
 const _ = require('lodash'); // Functional Library
-var fs = require('fs'); // filesystem
+const fs = require('fs'); // filesystem
 
 // Database
-var dynamo = require('dynamodb');
+const dynamo = require('dynamodb');
+
 if (fs.existsSync('data/data/dynamodb_credentials')){
+	// exposed creds?
 	dynamo.AWS.config.loadFromPath('data/dynamodb_credentials');
 	dynamo.AWS.config.update({region: 'us-east-1'});
 } else {
@@ -36,8 +42,6 @@ const languageStrings = {
 			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
-			HELP_MESSAGE: 'You could ask me things about classes, or parking lots, or any upcoming games!',
-			HELP_REPROMPT: 'Check out alexa.tamu.edu for more information.',
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_REPEAT_MESSAGE: 'Try saying repeat.',
 			DEF_NOT_FOUND_MESSAGE: 'I\'m sorry, I currently don\'t know ',
@@ -161,10 +165,12 @@ const handlers = {
 					// of the class 'count'. Then, for each of these elements,
 					// we iterate through and push the trimmed (whitespace) data
 					// that happens to be the current garage counts to an array counts.
-					Array.from($('.count > .badge').slice(0,5)).forEach(element => {
+					Array.from($('.count > .badge')).forEach(element => {
 						counts.push(_.trim(element.children[0].data));
 					});
 
+					// We could be doing this better, aka using the Resolved Slot's ID, but 
+					// if we do it here then people can add garages easily.
 					const garages = ['Cain Garage', 'Central Campus Garage', 'University Center Garage', 'West Campus Garage'];
 					if (!(reqGarageName in garages)){
 						if (typeof reqGarageType.resolutions !== 'undefined'){
@@ -176,9 +182,7 @@ const handlers = {
 						}
 					}
 
-					// CAIN: counts[0] CCG:  counts[1] UCG:  counts[2] WCG:  counts[3]
-					// We could be doing this better, aka using the Resolved Slot's ID, but 
-					// if we do it here then people can add garages easily.
+					// CAIN: 0, CCG: 1, UCG: 2, WCG: 3
 					var count_idx = -1;
 					if (reqGarageName === 'Cain Garage'){
 						count_idx = 0;
@@ -190,8 +194,11 @@ const handlers = {
 						count_idx = 3;
 					}
 
-					this.response.speak(reqGarageName+' has '+counts[count_idx]+' spots left.');;
-					this.response.cardRenderer('alexa-tamu', reqGarageName+' has '+counts[count_idx]+' spots left.');
+					var currentTime = moment().tz('America/Rainy_River').format('h:m a');
+					var cardContent = reqGarageName+' has '+counts[count_idx]+' spots open as of '+currentTime+'.';
+
+					this.response.speak(reqGarageName+' currently has '+counts[count_idx]+' spots open.');
+					this.response.cardRenderer('alexa-tamu: '+reqGarageName, cardContent);
 					this.emit(':responseReady');
 				}			
 			});
@@ -209,8 +216,6 @@ const handlers = {
 				location_name = closest_key;
 			}
 		}
-
-		var cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), location_name);
 		var cur_locations = this.t('LOCATIONS');
 		var location_info = cur_locations[location_name];
 
@@ -224,30 +229,30 @@ const handlers = {
 					// var canvas = $('.esri-display-object')[0];
 					// console.log("Found canvas at "+canvas.toDataURL());
 
-					var speechOutput = "I've sent you a screenshot of the location of ${location_name} on AggieMap.";
+					var speechOutput = 'I\'ve sent you a screenshot of the location of '+location_name+' on AggieMap.';
 					this.attributes.speechOutput = speechOutput;
-					this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+					this.attributes.repromptSpeech = 'I said that '+speechOutput;
 
-					this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-					this.response.cardRenderer(cardTitle, url);
+					// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
+					this.response.cardRenderer('alexa-tamu: '+location_name, 'Type the following url into your browser:'+url);
 					this.emit(':responseReady');
 				}
 			});
 		} else {
-			var speechOutput = this.t('LOC_NOT_FOUND_MESSAGE');
-			var repromptSpeech = this.t('LOC_NOT_FOUND_REPROMPT');
+			var speechOutput = 'I\'m not sure where ';
 			if (location_name){
-				speechOutput += this.t('LOC_NOT_FOUND_WITH_NAME', location_name);
+				// dynamodb for missed locations here!
+				speechOutput += location_name;
 			} else {
-				speechOutput += this.t('LOC_NOT_FOUND_WITHOUT_NAME');
+				speechOutput += 'that '
 			}
+			speehchOutput += 'is.';
 
-			speechOutput += repromptSpeech;
 			this.attributes.speechOutput = speechOutput;
-			this.attributes.repromptSpeech = repromptSpeech;
+			this.attributes.repromptSpeech = 'I said that'+speechOutput;
 
-			// this.response.speak(defSlot).listen(repromptSpeech);
 			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.response.cardRenderer('alexa-tamu: '+location_name, 'Error finding requested location!');
 			this.emit(':responseReady');
 		}
 	},
@@ -284,20 +289,23 @@ const handlers = {
 	'Unhandled': function () {
 		// This is where we'd add
 		// this.event.request -> DynamoDB
-		var MissedQuery = dynamo.define('MissedQuery', {
+		var Unhandled_Queries_Table = dynamo.define('Unhandled_Queries', {
 			hashKey : 'ID',
-			// add the timestamp attributes (updatedAt, createdAt)
 			timestamps : true,
 			schema : {
-				ID : dynamo.types.number,
-				date : dynamo.types.date,
+				ID : dynamo.types.string,
 				query: dynamo.types.string,
 			}
 		});
-		MissedQuery.create({ID: 0, date:'0000-00-01', query:'hello'});
-		this.attributes.speechOutput = this.t('HELP_MESSAGE');
-		this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
-		this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
+		Unhandled_Queries_Table.create({
+							ID: 'yo what it do',
+							query: stringifyObject(this.event.request, {
+								indent: '  ',
+								singleQuotes: true
+							})
+						   });
+		this.attributes.speechOutput = 'I can\'t currently answer that, but I\'ve stored your request in a database.';
+		this.attributes.repromptSpeech = 'Check out alexa.tamu.edu for more information.';
 		this.emit(':responseReady');
 	},
 };
