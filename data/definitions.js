@@ -1,5 +1,11 @@
 module.exports = {
-	'DEFINITION_EN_US': {
+	'es-es': {
+		'aggie' : 'hypothetically',
+		'howdy': 'a working implementation',
+		'northgate': 'of multiple languages',
+		'maroon': 'for static content'
+	},
+	'en-us': {
 		'yell practice': 'A Texas A and M event that is similar to a pep rally. The most notable yell practices, Midnight Yell, occurs the night before home football games.',
 		'yells': 'Synchronized yells done at Aggie sporting events.',
 		'whoop': 'An exclamation of approval and excitement, especially used at the end of a yell.',

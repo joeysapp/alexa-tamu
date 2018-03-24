@@ -38,13 +38,13 @@ if (fs.existsSync('data/data/dynamodb_credentials')){
 const languageStrings = {
 	'en': {
 		translation: {
-			DEFINITIONS: definitions.DEFINITION_EN_US,
+			DEFINITION_LANG: 'en-us',
 			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
 			STOP_MESSAGE: 'Goodbye!',
-			DEF_REPEAT_MESSAGE: 'Try saying repeat.',
-			DEF_NOT_FOUND_MESSAGE: 'I\'m sorry, I currently don\'t know ',
+			DEF_READOUT: 'The requested definition of ',
+			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
 			DEF_NOT_FOUND_WITH_NAME: 'the definition for %s. ',
 			DEF_NOT_FOUND_WITHOUT_NAME: 'that definition.',
 			DEF_NOT_FOUND_REPROMPT: 'What else can I help you with?',
@@ -56,7 +56,7 @@ const languageStrings = {
 	},
 	'en-us' : {
 		translation: {
-			DEFINITIONS: definitions.DEFINITION_EN_US,
+			DEFINITION_LANG: 'en-us',
 			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 		},
@@ -114,46 +114,41 @@ const handlers = {
 	'GetDefinitionIntent' : function(){
 		var defSlot = this.event.request.intent.slots.Definition;
 		var defName = defSlot.value;
-		if (!(defName in this.t('DEFINITIONS'))){
-			if (typeof defSlot.resolutions !== 'undefined'){
-				// This occurs:
-				// 		developer.amazon.com/alexa/console
-				//		in actual use
-				const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority[0].values[0];
-				defName = defSlotResolved.value.name;
-			} else {
-				// This only occurs on console.aws.alexa.com
-				// This is a little silly and is only for testing, can be removed later
-				var closest_key = stringSimilarity.findBestMatch(defName, Object.keys(this.t('DEFINITIONS')))['bestMatch']['target'];
-				defName = closest_key;
-			}
-		}
+		// if (!(defName in this.t('DEFINITIONS'))){
+		// 	if (typeof defSlot.resolutions !== 'undefined'){
+		// 		// This occurs:
+		// 		// 		developer.amazon.com/alexa/console
+		// 		//		in actual use
+		// 		const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority[0].values[0];
+		// 		defName = defSlotResolved.value.name;
+		// 	} else {
+		// 		// This only occurs on console.aws.alexa.com
+		// 		// This is a little silly and is only for testing, can be removed later
+		// 		var closest_key = stringSimilarity.findBestMatch(defName, Object.keys(this.t('DEFINITIONS')))['bestMatch']['target'];
+		// 		defName = closest_key;
+		// 	}
+		// }
 
-		var cardTitle = this.t('DISPLAY_CARD_TITLE', this.t('SKILL_NAME'), defName);
-		var myDefs = this.t('DEFINITIONS');
-		var def = myDefs[defName];
+		var s = require('intents/getDefinition.js');
+		var def = s.getDefinition(defName, this.t('DEFINITION_LANG'));
 
 		if (def){
-			this.attributes.speechOutput = def;
-			this.attributes.repromptSpeech = this.t('DEF_REPEAT_MESSAGE');
+			var speechOutput = this.t('DEF_READOUT')+defName+' is '+def;
+			var repromptSpeech = speechOutput;
 
-			this.response.speak(def).listen(this.attributes.repromptSpeech);
-			this.response.cardRenderer(cardTitle, def);
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.response.cardRenderer('alexa-tamu: '+defName, def);
 			this.emit(':responseReady');
 		} else {
-			var speechOutput = this.t('DEF_NOT_FOUND_MESSAGE');
-			var repromptSpeech = this.t('DEF_NOT_FOUND_REPROMPT');
+			var speechOutput = this.t('DEF_NOT_FOUND');
 			if (defName){
-				speechOutput += this.t('DEF_NOT_FOUND_WITH_NAME', defName);
+				speechOutput += defName;
 			} else {
-				speechOutput += this.t('DEF_NOT_FOUND_WITHOUT_NAME');
+				speechOutput += ' that';
 			}
+			speechOutput += ' is.';
+			var repromptSpeech = speechOutput;
 
-			speechOutput += repromptSpeech;
-			this.attributes.speechOutput = speechOutput;
-			this.attributes.repromptSpeech = repromptSpeech;
-
-			// this.response.speak(defSlot).listen(repromptSpeech);
 			this.response.speak(speechOutput).listen(repromptSpeech);
 			this.emit(':responseReady');
 		}
