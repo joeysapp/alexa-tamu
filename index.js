@@ -77,14 +77,14 @@ const handlers = {
 	},
 	'getExternalScriptIntent' : function(){
 		var reqScript = this.event.request.intent.slots.ScriptName.value;
-		var reqType = 'baseball';
+		var reqArgs = this.event.request.intent.slots.ScriptArgs.value;
 		// var reqType = this.event.request.intent.slots.SportType.value;
 
 		var s = require('intents/'+reqScript);
-		var res = s.getSportsPage(reqType);
+		var res = s.getSportsPage(reqArgs);
 
-		this.response.speak('getExternalScriptIntent(baseball) -> '+res);
-		this.response.cardRenderer('alexa-tamu', 'getExternalScriptIntent(baseball) -> '+res);
+		this.response.speak('getExternalScriptIntent('+reqArgs+') -> '+res);
+		this.response.cardRenderer('alexa-tamu', 'getExternalScriptIntent('+reqArgs+') -> '+res);
 		this.emit(':responseReady');		
 	},
 	'GetSportsInfoIntent' : function(){
@@ -114,20 +114,6 @@ const handlers = {
 	'GetDefinitionIntent' : function(){
 		var defSlot = this.event.request.intent.slots.Definition;
 		var defName = defSlot.value;
-		// if (!(defName in this.t('DEFINITIONS'))){
-		// 	if (typeof defSlot.resolutions !== 'undefined'){
-		// 		// This occurs:
-		// 		// 		developer.amazon.com/alexa/console
-		// 		//		in actual use
-		// 		const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority[0].values[0];
-		// 		defName = defSlotResolved.value.name;
-		// 	} else {
-		// 		// This only occurs on console.aws.alexa.com
-		// 		// This is a little silly and is only for testing, can be removed later
-		// 		var closest_key = stringSimilarity.findBestMatch(defName, Object.keys(this.t('DEFINITIONS')))['bestMatch']['target'];
-		// 		defName = closest_key;
-		// 	}
-		// }
 
 		var s = require('intents/getDefinition.js');
 		var def = s.getDefinition(defName, this.t('DEFINITION_LANG'));
