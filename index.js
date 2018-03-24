@@ -12,8 +12,8 @@ const Alexa = require('alexa-sdk');
 const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
 
 // Static Content
-const definitions = require('./data/definitions');
-const locations = require('./data/locations');
+const definitions = require('data/definitions');
+const locations = require('data/locations');
 
 // Dynamic Content
 const request = require('request'); 
@@ -74,6 +74,18 @@ const handlers = {
 
 		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
+	},
+	'getExternalScriptIntent' : function(){
+		var reqScript = this.event.request.intent.slots.ScriptName.value;
+		var reqType = 'baseball';
+		// var reqType = this.event.request.intent.slots.SportType.value;
+
+		var s = require('intents/'+reqScript);
+		var res = s.getSportsPage(reqType);
+
+		this.response.speak('getExternalScriptIntent(baseball) -> '+res);
+		this.response.cardRenderer('alexa-tamu', 'getExternalScriptIntent(baseball) -> '+res);
+		this.emit(':responseReady');		
 	},
 	'GetSportsInfoIntent' : function(){
 		var reqSportType = this.event.request.intent.slots.SportType;
