@@ -2,6 +2,9 @@
 *.zip
 to_zip/
 
+# secret keys!!!
+data/auth/
+
 # Logs
 logs
 *.log
