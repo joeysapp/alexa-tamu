@@ -51,6 +51,7 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 | Campus food    | "Where can I eat?", "What food places are open right now?", "I'm hungry"                           | https://www.dineoncampus.com/tamu/                            |
 | OAL            | "I need to print something", "Where can I use a computer?", "What labs are open currently?         | http://oal.tamu.edu/Lab-Locations                             |
 | Academic Cal   | 'When's drop date this semester?', 'When's the next school holiday?', 'When's spring break?''      | https://registrar.tamu.edu/, downloadable calendar object     |
+| Library Hours  | 'What libraries are open right now?', 'What are the hours of MSC?'                                 | https://library.tamu.edu/about/hours.html                     |
 
 ## Dependencies 
 | Library      | Uses                                    | URL                                             |
