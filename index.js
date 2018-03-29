@@ -18,6 +18,7 @@ const locations = require('data/locations');
 // Dynamic Content
 const request = require('request'); 
 const cheerio = require('cheerio'); // DOM Parser
+const bodyParser = require('body-parser');
 
 // util
 const moment = require('moment-timezone'); // Timestamps
@@ -96,24 +97,47 @@ const handlers = {
 			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
 		} else {
 			reqSportType = reqSportType.value;
-			var url = 'http://12thman.com/calendar.aspx?vtype=list&preset=current';
-			request(url, (err, res, body) => {
+			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
+			// var opts = {
+			// 	url: 'http://12thman.com/services/responsive-calendar.ashx',
+			// 	headers: { 
+			// 		'content-type': 'application/json',
+			// 	},
+			// 	qs: {
+			// 		type: 'events',				
+			// 		sport: 0,
+			// 		date: todayDate
+			// 	}
+			// }
+			var opt2 = {
+				url:'http://12thman.com/services/responsive-calendar.ashx',
+				headers:{
+					'Content-Type':'application/json'
+				},
+				method:'GET',
+				qs: {
+					type: 'events',
+					sport: '0',
+					date: '3/27/2018'
+				},
+				gzip:true,
+				json:true
+			}
+			request(opt2, (err, res, body) => {
 				if (!err && res.statusCode == 200){
-					const $ = cheerio.load(body);
+					console.log('you got'+bodyParser(body));
 
 					// The schedule has 6 days, with each day item
 					// holding (potentially) multiple events. 
-					var schedule = $('.sidearm-calendar-schedule');
-					schedule.children('article').each((idx1, day) => {
-						$(day).children('article').each((idx2, game) => {
-							console.log(_.toLower(_.words($(game).text())));
-						})
-					});
 
 					this.response.speak('You\'d like to hear about '+tmp);
-					this.response.cardRenderer('alexa-tamu', tmp);
+					this.response.cardRenderer('alexa-tamu', body);
 					this.emit(':responseReady');
-				}			
+				} else {
+					this.response.speak('That request failed!');
+					this.response.cardRenderer('alexa-tamu', err);
+					this.emit(':responseReady');					
+				}	
 			});
 		}
 	},
