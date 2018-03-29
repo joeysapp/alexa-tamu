@@ -16,7 +16,7 @@ Note that this project is being made to fulfill requirements of the team members
 ```
 Create IAM account for user on console.aws.amazon.com
 Install awscli, configure to above IAM account credentials
-$ zip -r out.zip index.js data/ node_modules/ package-lock.json package.json  
+$ zip -r out.zip index.js data/ node_modules/ intents/ package-lock.json package.json  
 $ aws s3 cp out.zip s3://alexa-tamu-code
 ```
 It must be noted our skill (Lambda setup within AWS console) is specifically running off of the file named "out.zip" and is particular about how the file is zipped.
@@ -29,29 +29,27 @@ Authentication: https://developer.amazon.com/docs/custom-skills/link-an-alexa-us
 ```
 
 ## Notes
-[Clickable URLS in cards/responses](https://forums.developer.amazon.com/questions/72895/how-to-include-clickable-urls-in-alexa-card-respon.html)
-[Custom Slot Types](https://developer.amazon.com/docs/custom-skills/custom-interaction-model-reference.html#custom-slot-type-values)
 Slot values are sent to your skill in written format. For example, both "fire h. d. 7" and "fire h. d. seven" would be sent to your skill as "Fire HD7". For better recognition, acronyms and other phrases involving spoken letters should either be all caps ("HD") or separated by periods and a space ("h. d. "). Using lowercase for initialisms may lead to unreliable recognition since the spoken form may not correctly be detected
 
 ## Potential Ideas
-| Idea           | Example                                                                                            | URL                                                           |
-|----------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
-| School/Depts   | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
-| Bus Routes     | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
-| Garage Status  | "Is WCG full?"                                                                                     | http://transport.tamu.edu/parking/realtime.aspx               |
-| Games          | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
-| Locations      | "Where is the MSC?", "Where is my son's New Student Conference?", "How do I get to my math class?" | https://aggiemap.tamu.edu/directory/                          |
-| Maroon Alerts  | Possible global opt-in Maroon Alert system                                                         | https://twitter.com/tamucodemaroon?lang=en                    |
-| eCampus/Howdy  | "Sorry, we can't do that just yet!"                                                                | N/A                                                           |
-| college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
-| Parking Info   | "Where can I park on parent's weekend?", "What times can I park in Lot 100 today?"                 | http://transportmap.tamu.edu/parkingmap/                      |
-| Student Health | "Is Beutel open today?", "Here's the Student Health Service URL!"                                  |                                                               |
-| college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
-| Event info.    | "Tell me events coming up", "Tell me if Craggies have any events soon!"                            | Custom website for insertion w/ curation                      |
-| Campus food    | "Where can I eat?", "What food places are open right now?", "I'm hungry"                           | https://www.dineoncampus.com/tamu/                            |
-| OAL            | "I need to print something", "Where can I use a computer?", "What labs are open currently?         | http://oal.tamu.edu/Lab-Locations                             |
-| Academic Cal   | 'When's drop date this semester?', 'When's the next school holiday?', 'When's spring break?''      | https://registrar.tamu.edu/, downloadable calendar object     |
-| Library Hours  | 'What libraries are open right now?', 'What are the hours of MSC?'                                 | https://library.tamu.edu/about/hours.html                     |
+| S | Idea           | Example                                                                                            | URL                                                           |
+|---|----------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
+|   | School/Depts   | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
+|   | Bus Routes     | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
+|   | Garage Status  | "Is WCG full?"                                                                                     | http://transport.tamu.edu/parking/realtime.aspx               |
+|   | Games          | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
+|   | Locations      | "Where is the MSC?", "Where is my son's New Student Conference?", "How do I get to my math class?" | https://aggiemap.tamu.edu/directory/                          |
+|   | Maroon Alerts  | Possible global opt-in Maroon Alert system                                                         | https://twitter.com/tamucodemaroon?lang=en                    |
+|   | eCampus/Howdy  | "Sorry, we can't do that just yet!"                                                                | N/A                                                           |
+|   | college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
+|   | Parking Info   | "Where can I park on parent's weekend?", "What times can I park in Lot 100 today?"                 | http://transportmap.tamu.edu/parkingmap/                      |
+|   | Student Health | "Is Beutel open today?", "Here's the Student Health Service URL!"                                  |                                                               |
+|   | college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
+|   | Event info.    | "Tell me events coming up", "Tell me if Craggies have any events soon!"                            | Custom website for insertion w/ curation                      |
+|   | Campus food    | "Where can I eat?", "What food places are open right now?", "I'm hungry"                           | https://www.dineoncampus.com/tamu/                            |
+|   | OAL            | "I need to print something", "Where can I use a computer?", "What labs are open currently?         | http://oal.tamu.edu/Lab-Locations                             |
+|   | Academic Cal   | 'When's drop date this semester?', 'When's the next school holiday?', 'When's spring break?''      | https://registrar.tamu.edu/, downloadable calendar object     |
+|   | Library Hours  | 'What libraries are open right now?', 'What are the hours of MSC?'                                 | https://library.tamu.edu/about/hours.html                     |
 
 ## Dependencies 
 | Library      | Uses                                    | URL                                             |
