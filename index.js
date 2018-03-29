@@ -96,13 +96,19 @@ const handlers = {
 			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
 		} else {
 			reqSportType = reqSportType.value;
-			var url = 'https://www.12thmanfoundation.com/ticket-center/sport/'+reqSportType;
+			var url = 'http://12thman.com/calendar.aspx?vtype=list&preset=current';
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
 					const $ = cheerio.load(body);
 
-					// Parsing of $
-					var tmp = null;
+					// The schedule has 6 days, with each day item
+					// holding (potentially) multiple events. 
+					var schedule = $('.sidearm-calendar-schedule');
+					schedule.children('article').each((idx1, day) => {
+						$(day).children('article').each((idx2, game) => {
+							console.log(_.toLower(_.words($(game).text())));
+						})
+					});
 
 					this.response.speak('You\'d like to hear about '+tmp);
 					this.response.cardRenderer('alexa-tamu', tmp);
