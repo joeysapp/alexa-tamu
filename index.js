@@ -104,6 +104,11 @@ const handlers = {
 			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
 			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sport=0&date='+todayDate;
 			requestserver.get(url, (err, res, body) => {
+					// this.response.speak('yo');
+					// this.response.cardRenderer('alexa-tamu: '+reqSportType, body);
+					// this.emit(':responseReady');
+					console.log('this far');
+
 				if (!err && res.statusCode == 200){
 
 					// The schedule has 6 days, with each day item
@@ -111,9 +116,16 @@ const handlers = {
 
 					var schedule = body;
 					for (var day in schedule){
+	
 						var date = moment(schedule[day].date).format('MMM Do, YYYY');
 						var all_events = schedule[day].events
+						console.log('all_events:');
+						if (all_events === [] || all_events === null){
+							console.log(all_events);
+							break;
+						}
 						for (var event of all_events) {
+		
 							// Logistics
 							var date = moment(event.date).format('MMM Do, YYYY');
 							var hour = moment(event.date).format('hh:mma');
@@ -146,7 +158,7 @@ const handlers = {
 								} else {
 									if (speechOutput.slice(-1) == '!'){
 										// means there's more than one game!
-										speechOutput += 'There are more games that I\'ve sent to your Alexa application.';
+										speechOutput += ' There are more games that I\'ve sent to your Alexa application.';
 									}
 									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n';
 								}
