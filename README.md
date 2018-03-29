@@ -36,9 +36,9 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 |---|----------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
 |   | School/Depts   | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
 |   | Bus Routes     | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
-|   | Garage Status  | "Is WCG full?"                                                                                     | http://transport.tamu.edu/parking/realtime.aspx               |
-|   | Games          | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
-|   | Locations      | "Where is the MSC?", "Where is my son's New Student Conference?", "How do I get to my math class?" | https://aggiemap.tamu.edu/directory/                          |
+| ✔️ | Garage Status  | "Is WCG full?"                                                                                     | http://transport.tamu.edu/parking/realtime.aspx               |
+|...| Sports         | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
+| ✔️ | Locations      | "Where is the MSC?", "Where is Blocker?"                                                           | https://aggiemap.tamu.edu/directory/                          |
 |   | Maroon Alerts  | Possible global opt-in Maroon Alert system                                                         | https://twitter.com/tamucodemaroon?lang=en                    |
 |   | eCampus/Howdy  | "Sorry, we can't do that just yet!"                                                                | N/A                                                           |
 |   | college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
