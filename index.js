@@ -17,8 +17,9 @@ const locations = require('data/locations');
 
 // Dynamic Content
 const request = require('request'); 
+const requestjson = require('request-json'); 
+const requestserver = requestjson.createClient('http://localhost:8888/')
 const cheerio = require('cheerio'); // DOM Parser
-const bodyParser = require('body-parser');
 
 // util
 const moment = require('moment-timezone'); // Timestamps
@@ -98,34 +99,10 @@ const handlers = {
 		} else {
 			reqSportType = reqSportType.value;
 			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
-			// var opts = {
-			// 	url: 'http://12thman.com/services/responsive-calendar.ashx',
-			// 	headers: { 
-			// 		'content-type': 'application/json',
-			// 	},
-			// 	qs: {
-			// 		type: 'events',				
-			// 		sport: 0,
-			// 		date: todayDate
-			// 	}
-			// }
-			var opt2 = {
-				url:'http://12thman.com/services/responsive-calendar.ashx',
-				headers:{
-					'Content-Type':'application/json'
-				},
-				method:'GET',
-				qs: {
-					type: 'events',
-					sport: '0',
-					date: '3/27/2018'
-				},
-				gzip:true,
-				json:true
-			}
-			request(opt2, (err, res, body) => {
+			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sports=0&date='+todayDate;
+			requestserver.get(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
-					console.log('you got'+bodyParser(body));
+					console.log('you got'+(body));
 
 					// The schedule has 6 days, with each day item
 					// holding (potentially) multiple events. 
@@ -138,7 +115,11 @@ const handlers = {
 					this.response.cardRenderer('alexa-tamu', err);
 					this.emit(':responseReady');					
 				}	
+
+
 			});
+
+
 		}
 	},
 	'GetDefinitionIntent' : function(){

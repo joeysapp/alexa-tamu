@@ -19,7 +19,6 @@
   "homepage": "https://github.com/joeysapp/alexa-tamu#readme",
   "dependencies": {
     "alexa-sdk": "^1.0.25",
-    "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
     "dynamodb": "^1.1.1",
     "express": "^4.16.3",
