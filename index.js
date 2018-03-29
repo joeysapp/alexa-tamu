@@ -98,25 +98,70 @@ const handlers = {
 			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
 		} else {
 			reqSportType = reqSportType.value;
+
+			var speechOutput = '';
+			var cardOutput = '';
 			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
-			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sports=0&date='+todayDate;
+			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sport=0&date='+todayDate;
 			requestserver.get(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
-					console.log('you got'+(body));
 
 					// The schedule has 6 days, with each day item
 					// holding (potentially) multiple events. 
 
-					this.response.speak('You\'d like to hear about '+tmp);
-					this.response.cardRenderer('alexa-tamu', body);
+					var schedule = body;
+					for (var day in schedule){
+						var date = moment(schedule[day].date).format('MMM Do, YYYY');
+						var all_events = schedule[day].events
+						for (var event of all_events) {
+							// Logistics
+							var date = moment(event.date).format('MMM Do, YYYY');
+							var hour = moment(event.date).format('hh:mma');
+							var time = event.time;
+							var is_conference_game = event.conference;
+							var location = event.location;
+							var at_vs = event.at_vs;
+							var venue = event.facility;
+
+							// Opponent info and image
+							var opponent = event.opponent;
+							var opponent_name = opponent.title;
+							var opponent_location = opponent.location;
+							var opponent_mascot = opponent.mascot;
+							var opponent_image = null;
+
+							var radio = event.media.radio;
+							var tv = event.media.tv;
+							var tickets = event.media.tickets;
+
+							// We say the first seen game, then otherwise just put it in the card object
+							if (event.sport.shortname.includes(reqSportType)){
+								if (speechOutput === ''){
+									if (typeof venue.title !== 'undefined'){
+										speechOutput = 'Our next '+reqSportType+' game is against '+opponent_name+' at '+venue.title+', '+location+' on '+date+' at '+time+'!';
+									} else {
+										speechOutput ='Our next '+reqSportType+' against '+opponent_name+' at '+venue+', '+location+' on '+date+' at '+time+'!';
+									}
+									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n';
+								} else {
+									if (speechOutput.slice(-1) == '!'){
+										// means there's more than one game!
+										speechOutput += 'There are more games that I\'ve sent to your Alexa application.';
+									}
+									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n';
+								}
+							}
+						}
+
+					}
+					this.response.speak(speechOutput);
+					this.response.cardRenderer('alexa-tamu: '+reqSportType, cardOutput);
 					this.emit(':responseReady');
 				} else {
 					this.response.speak('That request failed!');
-					this.response.cardRenderer('alexa-tamu', err);
-					this.emit(':responseReady');					
+					// this.response.cardRenderer('alexa-tamu'+reqSportType, 'Error');
+					this.emit(':responseReady');		
 				}	
-
-
 			});
 
 
