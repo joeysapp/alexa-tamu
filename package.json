@@ -29,6 +29,7 @@
     "request-json": "^0.6.3",
     "ssml-builder": "^0.4.3",
     "string-similarity": "^1.2.0",
-    "stringify-object": "^3.2.2"
+    "stringify-object": "^3.2.2",
+    "xml2js": "^0.4.19"
   }
 }

@@ -90,6 +90,7 @@ const handlers = {
 		this.emit(':responseReady');		
 	},
 	'GetSportsInfoIntent' : function(){
+		// TODO: reqRivalTeam
 		var reqSportType = this.event.request.intent.slots.SportType;
 		var reqRivalTeam = this.event.request.intent.slots.RivalTeam;
 		if (!reqSportType.value){
@@ -104,16 +105,10 @@ const handlers = {
 			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
 			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sport=0&date='+todayDate;
 			requestserver.get(url, (err, res, body) => {
-					// this.response.speak('yo');
-					// this.response.cardRenderer('alexa-tamu: '+reqSportType, body);
-					// this.emit(':responseReady');
-					console.log('this far');
-
 				if (!err && res.statusCode == 200){
 
 					// The schedule has 6 days, with each day item
 					// holding (potentially) multiple events. 
-
 					var schedule = body;
 					for (var day in schedule){
 	
@@ -127,7 +122,7 @@ const handlers = {
 						for (var event of all_events) {
 		
 							// Logistics
-							var date = moment(event.date).format('MMM Do, YYYY');
+							var date = moment(event.date).format('MMMM Do, YYYY');
 							var hour = moment(event.date).format('hh:mma');
 							var time = event.time;
 							var is_conference_game = event.conference;
@@ -154,21 +149,27 @@ const handlers = {
 									} else {
 										speechOutput ='Our next '+reqSportType+' against '+opponent_name+' at '+venue+', '+location+' on '+date+' at '+time+'!';
 									}
-									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n';
+									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n\n';
 								} else {
 									if (speechOutput.slice(-1) == '!'){
 										// means there's more than one game!
 										speechOutput += ' There are more games that I\'ve sent to your Alexa application.';
 									}
-									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n';
+									cardOutput += opponent_name+' @ '+location+', '+time+' on '+date+'\n\n';
 								}
 							}
 						}
 
 					}
-					this.response.speak(speechOutput);
-					this.response.cardRenderer('alexa-tamu: '+reqSportType, cardOutput);
+					if (speechOutput){
+						this.response.speak(speechOutput);
+						this.response.cardRenderer('alexa-tamu: '+reqSportType, cardOutput);
+					} else {
+						this.response.speak('I can\'t seem to find any '+reqSportType+' games in the next week.');
+
+					}
 					this.emit(':responseReady');
+
 				} else {
 					this.response.speak('That request failed!');
 					// this.response.cardRenderer('alexa-tamu'+reqSportType, 'Error');
@@ -318,8 +319,24 @@ const handlers = {
 		}
 	},
 	'GetBusStatusIntent' : function(){
-		this.response.speak('GetBusStatusIntent!');
-		this.emit(':responseReady');
+		var reqBusStatusType = this.event.request.intent.slots.BusNumber;
+		if (!reqBusStatusType.value){
+			const slotToElicit = 'BusNumber';
+			const speechOutput = 'What bus route would you like to hear about?';
+			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
+		} else {
+			reqBusRoute = reqBusStatusType.value;
+			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?request`;
+			request(url, (err, res, body) => {
+				// this gives us back an xml object.
+				// parse it pls
+				buses = JSON.parse(body);
+				buses.forEach(bus => {
+					console.log(bus);
+				});
+
+			});
+		}
 	},
 	'GetCollegeIntent' : function(){
 		this.response.speak('GetCollegeIntent!');
