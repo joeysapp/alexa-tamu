@@ -326,14 +326,24 @@ const handlers = {
 			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
 		} else {
 			reqBusRoute = reqBusStatusType.value;
+			var speechOutput = '';
 			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?request`;
+			var timeNow = moment().tz('America/Chicago').format();
 			request(url, (err, res, body) => {
 				// this gives us back an xml object.
 				// parse it pls
-				buses = JSON.parse(body);
-				buses.forEach(bus => {
-					console.log(bus);
-				});
+				try {
+					buses = JSON.parse(body);
+					buses.forEach(bus => {
+						console.log(bus);
+						var estimatedTime = moment(bus.NextStops[0].EstimatedDepartTime);
+						var durToNextStop = moment.duration(estimatedTime.diff(timeNow)).asMinutes();
+						console.log('You\'ll see a bus in '+durToNextStop);
+
+					});
+				} catch (err) {
+					//console.log('error');
+				}
 
 			});
 		}
