@@ -163,7 +163,7 @@ const handlers = {
 					}
 					if (speechOutput){
 						this.response.speak(speechOutput);
-						this.response.cardRenderer('alexa-tamu: '+reqSportType, cardOutput);
+						this.response.cardRenderer(`alexa-tamu: ${_.capitalize(reqSportType)} Schedule`, cardOutput);
 					} else {
 						this.response.speak('I can\'t seem to find any '+reqSportType+' games in the next week.');
 
@@ -320,27 +320,45 @@ const handlers = {
 	},
 	'GetBusStatusIntent' : function(){
 		var reqBusStatusType = this.event.request.intent.slots.BusNumber;
-		if (!reqBusStatusType.value){
+		if (typeof reqBusStatusType === 'undefined' || !reqBusStatusType.value){
 			const slotToElicit = 'BusNumber';
 			const speechOutput = 'What bus route would you like to hear about?';
 			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
 		} else {
 			reqBusRoute = reqBusStatusType.value;
 			var speechOutput = '';
+			console.log('here');
 			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?request`;
 			var timeNow = moment().tz('America/Chicago').format();
 			request(url, (err, res, body) => {
 				// this gives us back an xml object.
 				// parse it pls
+				console.log('there');
 				try {
+					var Canvas = require('canvas');
+					var new_canvas = new Canvas(200, 200);
+					var ctx = new_canvas.getContext('2d');
 					buses = JSON.parse(body);
+					var busAmount = 0;
+					var speechOutput = `I didn't see any buses on your route right now!`;
 					buses.forEach(bus => {
 						console.log(bus);
 						var estimatedTime = moment(bus.NextStops[0].EstimatedDepartTime);
 						var durToNextStop = moment.duration(estimatedTime.diff(timeNow)).asMinutes();
-						console.log('You\'ll see a bus in '+durToNextStop);
-
+						speechOutput = 'You\'ll see a bus in '+durToNextStop;
+						busAmount++;
 					});
+					const imageObj = {
+						smallImageUrl: ctx.getDataURL(),
+						largeImageUrl: 'https://imgs.xkcd.com/comics/standards.png'
+					};
+					this.attributes.speechOutput = speechOutput;
+					this.attributes.repromptSpeech = 'I said that '+speechOutput;
+
+					// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
+					this.response.cardRenderer(`alexa-tamu: Route ${reqBusRoute}`, `Buses on Route: ${busAmount}`, imageObj);
+					this.emit(':responseReady');
+
 				} catch (err) {
 					//console.log('error');
 				}
