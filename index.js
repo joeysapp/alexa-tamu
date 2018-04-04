@@ -41,19 +41,14 @@ const languageStrings = {
 	'en': {
 		translation: {
 			DEFINITION_LANG: 'en-us',
+			HELPDESK_LANG: 'en-us',
 			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_READOUT: 'The requested definition of ',
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
-			DEF_NOT_FOUND_WITH_NAME: 'the definition for %s. ',
-			DEF_NOT_FOUND_WITHOUT_NAME: 'that definition.',
-			DEF_NOT_FOUND_REPROMPT: 'What else can I help you with?',
-			LOC_NOT_FOUND_MESSAGE: 'I\'m sorry, I currently don\'t know ',
-			LOC_NOT_FOUND_WITH_NAME: 'the location of %s. ',
-			LOC_NOT_FOUND_WITHOUT_NAME: 'that location.',
-			LOC_NOT_FOUND_REPROMPT: 'What else can I help you with?',
+			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu'
 		},
 	},
 	'en-us' : {
@@ -209,27 +204,21 @@ const handlers = {
 		}
 	},
 	'GetHelpdeskIntent' : function(){
-		var defSlot = this.event.request.intent.slots.HelpdeskPhrase;
-		var defName = defSlot.value;
+		var helpdeskPhraseSlot = this.event.request.intent.slots.HelpdeskPhrase;
+		var helpdeskPhrase = helpdeskPhraseSlot.value;
 
-		var s = require('intents/getHelpdesk.js');
-		var def = s.getHelpdesk(defName, this.t('DEFINITION_LANG'));
+		var helpdeskDict = require('intents/getHelpdesk.js');
+		var helpdeskResponse = helpdeskDict.getHelpdesk(helpdeskPhrase, this.t('HELPDESK_LANG'));
 
-		if (def){
-			var speechOutput = def;
+		if (helpdeskResponse){
+			var speechOutput = helpdeskResponse;
 			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
-			this.response.cardRenderer('alexa-tamu: '+defName, def);
+			this.response.cardRenderer('alexa-tamu: '+helpdeskPhrase, helpdeskResponse);
 			this.emit(':responseReady');
 		} else {
-			var speechOutput = this.t('DEF_NOT_FOUND');
-			if (defName){
-				speechOutput += defName;
-			} else {
-				speechOutput += ' that';
-			}
-			speechOutput += ' is.';
+			var speechOutput = this.t('HELPDESK_NOT_FOUND');
 			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
