@@ -1,7 +1,7 @@
-const DEF_TABLE = require('../data/helpdesk');
+const HELPDESK_TABLE = require('../data/helpdesk');
 
 module.exports = {
 	'getHelpdesk' : function(req, def_lang){
-		return DEF_TABLE[def_lang][req];
+		return HELPDESK_TABLE[def_lang][req];
 	}
 };

@@ -1,5 +1,5 @@
 module.exports = {
-  'en us': {
+  'en-us': {
       'software store': 'Texas A and M students, faculty and staff can always purchase discounted software at software.TAMU.EDU.',
       'email': 'Your address will be your NetID@TAMU.EDU. You can also set up your Texas A and M Gmail at google.TAMU.EDU',
       'computer can i bring': 'We can support any machine you buy, but we do have some recommendations for you at u.TAMU.EDU/KB0011325',
