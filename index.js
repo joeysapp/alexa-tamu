@@ -16,8 +16,8 @@ const definitions = require('data/definitions');
 const locations = require('data/locations');
 
 // Dynamic Content
-const request = require('request'); 
-const requestjson = require('request-json'); 
+const request = require('request');
+const requestjson = require('request-json');
 const requestserver = requestjson.createClient('http://localhost:8888/')
 const cheerio = require('cheerio'); // DOM Parser
 
@@ -87,7 +87,7 @@ const handlers = {
 
 		this.response.speak('getExternalScriptIntent('+reqArgs+') -> '+res);
 		this.response.cardRenderer('alexa-tamu', 'getExternalScriptIntent('+reqArgs+') -> '+res);
-		this.emit(':responseReady');		
+		this.emit(':responseReady');
 	},
 	'GetSportsInfoIntent' : function(){
 		// TODO: reqRivalTeam
@@ -108,10 +108,10 @@ const handlers = {
 				if (!err && res.statusCode == 200){
 
 					// The schedule has 6 days, with each day item
-					// holding (potentially) multiple events. 
+					// holding (potentially) multiple events.
 					var schedule = body;
 					for (var day in schedule){
-	
+
 						var date = moment(schedule[day].date).format('MMM Do, YYYY');
 						var all_events = schedule[day].events
 						console.log('all_events:');
@@ -120,7 +120,7 @@ const handlers = {
 							break;
 						}
 						for (var event of all_events) {
-		
+
 							// Logistics
 							var date = moment(event.date).format('MMMM Do, YYYY');
 							var hour = moment(event.date).format('hh:mma');
@@ -173,8 +173,8 @@ const handlers = {
 				} else {
 					this.response.speak('That request failed!');
 					// this.response.cardRenderer('alexa-tamu'+reqSportType, 'Error');
-					this.emit(':responseReady');		
-				}	
+					this.emit(':responseReady');
+				}
 			});
 
 
@@ -189,6 +189,34 @@ const handlers = {
 
 		if (def){
 			var speechOutput = this.t('DEF_READOUT')+defName+' is '+def;
+			var repromptSpeech = speechOutput;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.response.cardRenderer('alexa-tamu: '+defName, def);
+			this.emit(':responseReady');
+		} else {
+			var speechOutput = this.t('DEF_NOT_FOUND');
+			if (defName){
+				speechOutput += defName;
+			} else {
+				speechOutput += ' that';
+			}
+			speechOutput += ' is.';
+			var repromptSpeech = speechOutput;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
+		}
+	},
+	'GetHelpdeskIntent' : function(){
+		var defSlot = this.event.request.intent.slots.HelpdeskPhrase;
+		var defName = defSlot.value;
+
+		var s = require('intents/getHelpdesk.js');
+		var def = s.getHelpdesk(defName, this.t('DEFINITION_LANG'));
+
+		if (def){
+			var speechOutput = def;
 			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
@@ -231,7 +259,7 @@ const handlers = {
 						counts.push(_.trim(element.children[0].data));
 					});
 
-					// We could be doing this better, aka using the Resolved Slot's ID, but 
+					// We could be doing this better, aka using the Resolved Slot's ID, but
 					// if we do it here then people can add garages easily.
 					const garages = ['Cain Garage', 'Central Campus Garage', 'University Center Garage', 'West Campus Garage'];
 					if (!(reqGarageName in garages)){
@@ -262,7 +290,7 @@ const handlers = {
 					this.response.speak(reqGarageName+' currently has '+counts[count_idx]+' spots open.');
 					this.response.cardRenderer('alexa-tamu: '+reqGarageName, cardContent);
 					this.emit(':responseReady');
-				}			
+				}
 			});
 		}
 	},
@@ -373,7 +401,7 @@ const handlers = {
 	'AMAZON.HelpIntent': function () {
 		this.attributes.speechOutput = this.t('HELP_MESSAGE');
 		this.attributes.repromptSpeech = this.t('HELP_REPROMPT');
-		
+
 		this.response.speak(this.attributes.speechOutput).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
 	},
