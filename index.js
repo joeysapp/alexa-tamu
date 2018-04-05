@@ -48,7 +48,7 @@ const languageStrings = {
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_READOUT: 'The requested definition of ',
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
-			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.<say-as interpret-as="characters">tamu</say-as>.<say-as interpret-as="characters">edu</say-as>'
+			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu'
 		},
 	},
 	'en-us' : {
@@ -63,11 +63,11 @@ const languageStrings = {
 const handlers = {
 	'LaunchRequest': function(){
 		var speech = new Speech();
-		speech.say('Welcome to Texas A&M University\'s Alexa dev app! Visit alexa.<say-as interpret-as="characters">tamu</say-as>.<say-as interpret-as="characters">edu</say-as> for more info.');
+		speech.say('Welcome to Texas A&M University\'s Alexa dev app! Visit alexa.tamu.edu for more info.');
 		var s = speech.ssml(true);
 
 		this.attributes.outputSpeech = s;
-		this.attributes.repromptSpeech = 'Please visit alexa.<say-as interpret-as="characters">tamu</say-as>.<say-as interpret-as="characters">edu</say-as> to learn more.';
+		this.attributes.repromptSpeech = 'Please visit alexa.tamu.edu to learn more.';
 
 		this.response.speak(this.attributes.outputSpeech).listen(this.attributes.repromptSpeech);
 		this.emit(':responseReady');
@@ -439,7 +439,7 @@ const handlers = {
 							})
 						   });
 		this.attributes.speechOutput = 'I can\'t currently answer that, but I\'ve stored your request in a database.';
-		this.attributes.repromptSpeech = 'Check out alexa.<say-as interpret-as="characters">tamu</say-as>.<say-as interpret-as="characters">edu</say-as> for more information.';
+		this.attributes.repromptSpeech = 'Check out alexa.tamu.edu for more information.';
 		this.emit(':responseReady');
 	},
 };
