@@ -181,7 +181,7 @@ const handlers = {
 
 		var s = require('intents/getDefinition.js');
 
-		if (typeof defSlot.resolutions !== 'undefined' && helpdeskPhraseSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+		if (typeof defSlot.resolutions !== 'undefined' && defSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
 			const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority[0].values[0];
 			defName = defSlotResolved.value.name;
 		}
