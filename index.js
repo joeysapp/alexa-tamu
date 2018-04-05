@@ -298,7 +298,7 @@ const handlers = {
 		var locationSlot = this.event.request.intent.slots.Location;
 		var locationName = helpdeskPhraseSlot.value;
 
-		var locationDict = require('intents/getHelpdesk.js');
+		var locationDict = require('intents/getLocation.js');
 		var locationResponse = locationDict.getHelpdesk(locationName, this.t('LOCATION_LANG'));
 
 		var url_id = locationResponse['url']
