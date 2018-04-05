@@ -297,7 +297,6 @@ const handlers = {
 	'GetLocationIntent' : function(){
 		var location_slot = this.event.request.intent.slots.Location;
 		var location_name = location_slot.value;
-
 		if (!(location_name in this.t('LOCATIONS'))){
 			if (typeof location_slot.resolutions !== 'undefined'){
 				const location_slot_resolved = location_slot.resolutions.resolutionsPerAuthority[0].values[0];
@@ -312,23 +311,23 @@ const handlers = {
 
 		if (location_info){
 			var url = 'https://aggiemap.tamu.edu/?bldg='+location_info['url'];
-			//request(url, (err, res, body) => {
-				//if (!err && res.statusCode === 200){
-					//const $ = cheerio.load(body);
+			request(url, (err, res, body) => {
+				if (!err && res.statusCode === 200){
+					const $ = cheerio.load(body);
 
 					// soooo cheerio doesn't run JS. we'd need PhantomJS for this
 					// var canvas = $('.esri-display-object')[0];
 					// console.log('Found canvas at '+canvas.toDataURL());
 
-					var speechOutput = 'I\'ve sent you a link of the location of '+location_name+' on AggieMap.';
+					var speechOutput = 'I\'ve sent you a screenshot of the location of '+location_name+' on AggieMap.';
 					this.attributes.speechOutput = speechOutput;
 					this.attributes.repromptSpeech = 'I said that '+speechOutput;
 
 					// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
 					this.response.cardRenderer('alexa-tamu: '+location_name, 'Type the following url into your browser:'+url);
 					this.emit(':responseReady');
-				//}
-			//});
+				}
+			});
 		} else {
 			var speechOutput = 'I\'m not sure where ';
 			if (location_name){
