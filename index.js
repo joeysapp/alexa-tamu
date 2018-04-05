@@ -180,6 +180,12 @@ const handlers = {
 		var defName = defSlot.value;
 
 		var s = require('intents/getDefinition.js');
+
+		if (typeof defSlot.resolutions !== 'undefined' && defSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+			const defSlotResolved = defSlot.resolutions.resolutionsPerAuthority[0].values[0];
+			defName = defSlotResolved.value.name;
+		}
+
 		var def = s.getDefinition(defName, this.t('DEFINITION_LANG'));
 
 		if (def){
@@ -206,6 +212,11 @@ const handlers = {
 	'GetHelpdeskIntent' : function(){
 		var helpdeskPhraseSlot = this.event.request.intent.slots.HelpdeskPhrase;
 		var helpdeskPhrase = helpdeskPhraseSlot.value;
+
+		if (typeof helpdeskPhraseSlot.resolutions !== 'undefined' && helpdeskPhraseSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+			const helpdeskSlotResolved = helpdeskPhraseSlot.resolutions.resolutionsPerAuthority[0].values[0];
+			helpdeskPhrase = helpdeskSlotResolved.value.name;
+		}
 
 		var helpdeskDict = require('intents/getHelpdesk.js');
 		var helpdeskResponse = helpdeskDict.getHelpdesk(helpdeskPhrase, this.t('HELPDESK_LANG'));
