@@ -284,54 +284,33 @@ const handlers = {
 		}
 	},
 	'GetLocationIntent' : function(){
-		var location_slot = this.event.request.intent.slots.Location;
-		var location_name = location_slot.value;
-		if (!(location_name in this.t('LOCATIONS'))){
-			if (typeof location_slot.resolutions !== 'undefined'){
-				const location_slot_resolved = location_slot.resolutions.resolutionsPerAuthority[0].values[0];
-				location_name = location_slot_resolved.value.name;
-			} else {
-				var closest_key = stringSimilarity.findBestMatch(location_name, Object.keys(this.t('LOCATIONS')))['bestMatch']['target'];
-				location_name = closest_key;
-			}
-		}
-		var cur_locations = this.t('LOCATIONS');
-		var location_info = cur_locations[location_name];
+		var locationSlot = this.event.request.intent.slots.Location;
+		var locationName = helpdeskPhraseSlot.value;
 
-		if (location_info){
+		var locationDict = require('intents/getHelpdesk.js');
+		var locationResponse = locationDict.getHelpdesk(locationName, this.t('LOCATION_LANG'));
+
+		var url_id = locationResponse['url']
+		var spoken_id = locationResponse['id'];
+
+		if (locationResponse){
 			var url = 'https://aggiemap.tamu.edu/?bldg='+location_info['url'];
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
-					const $ = cheerio.load(body);
+					// const $ = cheerio.load(body);
+					var speechOutput = `I\'ve sent you a screenshot of the location of ${locatioName} on AggieMap.`;
+					var repromptSpeech = speechOutput;
 
-					// soooo cheerio doesn't run JS. we'd need PhantomJS for this
-					// var canvas = $('.esri-display-object')[0];
-					// console.log('Found canvas at '+canvas.toDataURL());
-
-					var speechOutput = 'I\'ve sent you a screenshot of the location of '+location_name+' on AggieMap.';
-					this.attributes.speechOutput = speechOutput;
-					this.attributes.repromptSpeech = 'I said that '+speechOutput;
-
-					// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-					this.response.cardRenderer('alexa-tamu: '+location_name, 'Type the following url into your browser:'+url);
+					this.response.speak(speechOutput).listen(repromptSpeech);
+					this.response.cardRenderer('alexa-tamu: '+helpdeskPhrase, helpdeskResponse);
 					this.emit(':responseReady');
 				}
 			});
 		} else {
-			var speechOutput = 'I\'m not sure where ';
-			if (location_name){
-				// dynamodb for missed locations here!
-				speechOutput += location_name;
-			} else {
-				speechOutput += 'that '
-			}
-			speehchOutput += 'is.';
-
-			this.attributes.speechOutput = speechOutput;
-			this.attributes.repromptSpeech = 'I said that'+speechOutput;
+			var speechOutput = this.t('HELPDESK_NOT_FOUND');
+			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
-			this.response.cardRenderer('alexa-tamu: '+location_name, 'Error finding requested location!');
 			this.emit(':responseReady');
 		}
 	},
