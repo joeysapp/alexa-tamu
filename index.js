@@ -11,10 +11,6 @@ const stringifyObject = require('stringify-object');
 const Alexa = require('alexa-sdk');
 const APP_ID = 'amzn1.ask.skill.82534c6d-52ef-4742-90f3-1945c616832f';
 
-// Static Content
-const definitions = require('data/definitions');
-const locations = require('data/locations');
-
 // Dynamic Content
 const request = require('request');
 const requestjson = require('request-json');
@@ -42,7 +38,7 @@ const languageStrings = {
 		translation: {
 			DEFINITION_LANG: 'en-us',
 			HELPDESK_LANG: 'en-us',
-			LOCATIONS: locations.LOCATION_EN_US,
+			LOCATION_LANG: 'en-us',
 			SKILL_NAME: 'alexa-tamu',
 			DISPLAY_CARD_TITLE: '%s',
 			STOP_MESSAGE: 'Goodbye!',
@@ -54,7 +50,6 @@ const languageStrings = {
 	'en-us' : {
 		translation: {
 			DEFINITION_LANG: 'en-us',
-			LOCATIONS: locations.LOCATION_EN_US,
 			SKILL_NAME: 'alexa-tamu',
 		},
 	},
@@ -296,24 +291,23 @@ const handlers = {
 	},
 	'GetLocationIntent' : function(){
 		var locationSlot = this.event.request.intent.slots.Location;
-		var locationName = helpdeskPhraseSlot.value;
+		var locationName = locationSlot.value;
 
 		var locationDict = require('intents/getLocation.js');
-		var locationResponse = locationDict.getHelpdesk(locationName, this.t('LOCATION_LANG'));
-
-		var url_id = locationResponse['url']
-		var spoken_id = locationResponse['id'];
+		var locationResponse = locationDict.getLocation(locationName, this.t('LOCATION_LANG'));
 
 		if (locationResponse){
-			var url = 'https://aggiemap.tamu.edu/?bldg='+location_info['url'];
+			var url_id = locationResponse['url']
+			var spoken_id = locationResponse['id'];
+			var url = 'https://aggiemap.tamu.edu/?bldg='+url_id;
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
 					// const $ = cheerio.load(body);
-					var speechOutput = `I\'ve sent you a screenshot of the location of ${locatioName} on AggieMap.`;
+					var speechOutput = `I\'ve sent you a screenshot of the location of ${locationName} on AggieMap.`;
 					var repromptSpeech = speechOutput;
 
 					this.response.speak(speechOutput).listen(repromptSpeech);
-					this.response.cardRenderer('alexa-tamu: '+helpdeskPhrase, helpdeskResponse);
+					this.response.cardRenderer('alexa-tamu: '+locationName, url);
 					this.emit(':responseReady');
 				}
 			});

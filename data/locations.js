@@ -1,5 +1,5 @@
 module.exports = {
-	'LOCATION_EN_US': {
+	'en-us': {
 		"Purchasing & Stores": {
 			"url": "0957", 
 			"id": "PRCH"
