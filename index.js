@@ -45,6 +45,7 @@ const languageStrings = {
 			DEF_READOUT: 'The requested definition of ',
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
 			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu'
+			LOCATION_NOT_FOUND: "I'\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu"
 		},
 	},
 	'en-us' : {
@@ -293,6 +294,11 @@ const handlers = {
 		var locationSlot = this.event.request.intent.slots.Location;
 		var locationName = locationSlot.value;
 
+		if (typeof locationSlot.resolutions !== 'undefined' && locationSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+			const locationSlotResolved = locationSlot.resolutions.resolutionsPerAuthority[0].values[0];
+			locationName = locationSlotResolved.value.name;
+		}
+
 		var locationDict = require('intents/getLocation.js');
 		var locationResponse = locationDict.getLocation(locationName, this.t('LOCATION_LANG'));
 
@@ -312,7 +318,7 @@ const handlers = {
 				}
 			});
 		} else {
-			var speechOutput = this.t('HELPDESK_NOT_FOUND');
+			var speechOutput = this.t('LOCATION_NOT_FOUND');
 			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
