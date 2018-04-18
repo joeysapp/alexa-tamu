@@ -82,14 +82,19 @@ const handlers = {
 	},
 	'GetSportsInfoIntent' : function(){
 		// TODO: reqRivalTeam
-		var reqSportType = this.event.request.intent.slots.SportType;
+		var reqSportTypeSlot = this.event.request.intent.slots.SportType;
 		var reqRivalTeam = this.event.request.intent.slots.RivalTeam;
-		if (!reqSportType.value){
+		if (!reqSportTypeSlot.value){
 			const slotToElicit = 'SportType';
 			const speechOutput = 'What sport would you like to hear about?';
 			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
 		} else {
-			reqSportType = reqSportType.value;
+			var reqSportType = reqSportTypeSlot.value;
+
+			if (typeof reqSportTypeSlot.resolutions !== 'undefined' && reqSportTypeSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+				const reqSportTypeResolved = reqSportTypeSlot.resolutions.resolutionsPerAuthority[0].values[0];
+				reqSportType = reqSportTypeResolved.value.name;
+			}
 
 			var speechOutput = '';
 			var cardOutput = '';
@@ -402,21 +407,21 @@ const handlers = {
 	'Unhandled': function () {
 		// This is where we'd add
 		// this.event.request -> DynamoDB
-		var Unhandled_Queries_Table = dynamo.define('Unhandled_Queries', {
-			hashKey : 'ID',
-			timestamps : true,
-			schema : {
-				ID : dynamo.types.string,
-				query: dynamo.types.string,
-			}
-		});
-		Unhandled_Queries_Table.create({
-							ID: 'yo what it do',
-							query: stringifyObject(this.event.request, {
-								indent: '  ',
-								singleQuotes: true
-							})
-						   });
+		// var Unhandled_Queries_Table = dynamo.define('Unhandled_Queries', {
+		// 	hashKey : 'ID',
+		// 	timestamps : true,
+		// 	schema : {
+		// 		ID : dynamo.types.string,
+		// 		query: dynamo.types.string,
+		// 	}
+		// });
+		// Unhandled_Queries_Table.create({
+		// 					ID: 'yo what it do',
+		// 					query: stringifyObject(this.event.request, {
+		// 						indent: '  ',
+		// 						singleQuotes: true
+		// 					})
+		// 				   });
 		this.attributes.speechOutput = 'I can\'t currently answer that, but I\'ve stored your request in a database.';
 		this.attributes.repromptSpeech = 'Check out alexa.tamu.edu for more information.';
 		this.emit(':responseReady');
