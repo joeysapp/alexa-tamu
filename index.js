@@ -45,7 +45,8 @@ const languageStrings = {
 			DEF_READOUT: 'The requested definition of ',
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
 			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu',
-			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu'
+			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu',
+			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.'
 		},
 	},
 	'en-us' : {
@@ -330,9 +331,15 @@ const handlers = {
 		}
 	},
 	'GetBusStatusIntent' : function(){
-		var reqBusStatusType = this.event.request.intent.slots.BusNumber;
-	 {
-			reqBusRoute = reqBusStatusType.value;
+		var busSlot = this.event.request.intent.slots.BusNumber;
+		var reqBusRoute = busSlot.value;
+
+		if (typeof busSlot.resolutions !== 'undefined' && busSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+			const busSlotResolved = busSlot.resolutions.resolutionsPerAuthority[0].values[0];
+			reqBusRoute = busSlotResolved.value.name;
+		}
+
+	 	if(reqBusRoute){
 			var speechOutput = '';
 			console.log('here');
 			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?retmode=xml`;
@@ -341,21 +348,22 @@ const handlers = {
 				// this gives us back an xml object.
 				// parse it pls
 
-				var busses = JSON.parse(body);
+				var buses = JSON.parse(body);
 
-				if(busses.length < 1){
-					var speechOutput = "There are currently no busses active on route " + reqBusRoute + ".";
+				if(buses.length < 1){
+					var speechOutput = "There are currently no buses active on route " + reqBusRoute + ".";
+					var repromptSpeech = speechOutput;
 					this.response.speak(speechOutput).listen(repromptSpeech);
 					this.emit(':responseReady');
 				}
 
 				var speechOutput = "Bus route " + reqBusRoute + " will be stopping at: \n";
-				var cardOutput = "The next stops for the route " + reqBusRoute + " busses are: \n";
+				var cardOutput = "The next stops for the route " + reqBusRoute + " buses are: \n";
 
-				for(var i = 0; i < busses.length; ++i){
-					var stopName = busses[i]["NextStops"][0]["Name"];
-					var stopEstTime = moment(busses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago').format('h:mm:ss a');
-					var methodStopEst = moment(busses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago');
+				for(var i = 0; i < buses.length; ++i){
+					var stopName = buses[i]["NextStops"][0]["Name"];
+					var stopEstTime = moment(buses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago').format('h:mm:ss a');
+					var methodStopEst = moment(buses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago');
 
 					var difference = Math.round(moment.duration(methodStopEst.diff(timeNow)).asMinutes());
 
@@ -367,9 +375,9 @@ const handlers = {
 
 					// Let's make this have a pretty output. #DesigningForVoice
 					var speechOutputToAppend = "";
-					if(i == (busses.length - 1) && i != 0){
+					if(i == (buses.length - 1) && i != 0){
 						speechOutputToAppend = "and " + stopName + " in " + difference + ".\n";
-					}else if(i == (busses.length - 1) && i == 0){
+					}else if(i == (buses.length - 1) && i == 0){
 						speechOutputToAppend = stopName + " in " + difference + ".\n";
 					}else{
 						speechOutputToAppend = stopName + " in " + difference + ", \n";
@@ -418,6 +426,12 @@ const handlers = {
 				// }
 
 			});
+		}else{
+			var speechOutput = this.t('BUS_NOT_FOUND');
+			var repromptSpeech = speechOutput;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
 		}
 	},
 	'GetCollegeIntent' : function(){
