@@ -249,7 +249,6 @@ const handlers = {
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
 					const $ = cheerio.load(body);
-
 					counts = [];
 					// We use the DOM element $() to access an array of all
 					// elements of the class 'badge' that are children of elements
@@ -332,48 +331,91 @@ const handlers = {
 	},
 	'GetBusStatusIntent' : function(){
 		var reqBusStatusType = this.event.request.intent.slots.BusNumber;
-		if (typeof reqBusStatusType === 'undefined' || !reqBusStatusType.value){
-			const slotToElicit = 'BusNumber';
-			const speechOutput = 'What bus route would you like to hear about?';
-			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
-		} else {
+	 {
 			reqBusRoute = reqBusStatusType.value;
 			var speechOutput = '';
 			console.log('here');
-			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?request`;
-			var timeNow = moment().tz('America/Chicago').format();
+			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?retmode=xml`;
+			var timeNow = moment().tz('America/Chicago');
 			request(url, (err, res, body) => {
 				// this gives us back an xml object.
 				// parse it pls
-				console.log('there');
-				try {
-					var Canvas = require('canvas');
-					var new_canvas = new Canvas(200, 200);
-					var ctx = new_canvas.getContext('2d');
-					buses = JSON.parse(body);
-					var busAmount = 0;
-					var speechOutput = `I didn't see any buses on your route right now!`;
-					buses.forEach(bus => {
-						console.log(bus);
-						var estimatedTime = moment(bus.NextStops[0].EstimatedDepartTime);
-						var durToNextStop = moment.duration(estimatedTime.diff(timeNow)).asMinutes();
-						speechOutput = 'You\'ll see a bus in '+durToNextStop;
-						busAmount++;
-					});
-					const imageObj = {
-						smallImageUrl: ctx.getDataURL(),
-						largeImageUrl: 'https://imgs.xkcd.com/comics/standards.png'
-					};
-					this.attributes.speechOutput = speechOutput;
-					this.attributes.repromptSpeech = 'I said that '+speechOutput;
 
-					// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-					this.response.cardRenderer(`alexa-tamu: Route ${reqBusRoute}`, `Buses on Route: ${busAmount}`, imageObj);
+				var busses = JSON.parse(body);
+
+				if(busses.length < 1){
+					var speechOutput = "There are currently no busses active on route " + reqBusRoute + ".";
+					this.response.speak(speechOutput).listen(repromptSpeech);
 					this.emit(':responseReady');
-
-				} catch (err) {
-					//console.log('error');
 				}
+
+				var speechOutput = "Bus route " + reqBusRoute + " will be stopping at: \n";
+				var cardOutput = "The next stops for the route " + reqBusRoute + " busses are: \n";
+
+				for(var i = 0; i < busses.length; ++i){
+					var stopName = busses[i]["NextStops"][0]["Name"];
+					var stopEstTime = moment(busses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago').format('h:mm:ss a');
+					var methodStopEst = moment(busses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago');
+
+					var difference = Math.round(moment.duration(methodStopEst.diff(timeNow)).asMinutes());
+
+					if(difference < 1){
+						difference = "less than one minute";
+					}else{
+						difference += " minutes";
+					}
+
+					// Let's make this have a pretty output. #DesigningForVoice
+					var speechOutputToAppend = "";
+					if(i == (busses.length - 1) && i != 0){
+						speechOutputToAppend = "and " + stopName + " in " + difference + ".\n";
+					}else if(i == (busses.length - 1) && i == 0){
+						speechOutputToAppend = stopName + " in " + difference + ".\n";
+					}else{
+						speechOutputToAppend = stopName + " in " + difference + ", \n";
+					}
+
+					console.log(speechOutputToAppend);
+					var cardOutputToAppend = '\t' + stopName + '\t\t' + stopEstTime + '\n';
+
+					speechOutput += speechOutputToAppend;
+					cardOutput += cardOutputToAppend;
+				}
+
+				var repromptSpeech = speechOutput;
+				this.response.speak(speechOutput).listen(repromptSpeech);
+				this.response.cardRenderer('alexa-tamu: Bus Route ' + reqBusRoute + ' next stops:', cardOutput);
+				this.emit(':responseReady');
+
+				// console.log('there');
+				// try {
+				// 	var Canvas = require('canvas');
+				// 	var new_canvas = new Canvas(200, 200);
+				// 	var ctx = new_canvas.getContext('2d');
+				// 	buses = JSON.parse(body);
+				// 	var busAmount = 0;
+				// 	var speechOutput = `I didn't see any buses on your route right now!`;
+				// 	buses.forEach(bus => {
+				// 		console.log(bus);
+				// 		var estimatedTime = moment(bus.NextStops[0].EstimatedDepartTime);
+				// 		var durToNextStop = moment.duration(estimatedTime.diff(timeNow)).asMinutes();
+				// 		speechOutput = 'You\'ll see a bus in '+durToNextStop;
+				// 		busAmount++;
+				// 	});
+				// 	const imageObj = {
+				// 		smallImageUrl: ctx.getDataURL(),
+				// 		largeImageUrl: 'https://imgs.xkcd.com/comics/standards.png'
+				// 	};
+				// 	this.attributes.speechOutput = speechOutput;
+				// 	this.attributes.repromptSpeech = 'I said that '+speechOutput;
+				//
+				// 	// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
+				// 	this.response.cardRenderer(`alexa-tamu: Route ${reqBusRoute}`, `Buses on Route: ${busAmount}`, imageObj);
+				// 	this.emit(':responseReady');
+				//
+				// } catch (err) {
+				// 	//console.log('error');
+				// }
 
 			});
 		}
