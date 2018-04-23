@@ -44,8 +44,8 @@ const languageStrings = {
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_READOUT: 'The requested definition of ',
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
-			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu',
-			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu',
+			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu. Your request has been logged to help with the skill\'s development.',
+			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu. Your request has been logged to help with the skill\'s development.',
 			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.'
 		},
 	},
@@ -205,7 +205,7 @@ const handlers = {
 			} else {
 				speechOutput += ' that';
 			}
-			speechOutput += ' is.';
+			speechOutput += ' is. Your request has been logged to help with the skill\'s development.';
 			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
