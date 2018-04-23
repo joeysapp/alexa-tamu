@@ -46,7 +46,8 @@ const languageStrings = {
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
 			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu',
 			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu',
-			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.'
+			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.',
+			REC_NOT_FOUND: 'I\'m sorry, the Texas A&M Recreation Center currently does not offer that. Your request has been logged to help with the skill\'s development.'
 		},
 	},
 	'en-us' : {
@@ -80,6 +81,97 @@ const handlers = {
 		this.response.speak('getExternalScriptIntent('+reqArgs+') -> '+res);
 		this.response.cardRenderer('alexa-tamu', 'getExternalScriptIntent('+reqArgs+') -> '+res);
 		this.emit(':responseReady');
+	},
+	'GetRecIntent' : function(){
+		var recSlot = this.event.request.intent.slots.RecInfo;
+		var recName = recSlot.value;
+
+		if (typeof recSlot.resolutions !== 'undefined' && recSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+		 	const recSlotResolved = recSlot.resolutions.resolutionsPerAuthority[0].values[0];
+		 	recName = recSlotResolved.value.name;
+		}
+
+		var timeNow = moment().tz('America/Chicago');
+		//Keep these updated with most current open and close times
+		var open = [12, 6, 6, 6, 6, 6, 8];
+		//24 == 12 AM, for algorithmic reasons
+		var close = [24, 24, 24, 24, 24, 23, 23];
+		var open_fmt = ["12 PM", "6 AM", "6 AM", "6 AM", "6 AM", "6 AM", "8 AM"];
+		var close_fmt = ["12 AM", "12 AM", "12 AM", "12 AM", "12 AM", "11 PM", "11 PM"]
+		var name_of_day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ' Saturday'];
+		var schedule = '';
+		for(var i = 0; i < name_of_day.length; ++i){
+			schedule += name_of_day[i] + ": " + open_fmt[i] + " - " + close_fmt[i] + "\n";
+		}
+
+		var outputSpeech = '';
+		var day = timeNow.day();
+		var hour = timeNow.hour();
+
+		if(recName == "today" || recName == "right now"){
+			if(hour >= open[day] && hour < close[day]){
+				outputSpeech = "Yes, the recreational facilities are currently open. I have sent the current rec hours to your Alexa application.";
+			}else{
+				outputSpeech = "No, the recreational facilities are currently closed. ";
+				if(hour < open[day]){
+					outputSpeech += "The rec center opens at ";
+					if(day == 0){
+						outputSpeech += open_fmt[day] + " on " + name_of_day[day] + "s.";
+					}else if(day < 6){
+						outputSpeech += open_fmt[day] + " on " + name_of_day[day] + "s.";
+					}else{
+						outputSpeech += open_fmt[day] + " on " + name_of_day[day] + "s.";
+					}
+				}else if(hour >= close[day]){
+					outputSpeech += "The rec center will open at ";
+					if(day == 5){
+						outputSpeech += open_fmt[day + 1] + " on " + name_of_day[day + 1] + ".";
+					}else{
+						outputSpeech += open_fmt[0] + " on " + name_of_day[0] + ".";
+					}
+				}
+			}
+		}else if(recName == "this week"){
+			//Keep schedule var updated with the most current schedule.
+			if(schedule){
+				outputSpeech = "Yes, the recreational facilities are open this week. I have sent the current rec hours to your Alexa application.";
+			}else{
+				outputSpeech = "No, the recreational facilites are currently closed.";
+			}
+		}else if(recName == "this weekend"){
+			outputSpeech += "This weekend, the recreational facilities will be open on " + name_of_day[6];
+			outputSpeech += " from " + open_fmt[6] + " until " + close_fmt[6] + " and on " + name_of_day[0];
+			outputSpeech += " from " + open_fmt[0] + " until " + close_fmt[0] + ".";
+		}else if(recName == "Monday" || recName == "Tuesday" || recName == "Wednesday" ||
+			recName == "Thursday" || recName == "Friday" || recName == "Saturday" || recName == "Sunday"){
+				var index = name_of_day.indexOf(recName);
+				outputSpeech = "Yes, the recreational facilities are open on " + name_of_day[index] +
+					" from " + open_fmt[index] + " until " + close_fmt[index] + ".";
+		}else{
+			var s = require('intents/getRecInfo.js');
+
+			var def = s.getRecInfo(recName, this.t('DEFINITION_LANG'));
+
+			if(def){
+				var speechOutput = def;
+				var repromptSpeech = speechOutput;
+
+				this.response.speak(speechOutput).listen(repromptSpeech);
+				this.response.cardRenderer('alexa-tamu: '+recName, def);
+				this.emit(':responseReady');
+			} else {
+				var speechOutput = this.t('REC_NOT_FOUND');
+
+				this.response.speak(speechOutput).listen(repromptSpeech);
+				this.emit(':responseReady');
+			}
+		}
+
+		var repromptSpeech = outputSpeech;
+		this.response.speak(outputSpeech).listen(repromptSpeech);
+		this.response.cardRenderer('alexa-tamu: current rec schedule:', schedule);
+		this.emit(':responseReady');
+
 	},
 	'GetSportsInfoIntent' : function(){
 		// TODO: reqRivalTeam
@@ -315,7 +407,7 @@ const handlers = {
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
 					// const $ = cheerio.load(body);
-					var speechOutput = `I\'ve sent you a screenshot of the location of ${locationName} on AggieMap.`;
+					var speechOutput = `I\'ve sent you the URL of the location of ${locationName} on AggieMap.`;
 					var repromptSpeech = speechOutput;
 
 					this.response.speak(speechOutput).listen(repromptSpeech);
@@ -338,6 +430,12 @@ const handlers = {
 		if (typeof busSlot.resolutions !== 'undefined' && busSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
 			const busSlotResolved = busSlot.resolutions.resolutionsPerAuthority[0].values[0];
 			reqBusRoute = busSlotResolved.value.name;
+		}else if(busSlot.resolutions.resolutionsPerAuthority[0].status.code == 'ER_SUCCESS_NO_MATCH'){
+			var speechOutput = this.t('BUS_NOT_FOUND');
+			var repromptSpeech = speechOutput;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
 		}
 
 	 	if(reqBusRoute){
@@ -368,7 +466,7 @@ const handlers = {
 
 					var difference = Math.round(moment.duration(methodStopEst.diff(timeNow)).asMinutes());
 
-					if(difference < 1){
+					if(difference <= 1){
 						difference = "less than one minute";
 					}else{
 						difference += " minutes";
