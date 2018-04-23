@@ -66,7 +66,7 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 ## License
 **MIT License**
 
-Copyright (c) 2018 Joseph Sapp, Jack Swink, Justin Bevolo, Aaron Swink
+Copyright (c) 2018 Joseph Sapp, Jack Swink, Justin Bevolo, Aaron Blasband
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
