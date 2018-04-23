@@ -101,6 +101,7 @@ const handlers = {
 			var cardOutput = '';
 			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
 			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sport=0&date='+todayDate;
+			console.log(url)
 			requestserver.get(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
 
@@ -114,7 +115,7 @@ const handlers = {
 						console.log('all_events:');
 						if (all_events === [] || all_events === null){
 							console.log(all_events);
-							break;
+							continue;
 						}
 						for (var event of all_events) {
 
