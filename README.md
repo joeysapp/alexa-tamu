@@ -38,11 +38,12 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 ## Potential Ideas
 | S | Idea           | Example                                                                                            | URL                                                           |
 |---|----------------|----------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
-|   | School/Depts   | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
-|   | Bus Routes     | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
+| ✔️  | School/Depts   | "Tell me about the school of architecture."                                                        | https://www.tamu.edu/about/departments.html                   |
+| ✔️  | Bus Routes     | "Is my bus late?", "Where is bus 12?"                                                              | http://transport.tamu.edu/BusRoutes/                          |
 | ✔️ | Garage Status  | "Is WCG full?"                                                                                     | http://transport.tamu.edu/parking/realtime.aspx               |
-|...| Sports         | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
+| ✔️ | Sports         | "When's the next game?", "Buy tickets for the basketball game."                                    | https://www.12thmanfoundation.com/ticket-center/full-schedule |
 | ✔️ | Locations      | "Where is the MSC?", "Where is Blocker?"                                                           | https://aggiemap.tamu.edu/directory/                          |
+| ✔️ | Rec Hours  | 'Is the rec open right now?', 'Is the rec open?'                                 | https://library.tamu.edu/about/hours.html                     |
 |   | Maroon Alerts  | Possible global opt-in Maroon Alert system                                                         | https://twitter.com/tamucodemaroon?lang=en                    |
 |   | eCampus/Howdy  | "Sorry, we can't do that just yet!"                                                                | N/A                                                           |
 |   | college:crm    | "Tell me about CSCE482!", "That class is super fun! Would you like me to read the description?"    | Public?                                                       |
@@ -54,6 +55,7 @@ Slot values are sent to your skill in written format. For example, both "fire h.
 |   | OAL            | "I need to print something", "Where can I use a computer?", "What labs are open currently?         | http://oal.tamu.edu/Lab-Locations                             |
 |   | Academic Cal   | 'When's drop date this semester?', 'When's the next school holiday?', 'When's spring break?''      | https://registrar.tamu.edu/, downloadable calendar object     |
 |   | Library Hours  | 'What libraries are open right now?', 'What are the hours of MSC?'                                 | https://library.tamu.edu/about/hours.html                     |
+
 
 ## Dependencies 
 | Library      | Uses                                    | URL                                             |
