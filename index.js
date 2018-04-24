@@ -44,8 +44,10 @@ const languageStrings = {
 			STOP_MESSAGE: 'Goodbye!',
 			DEF_READOUT: 'The requested definition of ',
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
-			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu',
-			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu'
+			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu. Your request has been logged to help with the skill\'s development.',
+			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu. Your request has been logged to help with the skill\'s development.',
+			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.'
+			REC_NOT_FOUND: 'I\'m sorry, the Texas A&M Recreation Center currently does not offer that. Your request has been logged to help with the skill\'s development.'
 		},
 	},
 	'en-us' : {
@@ -80,6 +82,97 @@ const handlers = {
 		this.response.cardRenderer('alexa-tamu', 'getExternalScriptIntent('+reqArgs+') -> '+res);
 		this.emit(':responseReady');
 	},
+	'GetRecIntent' : function(){
+		var recSlot = this.event.request.intent.slots.RecInfo;
+		var recName = recSlot.value;
+
+		if (typeof recSlot.resolutions !== 'undefined' && recSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+		 	const recSlotResolved = recSlot.resolutions.resolutionsPerAuthority[0].values[0];
+		 	recName = recSlotResolved.value.name;
+		}
+
+		var timeNow = moment().tz('America/Chicago');
+		//Keep these updated with most current open and close times
+		var open = [12, 6, 6, 6, 6, 6, 8];
+		//24 == 12 AM, for algorithmic reasons
+		var close = [24, 24, 24, 24, 24, 23, 23];
+		var open_fmt = ["12 PM", "6 AM", "6 AM", "6 AM", "6 AM", "6 AM", "8 AM"];
+		var close_fmt = ["12 AM", "12 AM", "12 AM", "12 AM", "12 AM", "11 PM", "11 PM"]
+		var name_of_day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ' Saturday'];
+		var schedule = '';
+		for(var i = 0; i < name_of_day.length; ++i){
+			schedule += name_of_day[i] + ": " + open_fmt[i] + " - " + close_fmt[i] + "\n";
+		}
+
+		var outputSpeech = '';
+		var day = timeNow.day();
+		var hour = timeNow.hour();
+
+		if(recName == "today" || recName == "right now"){
+			if(hour >= open[day] && hour < close[day]){
+				outputSpeech = "Yes, the recreational facilities are currently open. I have sent the current rec hours to your Alexa application.";
+			}else{
+				outputSpeech = "No, the recreational facilities are currently closed. ";
+				if(hour < open[day]){
+					outputSpeech += "The rec center opens at ";
+					if(day == 0){
+						outputSpeech += open_fmt[day] + " on " + name_of_day[day] + "s.";
+					}else if(day < 6){
+						outputSpeech += open_fmt[day] + " on " + name_of_day[day] + "s.";
+					}else{
+						outputSpeech += open_fmt[day] + " on " + name_of_day[day] + "s.";
+					}
+				}else if(hour >= close[day]){
+					outputSpeech += "The rec center will open at ";
+					if(day == 5){
+						outputSpeech += open_fmt[day + 1] + " on " + name_of_day[day + 1] + ".";
+					}else{
+						outputSpeech += open_fmt[0] + " on " + name_of_day[0] + ".";
+					}
+				}
+			}
+		}else if(recName == "this week"){
+			//Keep schedule var updated with the most current schedule.
+			if(schedule){
+				outputSpeech = "Yes, the recreational facilities are open this week. I have sent the current rec hours to your Alexa application.";
+			}else{
+				outputSpeech = "No, the recreational facilites are currently closed.";
+			}
+		}else if(recName == "this weekend"){
+			outputSpeech += "This weekend, the recreational facilities will be open on " + name_of_day[6];
+			outputSpeech += " from " + open_fmt[6] + " until " + close_fmt[6] + " and on " + name_of_day[0];
+			outputSpeech += " from " + open_fmt[0] + " until " + close_fmt[0] + ".";
+		}else if(recName == "Monday" || recName == "Tuesday" || recName == "Wednesday" ||
+			recName == "Thursday" || recName == "Friday" || recName == "Saturday" || recName == "Sunday"){
+				var index = name_of_day.indexOf(recName);
+				outputSpeech = "Yes, the recreational facilities are open on " + name_of_day[index] +
+					" from " + open_fmt[index] + " until " + close_fmt[index] + ".";
+		}else{
+			var s = require('intents/getRecInfo.js');
+
+			var def = s.getRecInfo(recName, this.t('DEFINITION_LANG'));
+
+			if(def){
+				var speechOutput = def;
+				var repromptSpeech = speechOutput;
+
+				this.response.speak(speechOutput).listen(repromptSpeech);
+				this.response.cardRenderer('alexa-tamu: '+recName, def);
+				this.emit(':responseReady');
+			} else {
+				var speechOutput = this.t('REC_NOT_FOUND');
+
+				this.response.speak(speechOutput).listen(repromptSpeech);
+				this.emit(':responseReady');
+			}
+		}
+
+		var repromptSpeech = outputSpeech;
+		this.response.speak(outputSpeech).listen(repromptSpeech);
+		this.response.cardRenderer('alexa-tamu: current rec schedule:', schedule);
+		this.emit(':responseReady');
+
+	},
 	'GetSportsInfoIntent' : function(){
 		// TODO: reqRivalTeam
 		var reqSportTypeSlot = this.event.request.intent.slots.SportType;
@@ -100,6 +193,7 @@ const handlers = {
 			var cardOutput = '';
 			var todayDate = moment().tz('America/Rainy_River').format('MM/DD/YYYY');
 			var url = 'http://12thman.com/services/responsive-calendar.ashx?type=events&sport=0&date='+todayDate;
+			console.log(url)
 			requestserver.get(url, (err, res, body) => {
 				if (!err && res.statusCode == 200){
 
@@ -113,7 +207,7 @@ const handlers = {
 						console.log('all_events:');
 						if (all_events === [] || all_events === null){
 							console.log(all_events);
-							break;
+							continue;
 						}
 						for (var event of all_events) {
 
@@ -203,7 +297,7 @@ const handlers = {
 			} else {
 				speechOutput += ' that';
 			}
-			speechOutput += ' is.';
+			speechOutput += ' is. Your request has been logged to help with the skill\'s development.';
 			var repromptSpeech = speechOutput;
 
 			this.response.speak(speechOutput).listen(repromptSpeech);
@@ -249,7 +343,6 @@ const handlers = {
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
 					const $ = cheerio.load(body);
-
 					counts = [];
 					// We use the DOM element $() to access an array of all
 					// elements of the class 'badge' that are children of elements
@@ -314,7 +407,7 @@ const handlers = {
 			request(url, (err, res, body) => {
 				if (!err && res.statusCode === 200){
 					// const $ = cheerio.load(body);
-					var speechOutput = `I\'ve sent you a screenshot of the location of ${locationName} on AggieMap.`;
+					var speechOutput = `I\'ve sent you the URL of the location of ${locationName} on AggieMap.`;
 					var repromptSpeech = speechOutput;
 
 					this.response.speak(speechOutput).listen(repromptSpeech);
@@ -331,51 +424,113 @@ const handlers = {
 		}
 	},
 	'GetBusStatusIntent' : function(){
-		var reqBusStatusType = this.event.request.intent.slots.BusNumber;
-		if (typeof reqBusStatusType === 'undefined' || !reqBusStatusType.value){
-			const slotToElicit = 'BusNumber';
-			const speechOutput = 'What bus route would you like to hear about?';
-			this.emit(':elicitSlot', slotToElicit, speechOutput, speechOutput);
-		} else {
-			reqBusRoute = reqBusStatusType.value;
+		var busSlot = this.event.request.intent.slots.BusNumber;
+		var reqBusRoute = busSlot.value;
+
+		if (typeof busSlot.resolutions !== 'undefined' && busSlot.resolutions.resolutionsPerAuthority[0].status.code != 'ER_SUCCESS_NO_MATCH'){
+			const busSlotResolved = busSlot.resolutions.resolutionsPerAuthority[0].values[0];
+			reqBusRoute = busSlotResolved.value.name;
+		}else if(busSlot.resolutions.resolutionsPerAuthority[0].status.code == 'ER_SUCCESS_NO_MATCH'){
+			var speechOutput = this.t('BUS_NOT_FOUND');
+			var repromptSpeech = speechOutput;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
+		}
+
+	 	if(reqBusRoute){
 			var speechOutput = '';
 			console.log('here');
-			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?request`;
-			var timeNow = moment().tz('America/Chicago').format();
+			var url = `http://transport.tamu.edu/BusRoutesFeed/api/route/${reqBusRoute}/buses/mentor?retmode=xml`;
+			var timeNow = moment().tz('America/Chicago');
 			request(url, (err, res, body) => {
 				// this gives us back an xml object.
 				// parse it pls
-				console.log('there');
-				try {
-					var Canvas = require('canvas');
-					var new_canvas = new Canvas(200, 200);
-					var ctx = new_canvas.getContext('2d');
-					buses = JSON.parse(body);
-					var busAmount = 0;
-					var speechOutput = `I didn't see any buses on your route right now!`;
-					buses.forEach(bus => {
-						console.log(bus);
-						var estimatedTime = moment(bus.NextStops[0].EstimatedDepartTime);
-						var durToNextStop = moment.duration(estimatedTime.diff(timeNow)).asMinutes();
-						speechOutput = 'You\'ll see a bus in '+durToNextStop;
-						busAmount++;
-					});
-					const imageObj = {
-						smallImageUrl: ctx.getDataURL(),
-						largeImageUrl: 'https://imgs.xkcd.com/comics/standards.png'
-					};
-					this.attributes.speechOutput = speechOutput;
-					this.attributes.repromptSpeech = 'I said that '+speechOutput;
 
-					// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
-					this.response.cardRenderer(`alexa-tamu: Route ${reqBusRoute}`, `Buses on Route: ${busAmount}`, imageObj);
+				var buses = JSON.parse(body);
+
+				if(buses.length < 1){
+					var speechOutput = "There are currently no buses active on route " + reqBusRoute + ".";
+					var repromptSpeech = speechOutput;
+					this.response.speak(speechOutput).listen(repromptSpeech);
 					this.emit(':responseReady');
-
-				} catch (err) {
-					//console.log('error');
 				}
 
+				var speechOutput = "Bus route " + reqBusRoute + " will be stopping at: \n";
+				var cardOutput = "The next stops for the route " + reqBusRoute + " buses are: \n";
+
+				for(var i = 0; i < buses.length; ++i){
+					var stopName = buses[i]["NextStops"][0]["Name"];
+					var stopEstTime = moment(buses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago').format('h:mm:ss a');
+					var methodStopEst = moment(buses[i]["NextStops"][0]["EstimatedDepartTime"]).tz('America/Chicago');
+
+					var difference = Math.round(moment.duration(methodStopEst.diff(timeNow)).asMinutes());
+
+					if(difference <= 1){
+						difference = "less than one minute";
+					}else{
+						difference += " minutes";
+					}
+
+					// Let's make this have a pretty output. #DesigningForVoice
+					var speechOutputToAppend = "";
+					if(i == (buses.length - 1) && i != 0){
+						speechOutputToAppend = "and " + stopName + " in " + difference + ".\n";
+					}else if(i == (buses.length - 1) && i == 0){
+						speechOutputToAppend = stopName + " in " + difference + ".\n";
+					}else{
+						speechOutputToAppend = stopName + " in " + difference + ", \n";
+					}
+
+					console.log(speechOutputToAppend);
+					var cardOutputToAppend = '\t' + stopName + '\t\t' + stopEstTime + '\n';
+
+					speechOutput += speechOutputToAppend;
+					cardOutput += cardOutputToAppend;
+				}
+
+				var repromptSpeech = speechOutput;
+				this.response.speak(speechOutput).listen(repromptSpeech);
+				this.response.cardRenderer('alexa-tamu: Bus Route ' + reqBusRoute + ' next stops:', cardOutput);
+				this.emit(':responseReady');
+
+				// console.log('there');
+				// try {
+				// 	var Canvas = require('canvas');
+				// 	var new_canvas = new Canvas(200, 200);
+				// 	var ctx = new_canvas.getContext('2d');
+				// 	buses = JSON.parse(body);
+				// 	var busAmount = 0;
+				// 	var speechOutput = `I didn't see any buses on your route right now!`;
+				// 	buses.forEach(bus => {
+				// 		console.log(bus);
+				// 		var estimatedTime = moment(bus.NextStops[0].EstimatedDepartTime);
+				// 		var durToNextStop = moment.duration(estimatedTime.diff(timeNow)).asMinutes();
+				// 		speechOutput = 'You\'ll see a bus in '+durToNextStop;
+				// 		busAmount++;
+				// 	});
+				// 	const imageObj = {
+				// 		smallImageUrl: ctx.getDataURL(),
+				// 		largeImageUrl: 'https://imgs.xkcd.com/comics/standards.png'
+				// 	};
+				// 	this.attributes.speechOutput = speechOutput;
+				// 	this.attributes.repromptSpeech = 'I said that '+speechOutput;
+				//
+				// 	// this.response.speak(speechOutput).listen(this.attributes.repromptSpeech);
+				// 	this.response.cardRenderer(`alexa-tamu: Route ${reqBusRoute}`, `Buses on Route: ${busAmount}`, imageObj);
+				// 	this.emit(':responseReady');
+				//
+				// } catch (err) {
+				// 	//console.log('error');
+				// }
+
 			});
+		}else{
+			var speechOutput = this.t('BUS_NOT_FOUND');
+			var repromptSpeech = speechOutput;
+
+			this.response.speak(speechOutput).listen(repromptSpeech);
+			this.emit(':responseReady');
 		}
 	},
 	'GetCollegeIntent' : function(){
