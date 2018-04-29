@@ -1,6 +1,7 @@
 module.exports = {
   'en-us': {
       'software store': 'Texas A&amp;M students, faculty and staff can always purchase discounted software at software.tamu.edu.',
+      'change net ID': 'Your NetID can be reset using a call-in reset.  Call-in Reset is an option users can enable in Gateway, allowing them to call Help Desk Central to reset their NetID password, if they forget it.',
       'email': 'Your address will be your NetID@TAMU.edu. You can also set up your Texas A&amp;M Gmail at google.tamu.edu',
       'computer can i bring': 'We can support any machine you buy, but we do have some recommendations for you at u.tamu.edu/KB0011325',
       'net ID': 'Your NetID is the username you will use to login to various systems and services, including Texas A&amp;M Gmail, the Central Authentication Service and the Howdy Portal.',
@@ -38,7 +39,7 @@ module.exports = {
       'medical school': 'Yes. The Texas A&amp;M College of Medicine has campuses in five Texas locations and is part of the Texas A&amp;M Health Science Center. More information can be found at medicine.tamhsc.edu.',
       'tour': 'We would love for you to visit Texas A&amp;M University. To help us plan for your arrival, please email us at visit@TAMU.edu or call us at 979 845 5851.',
       'president': 'Michael K. Young is the 25th president of Texas A&amp;M and has held the office since 2015.',
-      'college station': 'College Station is in East Central Texas , approximately 90 miles northwest of Houston and 87 miles northeast of Austin.',
+      'college station': 'College Station is in East Central Texas, approximately 90 miles northwest of Houston and 87 miles northeast of Austin.',
       'student organizations': 'There are over 1,000 great student organizations on campus. You can view them at studentactivities.tamu.edu.',
       'check my grades': 'Students can check their grades at howdy.tamu.edu with their Net ID and password.',
       'texas a and m traditions': 'Texas A&amp;M has too many storied traditions to list here. Please go to www.tamu.edu/traditions and enjoy reading about our culture!',
@@ -48,8 +49,9 @@ module.exports = {
       'students attend texas a and m': 'Over 68 thousand students were enrolled for the fall 2017 semester at the main College Station campus, branch campuses and other sites throughout the state.',
       'tuition': 'Incoming undergraduate students at Texas A&amp;M University are offered a choice between a locked tuition price plan and a variable tuition rate. Averages for the cost of attendance can be found at admissions.tamu.edu.',
       'texas a and m university located': 'The main campus is in College Station, Texas and there are branch campuses in Galveston, Texas and Doha, Qatar. ',
-      'password': 'Be sure to set up Self Service Password Reset at u.tamu.edu/SSPR so you can reset your password easily. Otherwise, contact Help Desk Central by phone at 979 845 8300 or by email at helpdesk@TAMU.edu',
-      'virus': 'Faculty, staff and students can bring their computers to Help Desk Central for diagnosis and removal. Help Desk Central is located in the Computing Services Center, across from the Central Parking Garage on Lamar Street.',
+      'password': 'Be sure to set up Self Service Password Reset at u.tamu.edu/SSPR so you can reset your password easily. Otherwise, contact Help Desk Central by phone at 979 845 8300 or by email at helpdesk@tamu.edu',
+      'virus': 'First, try an up-to-date antivirus software. Antivirus is available for free at the software store. Otherwise, faculty, staff and students can bring their computers to Help Desk Central for diagnosis and removal. Help Desk Central is located in the Computing Services Center, across from the Central Parking Garage on Lamar Street.',
       'computer': 'Help Desk Repair provides hardware and connectivity services for current students, and active or retired faculty and staff of Texas A&amp;M University. Email helpdesk@TAMU.edu or call 979.845.8300.',
+      'fix software': 'For this kind of diagnosis we recommend contacting Help Desk Central. They are open 24/7 and can talk you through most problems. They also have technicians who focus on hardware and connectivity issues that require a more hands-on approach to the situation.',
   },
 };

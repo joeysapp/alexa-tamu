@@ -46,7 +46,7 @@ const languageStrings = {
 			DEF_NOT_FOUND: 'I\'m sorry, I don\'t know what ',
 			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu. Your request has been logged to help with the skill\'s development.',
 			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu. Your request has been logged to help with the skill\'s development.',
-			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.'
+			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.',
 			REC_NOT_FOUND: 'I\'m sorry, the Texas A&M Recreation Center currently does not offer that. Your request has been logged to help with the skill\'s development.'
 		},
 	},
@@ -98,7 +98,7 @@ const handlers = {
 		var close = [24, 24, 24, 24, 24, 23, 23];
 		var open_fmt = ["12 PM", "6 AM", "6 AM", "6 AM", "6 AM", "6 AM", "8 AM"];
 		var close_fmt = ["12 AM", "12 AM", "12 AM", "12 AM", "12 AM", "11 PM", "11 PM"]
-		var name_of_day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', ' Saturday'];
+		var name_of_day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 		var schedule = '';
 		for(var i = 0; i < name_of_day.length; ++i){
 			schedule += name_of_day[i] + ": " + open_fmt[i] + " - " + close_fmt[i] + "\n";
@@ -108,11 +108,11 @@ const handlers = {
 		var day = timeNow.day();
 		var hour = timeNow.hour();
 
-		if(recName == "today" || recName == "right now"){
+		if(recName == "today" || recName == "right now" || recName == "open"){
 			if(hour >= open[day] && hour < close[day]){
-				outputSpeech = "Yes, the recreational facilities are currently open. I have sent the current rec hours to your Alexa application.";
+				outputSpeech = "The recreational facilities are currently open from now until " + close_fmt[day] + ". I have sent the current rec hours to your Alexa application.";
 			}else{
-				outputSpeech = "No, the recreational facilities are currently closed. ";
+				outputSpeech = "The recreational facilities are currently closed. ";
 				if(hour < open[day]){
 					outputSpeech += "The rec center opens at ";
 					if(day == 0){
@@ -134,9 +134,9 @@ const handlers = {
 		}else if(recName == "this week"){
 			//Keep schedule var updated with the most current schedule.
 			if(schedule){
-				outputSpeech = "Yes, the recreational facilities are open this week. I have sent the current rec hours to your Alexa application.";
+				outputSpeech = "The recreational facilities are open this week. I have sent the current rec hours to your Alexa application.";
 			}else{
-				outputSpeech = "No, the recreational facilites are currently closed.";
+				outputSpeech = "The recreational facilites are currently closed.";
 			}
 		}else if(recName == "this weekend"){
 			outputSpeech += "This weekend, the recreational facilities will be open on " + name_of_day[6];
@@ -145,7 +145,7 @@ const handlers = {
 		}else if(recName == "Monday" || recName == "Tuesday" || recName == "Wednesday" ||
 			recName == "Thursday" || recName == "Friday" || recName == "Saturday" || recName == "Sunday"){
 				var index = name_of_day.indexOf(recName);
-				outputSpeech = "Yes, the recreational facilities are open on " + name_of_day[index] +
+				outputSpeech = "The recreational facilities are open on " + name_of_day[index] +
 					" from " + open_fmt[index] + " until " + close_fmt[index] + ".";
 		}else{
 			var s = require('intents/getRecInfo.js');
@@ -161,6 +161,7 @@ const handlers = {
 				this.emit(':responseReady');
 			} else {
 				var speechOutput = this.t('REC_NOT_FOUND');
+				var repromptSpeech = speechOutput;
 
 				this.response.speak(speechOutput).listen(repromptSpeech);
 				this.emit(':responseReady');
@@ -489,6 +490,7 @@ const handlers = {
 					cardOutput += cardOutputToAppend;
 				}
 
+				speechOutput += "\nI have sent the estimated arrival times to your Alexa application.";
 				var repromptSpeech = speechOutput;
 				this.response.speak(speechOutput).listen(repromptSpeech);
 				this.response.cardRenderer('alexa-tamu: Bus Route ' + reqBusRoute + ' next stops:', cardOutput);
