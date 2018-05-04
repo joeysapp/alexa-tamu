@@ -47,7 +47,7 @@ const languageStrings = {
 			HELPDESK_NOT_FOUND: 'I\'m sorry, I can\'t help you with that. Please visit hdc.tamu.edu. Your request has been logged to help with the skill\'s development.',
 			LOCATION_NOT_FOUND: 'I\'m sorry, I can\'t find that location. Please visit aggiemap.tamu.edu. Your request has been logged to help with the skill\'s development.',
 			BUS_NOT_FOUND: 'I\'m sorry, I can\'t find that bus. Your request has been logged to help with the skill\'s development.',
-			REC_NOT_FOUND: 'I\'m sorry, the Texas A&M Recreation Center currently does not offer that. Your request has been logged to help with the skill\'s development.'
+			REC_NOT_FOUND: 'I\'m sorry, the Recreation Center currently does not offer that. Your request has been logged to help with the skill\'s development.'
 		},
 	},
 	'en-us' : {
